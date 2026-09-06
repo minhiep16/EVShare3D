@@ -1,0 +1,5 @@
+# Created at 2026-09-06T20:24:42.245
+Boot Manifest-JAR contains absolute paths in classpath 'E:\EVShare3D\backend\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

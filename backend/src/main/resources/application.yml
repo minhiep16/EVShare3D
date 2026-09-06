@@ -1,0 +1,91 @@
+# ===================================================================
+# EVShare 3D Platform - Master Configuration (Spring Boot 3)
+# ===================================================================
+
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /
+  shutdown: graceful
+
+spring:
+  application:
+    name: evshare-backend
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  # MySQL Datasource Configuration via Environment Variables
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:evshare_db}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:minhhiep}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: EvShareHikariPool
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:10}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  # Spring Data JPA / Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+
+  # Flyway Migration Engine Configuration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    out-of-order: false
+
+# Jakarta Bean Validation
+validation:
+  fail-fast: false
+
+# Spring Boot Actuator Monitoring & Health Probes
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+
+# OpenAPI 3 / Swagger Documentation
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    doc-expansion: none
+  show-actuator: true
+
+# Logging Configuration
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    root: INFO
+    com.example.evshare: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN

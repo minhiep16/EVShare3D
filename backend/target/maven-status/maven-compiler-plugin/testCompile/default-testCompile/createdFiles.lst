@@ -1,0 +1,11 @@
+com\example\evshare\config\ConfigurationFoundationTest.class
+com\example\evshare\repository\RepositoryInitializationTest.class
+com\example\evshare\validation\FoundationValidationTest$SampleValidationDto.class
+com\example\evshare\FlywayMigrationIntegrationTest.class
+com\example\evshare\validation\FoundationValidationTest.class
+com\example\evshare\entity\EntityMappingFoundationTest.class
+com\example\evshare\dto\response\ApiResponseTest.class
+com\example\evshare\actuator\ActuatorHealthIntegrationTest.class
+com\example\evshare\exception\GlobalExceptionHandlerTest.class
+com\example\evshare\EvShareApplicationTests.class
+com\example\evshare\validation\FoundationValidationTest$TestValidationController.class

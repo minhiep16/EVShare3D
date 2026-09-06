@@ -1,0 +1,10 @@
+E:\EVShare3D\backend\src\test\java\com\example\evshare\dto\AuthDtoValidationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\actuator\ActuatorHealthIntegrationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\validation\FoundationValidationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\EvShareApplicationTests.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\entity\EntityMappingFoundationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\exception\GlobalExceptionHandlerTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\dto\response\ApiResponseTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\FlywayMigrationIntegrationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\config\ConfigurationFoundationTest.java
+E:\EVShare3D\backend\src\test\java\com\example\evshare\repository\RepositoryInitializationTest.java

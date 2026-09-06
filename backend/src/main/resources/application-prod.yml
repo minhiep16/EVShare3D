@@ -1,0 +1,35 @@
+# ===================================================================
+# EVShare 3D Platform - Production Profile ('prod')
+# ===================================================================
+
+server:
+  error:
+    include-stacktrace: never
+    include-message: never
+
+spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  datasource:
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:25}
+      minimum-idle: ${DB_POOL_MIN_IDLE:10}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: WARN
+    com.example.evshare: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN

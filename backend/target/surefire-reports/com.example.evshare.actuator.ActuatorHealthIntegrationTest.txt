@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.evshare.actuator.ActuatorHealthIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.263 s -- in com.example.evshare.actuator.ActuatorHealthIntegrationTest
