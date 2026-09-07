@@ -22,11 +22,16 @@
 
 | Functional Module | Specific Permission | Co-Owner | Staff | Admin | Scope & Constraint Notes |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Authentication & Profile** | `AUTH_REGISTER` | ✅ | ❌ | ✅ | Public registration or Admin invite |
-| | `AUTH_LOGIN` | ✅ | ✅ | ✅ | Standard JWT issuance |
-| | `USER_VIEW_SELF` | ✅ | ✅ | ✅ | View own profile & credentials |
+| **Authentication & Profile** | `AUTH_REGISTER` | ✅ | ❌ | ✅ | Public registration (default `CO_OWNER`) or Admin invite; self-assignment of Staff/Admin forbidden |
+| | `AUTH_LOGIN` | ✅ | ✅ | ✅ | Standard JWT issuance; inactive accounts rejected with 403 |
+| | `AUTH_REFRESH` | ✅ | ✅ | ✅ | Dual-token refresh with RFC 6819 rotation and server-side revocation tracking |
+| | `AUTH_PASSWORD_RESET`| ✅ | ✅ | ✅ | Public flow with anti-enumeration protection; invalidates all sessions on success |
+| | `USER_VIEW_SELF` | ✅ | ✅ | ✅ | `GET /users/me`: View own profile & credentials (anti-spoofing) |
 | | `USER_UPDATE_SELF` | ✅ | ✅ | ✅ | Update password, phone, avatar |
+| | `USER_VIEW_BY_ID` | ❌ | ✅ | ✅ | `GET /users/{id}`: Inspect user details restricted to Staff and Admin |
 | | `USER_MANAGE_ALL` | ❌ | ❌ | ✅ | Lock user, change roles, inspect audit logs |
+| **System & Monitoring** | `ACTUATOR_HEALTH` | ✅ | ✅ | ✅ | Public `/actuator/health/**` & `/actuator/info` for container orchestration |
+| | `ACTUATOR_ADMIN` | ❌ | ❌ | ✅ | `/actuator/**` metrics and management endpoints restricted to Admin |
 | **Vehicle Management** | `VEHICLE_VIEW_OWNED` | ✅ | ✅ | ✅ | Co-owner views vehicles in their group |
 | | `VEHICLE_VIEW_ALL` | ❌ | ✅ | ✅ | Staff & Admin inspect total fleet |
 | | `VEHICLE_CREATE` | ❌ | ❌ | ✅ | Register new EV into platform |

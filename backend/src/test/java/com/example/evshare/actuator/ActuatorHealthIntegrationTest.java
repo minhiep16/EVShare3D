@@ -55,12 +55,21 @@ class ActuatorHealthIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /actuator/metrics should return 200 OK")
+    @org.springframework.security.test.context.support.WithMockUser(roles = "ADMIN")
+    @DisplayName("GET /actuator/metrics with ADMIN role should return 200 OK")
     void testActuatorMetricsEndpoint() throws Exception {
         mockMvc.perform(get("/actuator/metrics")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.names", hasItem("jvm.memory.used")));
+    }
+
+    @Test
+    @DisplayName("GET /actuator/metrics without authentication should return 401 Unauthorized")
+    void testActuatorMetricsEndpoint_Unauthorized() throws Exception {
+        mockMvc.perform(get("/actuator/metrics")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

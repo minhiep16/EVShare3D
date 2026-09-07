@@ -27,6 +27,12 @@ public class RegisterRequest {
     @Size(max = 255, message = "Avatar 3D URL cannot exceed 255 characters")
     private String avatar3dUrl;
 
+    /**
+     * Optional client role hint. Self-assignment of privileged roles (ADMIN, STAFF)
+     * is forbidden and rejected by security policies.
+     */
+    private String role;
+
     public RegisterRequest() {
     }
 
@@ -36,6 +42,15 @@ public class RegisterRequest {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.avatar3dUrl = avatar3dUrl;
+    }
+
+    public RegisterRequest(String email, String password, String fullName, String phoneNumber, String avatar3dUrl, String role) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.avatar3dUrl = avatar3dUrl;
+        this.role = role;
     }
 
     public static RegisterRequestBuilder builder() {
@@ -82,12 +97,21 @@ public class RegisterRequest {
         this.avatar3dUrl = avatar3dUrl;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public static class RegisterRequestBuilder {
         private String email;
         private String password;
         private String fullName;
         private String phoneNumber;
         private String avatar3dUrl;
+        private String role;
 
         RegisterRequestBuilder() {
         }
@@ -117,8 +141,13 @@ public class RegisterRequest {
             return this;
         }
 
+        public RegisterRequestBuilder role(String role) {
+            this.role = role;
+            return this;
+        }
+
         public RegisterRequest build() {
-            return new RegisterRequest(email, password, fullName, phoneNumber, avatar3dUrl);
+            return new RegisterRequest(email, password, fullName, phoneNumber, avatar3dUrl, role);
         }
     }
 }

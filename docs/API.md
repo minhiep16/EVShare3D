@@ -28,10 +28,12 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/auth/register` | Public | `RegisterRequest` | Register new user account |
+| `POST` | `/auth/register` | Public | `RegisterRequest` | Register new user account (default `ROLE_CO_OWNER`) |
 | `POST` | `/auth/login` | Public | `LoginRequest` | Authenticate & obtain Access + Refresh JWTs |
-| `POST` | `/auth/refresh` | Public | `RefreshTokenRequest` | Exchange refresh token for fresh access token |
+| `POST` | `/auth/refresh` | Public | `RefreshTokenRequest` | Exchange refresh token for fresh access token (RFC 6819 rotation) |
 | `POST` | `/auth/logout` | Authenticated | `RefreshTokenRequest` | Invalidate active refresh token session |
+| `POST` | `/auth/password-reset/request` | Public | `PasswordResetRequest` | Request password reset instructions (Anti-enumeration generic 200, alias: `/auth/forgot-password`) |
+| `POST` | `/auth/password-reset/confirm` | Public | `PasswordResetConfirmRequest` | Confirm password reset with token & new password (alias: `/auth/reset-password`) |
 
 ### 2.2. Users & Profiles (`/api/v1/users`)
 
@@ -45,28 +47,49 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/vehicles` | Authenticated | Query params | List all accessible vehicles (paged) |
-| `GET` | `/vehicles/{id}` | Authenticated | None | Get full digital twin vehicle details & state |
+| `GET` | `/vehicles` | Authenticated | Query params (`page`, `size`, `sort`, `status`) | List all accessible vehicles (paged and filtered) |
+| `GET` | `/vehicles/{id}` | Authenticated | None | Get full digital twin vehicle details & canonical state |
 | `POST` | `/vehicles` | Admin | `CreateVehicleRequest` | Register new EV and assign 3D asset model |
-| `PATCH` | `/vehicles/{id}/status` | Staff, Admin | `UpdateVehicleStatusRequest` | Transition status (`MAINTENANCE`, `CHARGING`, etc.) |
-| `GET` | `/vehicles/{id}/telemetry` | Authenticated | None | Real-time battery SoC, odometer, and bay location |
+| `PUT` | `/vehicles/{id}` | Admin | `UpdateVehicleRequest` | Update vehicle metadata, license plate, model, or stall code |
+| `PATCH` | `/vehicles/{id}/status` | Staff, Admin | `UpdateVehicleStatusRequest` | Controlled finite state machine transition (`AVAILABLE`, `MAINTENANCE`, etc.) |
+| `DELETE` | `/vehicles/{id}` | Admin | None | Delete vehicle record |
+| `GET` | `/vehicles/{id}/telemetry` | Authenticated | None | Real-time battery SoC, odometer, and bay location (Phase 07) |
 
 ### 2.4. Ownership Groups & Equity (`/api/v1/ownership-groups`)
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/ownership-groups/{id}` | Authenticated | None | Retrieve group info, vehicle ID, and member share list |
-| `GET` | `/ownership-groups/my-groups` | Co-Owner | None | List groups where user holds active equity |
-| `POST` | `/ownership-groups` | Admin | `CreateGroupRequest` | Form a new co-ownership group |
-| `POST` | `/ownership-groups/{id}/transfer-share` | Admin | `TransferShareRequest` | Execute validated equity transfer (validating 100%) |
+| `POST` | `/ownership-groups` | Admin | `CreateOwnershipGroupRequest` | Form a new syndicate and bind 1:1 to an electric vehicle |
+| `GET` | `/ownership-groups` | Staff, Admin | Query params (`page`, `size`, `sort`) | List all syndicate ownership groups (paged) |
+| `GET` | `/ownership-groups/{id}` | Co-Owner (Member), Staff, Admin | None | Retrieve group info, vehicle binding, and member share list |
+| `GET` | `/ownership-groups/my-groups` | Authenticated | None | List groups where the authenticated user holds equity shares |
+| `GET` | `/ownership-groups/vehicle/{vehicleId}` | Authenticated | None | Retrieve the ownership group bound to a specific vehicle |
+| `GET` | `/ownership-groups/{id}/validate` | Co-Owner (Member), Staff, Admin | None | Validate whether active group shares equal exactly 100.00% |
+| `POST` | `/ownership-groups/{id}/transfer-share` | Admin | `TransferShareRequest` | Atomically transfer equity between co-owners enforcing 100.00% invariant |
+| `POST` | `/ownership-groups/{groupId}/shares` | Admin | `CreateShareRequest` | Issue a new ownership share certificate to a co-owner |
+| `GET` | `/ownership-groups/{groupId}/shares` | Co-Owner (Member), Staff, Admin | None | List all ownership shares (active and inactive) for the syndicate |
+| `GET` | `/ownership-groups/{groupId}/shares/{shareId}` | Co-Owner (Member), Staff, Admin | None | Retrieve specific share certificate details |
+| `PATCH` | `/ownership-groups/{groupId}/shares/{shareId}` | Admin | `UpdateSharePercentageRequest` | Modify equity percentage for a member share |
+| `DELETE` | `/ownership-groups/{groupId}/shares/{shareId}` | Admin | None | Deactivate an ownership share certificate |
+| `POST` | `/ownership-groups/{groupId}/shares/{shareId}/reactivate` | Admin | None | Reactivate a previously deactivated ownership share |
+| `GET` | `/ownership-groups/{groupId}/shares/validate` | Co-Owner (Member), Staff, Admin | None | Check if sum of active shares equals 100.00% (`isValid`, `totalPercentage`) |
+| `POST` | `/ownership-groups/{groupId}/shares/rebalance` | Admin | `RebalanceSharesRequest` | Atomically rebalance all group equity shares to sum to 100.00% |
+| `GET` | `/ownership-groups/{groupId}/shares/{shareId}/history` | Co-Owner (Member), Staff, Admin | None | Retrieve chronological audit trail for a specific share |
+| `GET` | `/ownership-groups/{groupId}/shares/history` | Co-Owner (Member), Staff, Admin | None | Retrieve complete chronological equity audit history for syndicate |
 
-### 2.5. Digital Contracts (`/api/v1/contracts`)
+### 2.5. Digital Co-Ownership Contracts (`/api/v1/contracts`)
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/contracts/group/{groupId}` | Co-Owner, Admin | None | Fetch current active contract and terms |
-| `POST` | `/contracts/{id}/sign` | Co-Owner | `SignContractRequest` | Submit digital cryptographic signature |
-| `GET` | `/contracts/{id}/signatures` | Co-Owner, Admin | None | View list of signed members and pending signers |
+| `POST` | `/contracts` | Admin | `CreateContractRequest` | Create a co-ownership contract draft (increments version if prior contracts exist) |
+| `GET` | `/contracts/{id}` | Co-Owner (Member), Staff, Admin | None | Fetch contract terms, version, and status by contract ID |
+| `GET` | `/contracts/group/{groupId}` | Co-Owner (Member), Staff, Admin | Query params (`page`, `size`, `sort`) | List all contract versions for a syndicate (paged) |
+| `GET` | `/contracts/group/{groupId}/active` | Co-Owner (Member), Staff, Admin | None | Retrieve the currently ACTIVE legal contract for the syndicate |
+| `PUT` | `/contracts/{id}` | Admin | `UpdateContractRequest` | Update contract terms/title (strictly rejected if status != DRAFT) |
+| `PATCH` | `/contracts/{id}/status` | Admin | `UpdateContractStatusRequest` | Execute state machine lifecycle transitions (e.g., ACTIVE, TERMINATED) |
+| `DELETE` | `/contracts/{id}` | Admin | None | Attempted deletion rejected (405 / 400) to ensure immutable history |
+| `POST` | `/contracts/{id}/sign` | Co-Owner (Member) | `SignContractRequest` | Submit digital cryptographic SHA-256 signature; auto-transitions to SIGNED when all sign |
+| `GET` | `/contracts/{id}/signatures` | Co-Owner (Member), Staff, Admin | None | View all recorded digital signatures and identify pending signers |
 
 ### 2.6. Reservations & 3D Booking Timeline (`/api/v1/bookings`)
 

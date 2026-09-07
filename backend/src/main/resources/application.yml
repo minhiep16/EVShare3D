@@ -80,6 +80,13 @@ springdoc:
     doc-expansion: none
   show-actuator: true
 
+# JWT Authentication Security Configuration
+jwt:
+  secret: ${JWT_SECRET:EVShare3DSuperSecretKeyWithMinimum256BitsLengthForHmacSha256Security12345}
+  issuer: ${JWT_ISSUER:evshare3d-backend}
+  access-token-expiration-ms: ${JWT_ACCESS_EXPIRATION_MS:900000}       # 15 minutes = 900,000 ms
+  refresh-token-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}  # 7 days = 604,800,000 ms
+
 # Logging Configuration
 logging:
   pattern:
