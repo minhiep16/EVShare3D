@@ -182,14 +182,15 @@ class VehicleRepositoryTest {
     @Test
     @DisplayName("8. Manufacturer Case-Insensitive Filter")
     void testFindByManufacturerIgnoreCase() {
+        String uniqueMfr = "Hyundai" + UUID.randomUUID().toString().substring(0, 6);
         Vehicle v = buildSampleVehicle(generateVin(), generatePlate(), VehicleStatus.AVAILABLE);
-        v.setManufacturer("Hyundai");
+        v.setManufacturer(uniqueMfr);
         vehicleRepository.saveAndFlush(v);
 
-        Page<Vehicle> hyundaiUpper = vehicleRepository.findByManufacturerIgnoreCase("HYUNDAI", PageRequest.of(0, 10));
+        Page<Vehicle> hyundaiUpper = vehicleRepository.findByManufacturerIgnoreCase(uniqueMfr.toUpperCase(), PageRequest.of(0, 10));
         assertTrue(hyundaiUpper.getContent().stream().anyMatch(item -> item.getId().equals(v.getId())));
 
-        Page<Vehicle> hyundaiLower = vehicleRepository.findByManufacturerIgnoreCase("hyundai", PageRequest.of(0, 10));
+        Page<Vehicle> hyundaiLower = vehicleRepository.findByManufacturerIgnoreCase(uniqueMfr.toLowerCase(), PageRequest.of(0, 10));
         assertTrue(hyundaiLower.getContent().stream().anyMatch(item -> item.getId().equals(v.getId())));
     }
 

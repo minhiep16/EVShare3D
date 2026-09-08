@@ -45,6 +45,9 @@ public class UsageSession {
     @Column(name = "status", nullable = false, length = 30)
     private UsageSessionStatus status = UsageSessionStatus.ACTIVE;
 
+    @OneToMany(mappedBy = "usageSession", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.List<VehicleInspection> inspections = new java.util.ArrayList<>();
+
     public UsageSession() {
     }
 
@@ -130,5 +133,21 @@ public class UsageSession {
 
     public void setStatus(UsageSessionStatus status) {
         this.status = status;
+    }
+
+    public java.util.List<VehicleInspection> getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(java.util.List<VehicleInspection> inspections) {
+        this.inspections = inspections;
+    }
+
+    public void addInspection(VehicleInspection inspection) {
+        if (this.inspections == null) {
+            this.inspections = new java.util.ArrayList<>();
+        }
+        this.inspections.add(inspection);
+        inspection.setUsageSession(this);
     }
 }

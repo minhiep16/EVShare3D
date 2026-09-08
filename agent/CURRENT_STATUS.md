@@ -1,28 +1,86 @@
 # EVShare 3D – CURRENT PROJECT STATUS
 
 ## 1. Active Phase & Checkpoint
-* **CURRENT_PHASE**: `PHASE 04 — VEHICLE, CO-OWNERSHIP & CONTRACT`
-* **CURRENT_CHECKPOINT**: `04-N — FINAL VERIFICATION`
-* **CHECKPOINT 04-N STATUS**: **`COMPLETE`**
-* **PHASE 04 STATUS**: **`COMPLETE` / `QUALITY GATE PASSED`**
-* **Phase 04 Final Report**: [`agent/PHASE_04_REPORT.md`](file:///e:/EVShare3D/agent/PHASE_04_REPORT.md)
-* **Full Backend Automated Test Suite**: `mvn clean test` — **`394 / 394 PASS (100%)`** (0 failures, 0 errors, 0 skipped across 28 test classes)
-* **Comprehensive Phase 04 Master Test Suite**: [`com.example.evshare.controller.ComprehensivePhase04TestSuiteTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ComprehensivePhase04TestSuiteTest.java) (13/13 PASS)
-* **Vehicle REST API Test Suite**: [`com.example.evshare.controller.VehicleApiControllerIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/VehicleApiControllerIntegrationTest.java) (16/16 PASS)
-* **Contract Lifecycle Test Suite**: [`com.example.evshare.controller.ContractLifecycleIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ContractLifecycleIntegrationTest.java) (17/17 PASS)
-* **Contract State Machine Test Suite**: [`com.example.evshare.service.ContractStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/ContractStateMachineTest.java) (52/52 PASS)
-* **Contract Signature Test Suite**: [`com.example.evshare.controller.ContractSignatureIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ContractSignatureIntegrationTest.java) (15/15 PASS)
-* **Contract Test Suite**: [`com.example.evshare.controller.ContractIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ContractIntegrationTest.java) (17/17 PASS)
-* **Ownership History Test Suite**: [`com.example.evshare.controller.OwnershipHistoryIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/OwnershipHistoryIntegrationTest.java) (10/10 PASS)
-* **Ownership Validation Test Suite**: [`com.example.evshare.controller.OwnershipValidationIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/OwnershipValidationIntegrationTest.java) (18/18 PASS)
-* **Ownership Share Test Suite**: [`com.example.evshare.controller.OwnershipShareIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/OwnershipShareIntegrationTest.java) (11/11 PASS)
-* **Checkpoint 04-M Status**: **`COMPLETE`**
-* **Checkpoint 04-L Status**: **`COMPLETE`**
-* **Checkpoint 04-K Status**: **`COMPLETE`**
-* **Checkpoint 04-J Status**: **`COMPLETE`**
-* **Checkpoint 04-I Status**: **`COMPLETE`**
-* **Checkpoint 04-H Status**: **`COMPLETE`**
-* **Checkpoint 04-G Status**: **`COMPLETE`**
+* **CURRENT_PHASE**: `PHASE 05 — BOOKING, FAIR USAGE & VEHICLE OPERATION`
+* **PHASE 05 STATUS**: **`COMPLETE / QUALITY GATE PASSED`**
+* **CURRENT_CHECKPOINT**: `05-O — FINAL VERIFICATION`
+* **CHECKPOINT 05-O STATUS**: **`COMPLETE`**
+* **Build Verification (`mvn clean test`)**: **`BUILD SUCCESS`** (0 errors, 0 failures, 668/668 tests pass in ~4m 34s)
+* **Vehicle State Integration Tests**: [`com.example.evshare.controller.VehicleStateIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/VehicleStateIntegrationTest.java) (5/5 PASS)
+* **Usage Session Service Unit Tests**: [`com.example.evshare.service.UsageSessionServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/UsageSessionServiceTest.java) (37/37 PASS)
+* **Usage Session Integration Tests**: [`com.example.evshare.controller.UsageSessionIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/UsageSessionIntegrationTest.java) (18/18 PASS)
+* **QR Validation Integration Tests**: [`com.example.evshare.controller.QrValidationIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/QrValidationIntegrationTest.java) (10/10 PASS)
+* **QR Validation Service Unit Tests**: [`com.example.evshare.service.QrValidationServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/QrValidationServiceTest.java) (22/22 PASS)
+* **Fair Usage Service Unit Tests**: [`com.example.evshare.service.FairUsageServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FairUsageServiceTest.java) (26/26 PASS)
+* **Fair Usage Analytics Integration Tests**: [`com.example.evshare.controller.FairUsageIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/FairUsageIntegrationTest.java) (5/5 PASS)
+* **Booking State Machine Unit Tests**: [`com.example.evshare.service.BookingStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/BookingStateMachineTest.java) (67/67 PASS)
+* **Booking State Transition Integration Tests**: [`com.example.evshare.controller.BookingStateTransitionIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/BookingStateTransitionIntegrationTest.java) (18/18 PASS)
+* **Conflict Detection Test Suite**: [`com.example.evshare.controller.BookingConflictDetectionIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/BookingConflictDetectionIntegrationTest.java) (13/13 PASS)
+* **Booking Update/Cancel Test Suite**: [`com.example.evshare.controller.BookingUpdateAndCancelIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/BookingUpdateAndCancelIntegrationTest.java) (16/16 PASS)
+* **Booking Creation Test Suite**: [`com.example.evshare.controller.BookingCreationIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/BookingCreationIntegrationTest.java) (19/19 PASS)
+* **Booking Availability Test Suite**: [`com.example.evshare.controller.BookingAvailabilityIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/BookingAvailabilityIntegrationTest.java) (9/9 PASS)
+* **Booking Repository Test Suite**: [`com.example.evshare.repository.BookingRepositoryTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/repository/BookingRepositoryTest.java) (9/9 PASS)
+* **Total Phase 05 Booking, Fair Usage, Session, QR & Vehicle State Integration Tests**: **274 / 274 PASS** (0 failures, 0 errors, 0 skipped)
+* **Total Platform Tests**: **668 / 668 PASS** (0 failures, 0 errors, 0 skipped across all 45 test classes)
+* **Summary of Checkpoint 05-O**:
+  - Final verification of all Phase 05 functional, mathematical, and security requirements.
+  - Zero new feature implementations; zero scope creep beyond Phase 05 boundaries.
+  - Formally updated `docs/API.md` with complete endpoint specifications for bookings, usage sessions, QR, and fair usage analytics.
+  - Formally updated `docs/BUSINESS_RULES.md` with operational clarifications for BR-OPS-01 and BR-OPS-02.
+  - Audited `docs/DATABASE.md` against Phase 05 JPA entities and Flyway migrations (100% verified alignment).
+  - Documented ADR-12 through ADR-15 in `agent/DECISIONS.md`.
+  - Added Phase 05 risks and mitigations to `agent/KNOWN_ISSUES.md`.
+  - Published definitive verification audit in `agent/PHASE_05_REPORT.md` (all 18 requirement dimensions rated PASS).
+* **Directive**: STOP. Phase 05 is 100% verified and complete. Do NOT start Phase 06. Awaiting explicit user command.
+* **Checkpoint 05-N Status**: **`COMPLETE`**
+* **Checkpoint 05-M Status**: **`COMPLETE`**
+* **Checkpoint 05-K Status**: **`COMPLETE`**
+* **Checkpoint 05-J Status**: **`COMPLETE`**
+* **Checkpoint 05-I Status**: **`COMPLETE`**
+* **Checkpoint 05-H Status**: **`COMPLETE`**
+* **Checkpoint 05-G Status**: **`COMPLETE`**
+* **Checkpoint 05-F Status**: **`COMPLETE`**
+* **Checkpoint 05-E Status**: **`COMPLETE`**
+* **Checkpoint 05-D Status**: **`COMPLETE`**
+* **Checkpoint 05-C Status**: **`COMPLETE`**
+* **Checkpoint 05-B Status**: **`COMPLETE`**
+* **Checkpoint 05-A Status**: **`COMPLETE`** ([`docs/PHASE_05_DOMAIN_AUDIT.md`](file:///e:/EVShare3D/docs/PHASE_05_DOMAIN_AUDIT.md))
+* **Summary of Checkpoint 05-M**:
+  - Integrated booking and usage session lifecycles with the authoritative `VehicleStateMachine`:
+    1. Conceptual flow: strictly enforces and verifies `AVAILABLE -> BOOKED -> IN_USE -> AVAILABLE`.
+    2. Cancellation: when a booking is cancelled, if the vehicle was transitioned to `BOOKED` for the impending trip, it is safely transitioned back `BOOKED -> AVAILABLE` via the controlled state machine, recording an audit log.
+    3. Maintenance: vehicles placed in `MAINTENANCE` status reject new booking creation and check-in attempts; when repairs finish, transition `MAINTENANCE -> AVAILABLE` restores operational eligibility.
+    4. Damage: when physical check-out inspection flags damage (`hasDamage=true`), vehicle transitions `IN_USE -> DAMAGED`, blocking booking attempts until inspected/serviced via `DAMAGED -> MAINTENANCE -> AVAILABLE`.
+    5. Controlled transition guard: neither `BookingServiceImpl` nor `UsageSessionServiceImpl` directly mutates `vehicle.setStatus(...)` without validating against `vehicleStateMachine.validateTransition(current, target)`. Direct or illegal transitions (e.g. `DAMAGED -> AVAILABLE`, `MAINTENANCE -> IN_USE`, `DAMAGED -> IN_USE`, or redundant updates) throw `InvalidStateTransitionException` returning HTTP 409 Conflict.
+    6. Complete lifecycle integration testing: implemented [`VehicleStateIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/VehicleStateIntegrationTest.java) validating all 5 lifecycle cases against the live MySQL database.
+* **Directive**: Checkpoint 05-M completed. STOPPED. Awaiting explicit user command for next checkpoint.
+* **Summary of Checkpoint 05-L**:
+  - Implemented backend QR code generation and cryptographic validation for vehicle operations per specification:
+    1. Authenticated user: verified via SecurityContext / UserPrincipal; missing principal throws HTTP 401 Unauthorized.
+    2. Vehicle: verified via authoritative DB query (status must be `AVAILABLE` or `BOOKED`), cross-matched against physical scanner station vehicle ID.
+    3. Booking: verified via authoritative DB query (status must be `CONFIRMED` or `APPROVED`), cross-matched against QR claims and request booking ID.
+    4. Time window: strictly verified against $[\text{startTime} - 15\text{m}, \text{startTime} + 30\text{m}]$; if scanned $>30$ minutes late, automatically transitions booking to `NO_SHOW` and saves to DB per BR-OPS-01.
+    5. Authorization: caller must be the booking creator, an active co-owner in the vehicle's syndicate group, or a staff operator / admin; unauthorized access throws HTTP 403 Forbidden.
+    6. Token/code validity: HMAC-SHA256 signature verified against platform secret key, structure and claims verified, token type must match `QR_CHECK_IN`.
+    7. Expiration where applicable: strictly bounded to 5-minute TTL per BR-OPS-01.
+    8. Never trust QR data alone: all payload claims are cross-checked against authoritative entities in MySQL database.
+    9. Do not put sensitive information unnecessarily inside QR: token contains solely non-sensitive identifiers (`bookingId`, `vehicleId`, `userId`, `tokenType`, `jti`, `iat`, `exp`), with 0 PII, credentials, or financial data.
+  - Comprehensive testing:
+    - 22 unit tests in `QrValidationServiceTest` covering all guard failures, cryptographic signatures, time window boundaries, and automatic `NO_SHOW` transitions.
+    - 10 integration tests in `QrValidationIntegrationTest` covering controller endpoints, DB mutations, security authorization, and negative test cases.
+* **Directive**: Checkpoint 05-L completed. STOPPED. Awaiting explicit user command for next checkpoint.
+* **Summary of Checkpoint 05-K**:
+  - Implemented comprehensive check-out validation, telemetry and evidence capture, deterministic surcharge calculation, and transactional closure per specification:
+    1. Active usage session guard: verifies session exists, status is `ACTIVE` (HTTP 400 otherwise), rejects rewriting completed sessions via `HistoricalUsageImmutableException` (HTTP 409), and verifies associated booking is in `IN_USE` status (HTTP 400 otherwise).
+    2. Correct user guard: enforces authenticated context (HTTP 401), matches explicit `request.userId` (HTTP 400 on mismatch), and validates caller access via booking ownership or syndicate co-ownership/admin (HTTP 403 otherwise).
+    3. Correct vehicle guard: verifies vehicle existence, matches explicit `request.vehicleId` (HTTP 400 on mismatch), and ensures vehicle is currently in `IN_USE` status (HTTP 400 otherwise).
+    4. Telemetry & evidence guard: verifies non-negative end odometer, end odometer $\ge$ start odometer, and end battery SoC in $[0, 100]$; captures 3D defect mesh flags, condition notes, and photographic evidence.
+    5. Deterministic additional surcharges: BR-OPS-02 low battery penalty (150,000 VND if $< 20\%$ SoC and unplugged), late return fee (50,000 VND / 30 min if $> 15$ min overdue), and explicit cleaning/damage costs.
+    6. Transactional closure (`@Transactional`): closes session to `COMPLETED`, transitions booking to `COMPLETED` via `BookingStateMachine`, transitions vehicle to `MAINTENANCE` (if damaged), `CHARGING` (if plugged in), or `AVAILABLE` via `VehicleStateMachine`, updates vehicle odometer and battery, records `VehicleInspection` (`CHECK_OUT`), and writes immutable `AuditLog`.
+  - Comprehensive testing:
+    - 36 unit tests in `UsageSessionServiceTest` covering all guard failures, telemetry boundary conditions, and check-out flows.
+    - 18 integration tests in `UsageSessionIntegrationTest` covering controller endpoints, DB mutations, security authorization, and duplicate/invalid checkouts.
+* **Directive**: Checkpoint 05-K completed. STOPPED. Awaiting explicit user command for next checkpoint.
 * **Checkpoint 04-F Status**: **`COMPLETE`**
 * **Checkpoint 04-E Status**: **`COMPLETE`** ([`OwnershipGroupIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/OwnershipGroupIntegrationTest.java), 14/14 PASS)
 * **Checkpoint 04-D Status**: **`COMPLETE`** ([`VehicleStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/VehicleStateMachineTest.java) 51/51 PASS, [`VehicleStateTransitionIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/VehicleStateTransitionIntegrationTest.java) 10/10 PASS)

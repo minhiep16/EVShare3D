@@ -94,4 +94,16 @@ public interface TokenService {
      * Extracts all payload claims from a signed token.
      */
     Claims extractAllClaims(String token);
+
+    /**
+     * Generates a short-lived cryptographic QR check-in token (valid for specified duration).
+     * Contains only non-sensitive identifiers and tokenType 'QR_CHECK_IN'.
+     *
+     * @param bookingId the target booking reservation ID
+     * @param vehicleId the target vehicle ID
+     * @param userId the user authorized for the session
+     * @param ttl time-to-live duration (e.g. 5 minutes per BR-OPS-01)
+     * @return the signed compact JWT string
+     */
+    String generateQrToken(Long bookingId, Long vehicleId, Long userId, java.time.Duration ttl);
 }

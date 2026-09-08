@@ -85,3 +85,37 @@
 * **Context**: Disputes, equity audits, and regulatory inspections require complete chronological traceability of all vehicle ownership and contract lifecycle mutations, including exact before-and-after states and acting principals.
 * **Decision**: Store all ownership group creations, equity share certificate issuances, transfers, rebalances, and contract lifecycle actions in an append-only `audit_logs` table. Every event records acting `userId`, `action`, `entityName`, `entityId`, `old_state_json`, `new_state_json`, `ipAddress`, and immutable `created_at` timestamp.
 * **Consequences**: Provides full non-repudiation and audit provenance accessible via `/history` REST endpoints without impacting primary read performance.
+
+---
+
+## ADR-12: Pessimistic Turnaround-Buffer Booking Concurrency & Conflict Engine
+* **Status**: ACCEPTED
+* **Context**: In co-ownership syndicates, high demand for prime weekend and holiday driving slots creates severe concurrency risks where multiple members attempt to book overlapping intervals. Moreover, operational readiness requires cleaning, inspection, and charging turnaround between consecutive trips.
+* **Decision**: Implement a database-level pessimistic write lock on the target vehicle (`SELECT ... FOR UPDATE` via `findByIdForUpdate`) during booking creation, rescheduling, and status transitions within `@Transactional`. Enforce an automated 30-minute turnaround buffer between consecutive bookings:
+  $$\text{Interval}_A \cap \text{Interval}_B \neq \emptyset \iff \max(start_A, start_B) < \min(end_A + 30\text{m}, end_B + 30\text{m})$$
+  Any overlapping attempt throws `BookingConflictException` (mapped to HTTP 409 Conflict).
+* **Consequences**: Mathematically prevents double-booking and buffer race conditions under extreme concurrent load while ensuring vehicles have adequate buffer time for turnaround.
+
+---
+
+## ADR-13: Syndicate Fair Usage Allocation Formula & Weighted Demand Gini Imbalance Classification
+* **Status**: ACCEPTED
+* **Context**: Equity co-owners expect vehicle access proportional to their ownership percentage (`BR-FAIR-01..03`). Pure duration tracking ignores peak demand premiums (Friday evening vs. Tuesday night) and encourages resource hoarding.
+* **Decision**: Implement a multi-factor fair usage engine. Historical trip sessions are weighted by time-of-day demand multipliers (Peak = 1.5x, Standard = 1.0x, Off-Peak = 0.7x). Compute individual fairness ratios ($FR_i$) normalized against active equity shares and calculate the syndicate-wide Gini inequality coefficient ($G \in [0.0, 1.0]$). Co-owners are dynamically mapped into 4 visual aura tiers: `BALANCED` ($0.90 \le FR \le 1.10$), `SLIGHTLY_IMBALANCED`, `IMBALANCED`, and `SEVERELY_IMBALANCED`. Co-owners with $FR_i < 1.0$ receive automated priority in booking contention.
+* **Consequences**: Produces mathematically transparent, un-gameable fairness metrics exposed via `/api/v1/analytics/fair-usage` for 3D UI visualization and automated priority arbitration.
+
+---
+
+## ADR-14: Usage Session Historical Immutability, Physical 3D Inspection Coordination, and Controlled Surcharge Computation
+* **Status**: ACCEPTED
+* **Context**: Vehicle operations require auditing actual mileage and battery consumption, assessing penalties (such as returning under 20% SoC unplugged per BR-OPS-02), logging 3D defect coordinate flags, and guaranteeing that concluded trips cannot be rewritten or manipulated.
+* **Decision**: Implement `UsageSession` with transactional closure. Check-in records starting odometer, battery, and optional initial physical inspection. Check-out validates non-negative ending mileage ($\ge \text{startOdometer}$), computes battery consumption delta, automatically calculates deterministic surcharges (150,000 VND for $<20\%$ battery unplugged; 50,000 VND / 30 min for late return $>15$ min), captures 3D mesh defect coordinates in `vehicle_inspections`, and permanently seals the session. Concluded sessions reject rewrite attempts with `HistoricalUsageImmutableException` (HTTP 409).
+* **Consequences**: Protects financial and operational audit trails against fraudulent retroactive alterations and provides clear evidence for syndicate dispute resolution.
+
+---
+
+## ADR-15: Stateless HMAC-SHA256 Cryptographic QR Check-In Protocol with Live DB Cross-Validation
+* **Status**: ACCEPTED
+* **Context**: Fast, contactless check-in at physical parking bays or charging stalls requires a secure QR code. Exposing user credentials or sensitive booking data in a QR payload introduces security risks, while trusting offline QR claims alone risks unauthorized access to damaged or cancelled vehicles.
+* **Decision**: Implement a two-tiered QR validation protocol. The backend issues a short-lived (5-minute TTL) signed JWT with `tokenType="QR_CHECK_IN"` containing strictly non-sensitive public identifiers (`bookingId`, `vehicleId`, `userId`, `jti`, `exp`), signed with server-side HMAC-SHA256. Upon scanning, the server verifies the cryptographic signature and expiration, then performs authoritative live queries against `BookingRepository`, `VehicleRepository`, `OwnershipGroupRepository`, and `UserRepository` to verify active co-owner equity ACLs, vehicle operational status (`AVAILABLE` or `BOOKED`), and the check-in time window ($[startTime - 15\text{m}, startTime + 30\text{m}]$). Scans $>30$ minutes overdue automatically mark the booking as `NO_SHOW` in the database per BR-OPS-01.
+* **Consequences**: Guarantees zero sensitive data leakage inside QR codes, prevents replay or forged token attacks, and enforces live physical station verification before vehicles can be operated.

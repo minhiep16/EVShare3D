@@ -74,3 +74,35 @@
   1. Authorization & Membership check: Signer identity is resolved strictly from `UserPrincipal` (authenticated user). The system verifies that the user holds an active equity share in the contract's ownership group.
   2. Composite uniqueness: `contract_signatures` table enforces a composite unique constraint `UNIQUE (contract_id, user_id)`. The signature service also checks if the user has already signed and rejects duplicate submissions.
   3. Cryptographic digest verification: Each signature computes a SHA-256 hash incorporating contract ID, version, terms text, user ID, and timestamp, guaranteeing complete tamper-evidence.
+
+---
+
+## 10. Turnaround Buffer Scheduling Contention & Buffer Bleed-Over
+* **Risk**: A 30-minute turnaround buffer between consecutive bookings could be violated if co-owners submit back-to-back reservations or if a prior user returns the vehicle late, bleeding over into the next reservation's turnaround buffer.
+* **Mitigation Strategy**:
+  1. Automated buffer expansion: The availability and conflict engines enforce an automated 30-minute post-booking buffer (`[startTime, endTime + 30m]`) in all overlap queries.
+  2. Late return detection: When a trip is returned $>15$ minutes late, the check-out engine automatically logs a late return fee (50,000 VND / 30 min block) and notifies station dispatch to expedite cleaning/charging before the next booked trip.
+
+---
+
+## 11. Late QR Check-In & Automatic No-Show Race Condition
+* **Risk**: A co-owner arriving at the station exactly at the 30-minute mark might experience a race condition where an automated background job or concurrent check-in attempt marks the booking as `NO_SHOW` while the user is physically scanning.
+* **Mitigation Strategy**:
+  1. Atomicity in QR validation: QR validation checks the time window $[startTime - 15\text{m}, startTime + 30\text{m}]$ under database transaction. If $>30$ minutes overdue, it transitions the booking to `NO_SHOW` within the same transaction, safely releasing the vehicle back to `AVAILABLE`.
+  2. Time sync: Server time (`Instant.now()`) is authoritative; mobile/client timestamps are ignored in validation.
+
+---
+
+## 12. Telemetry Discrepancy & Offline Return Resolution
+* **Risk**: Physical vehicle odometers or battery sensors reporting values inconsistent with user input (e.g., lower ending odometer than starting odometer, or SoC out of 0–100% range).
+* **Mitigation Strategy**:
+  1. Strict input validation: Check-out requests strictly reject ending odometers less than starting odometers (`endOdometer >= startOdometer`) and battery SoC outside $[0, 100]$.
+  2. Telemetry warning logging: If start odometer is less than vehicle's registered odometer in the DB, a security warning is logged for station inspection without blocking legitimate user trips.
+
+---
+
+## 13. Gini Coefficient Drift with Infrequent Usage in Newly Formed Syndicates
+* **Risk**: In newly formed ownership groups with few or zero historical trips, calculating fairness ratios and Gini coefficients could encounter division-by-zero errors or artificially high inequality metrics.
+* **Mitigation Strategy**:
+  1. Zero-safe mathematical guards: If total group usage is zero, each member's fairness ratio defaults safely to `1.0000` (`BALANCED` tier), and the group Gini coefficient defaults to `0.0000` (perfect equality).
+  2. Time window scaling: The default evaluation window is 30 days, smoothing out short-term fluctuations.

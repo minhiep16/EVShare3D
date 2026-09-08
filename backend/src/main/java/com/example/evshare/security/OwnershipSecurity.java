@@ -21,11 +21,14 @@ public class OwnershipSecurity {
 
     private final OwnershipShareRepository ownershipShareRepository;
     private final com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository;
+    private final com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository;
 
     public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
-                             com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository) {
+                             com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
+                             com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository) {
         this.ownershipShareRepository = ownershipShareRepository;
         this.coOwnershipContractRepository = coOwnershipContractRepository;
+        this.ownershipGroupRepository = ownershipGroupRepository;
     }
 
     /**
@@ -88,5 +91,34 @@ public class OwnershipSecurity {
                 .filter(share -> Boolean.TRUE.equals(share.getIsActive()))
                 .map(share -> share.getPercentage() != null && share.getPercentage().compareTo(minPercentage) >= 0)
                 .orElse(false);
+    }
+
+    /**
+     * Checks if the specified user holds an active equity share in the ownership group
+     * bound to the target vehicle.
+     *
+     * @param vehicleId the vehicle ID
+     * @param userId the user ID
+     * @return true if user is an active equity holder in the vehicle's group; false otherwise
+     */
+    public boolean isVehicleGroupMember(Long vehicleId, Long userId) {
+        if (vehicleId == null || userId == null) {
+            return false;
+        }
+
+        return ownershipGroupRepository.findByVehicleId(vehicleId)
+                .map(group -> isGroupMember(group.getId(), userId))
+                .orElse(false);
+    }
+
+    /**
+     * Convenience method to check if the user is a co-owner of the vehicle.
+     *
+     * @param userId the user ID
+     * @param vehicleId the vehicle ID
+     * @return true if user is an active equity holder in the vehicle's group; false otherwise
+     */
+    public boolean isCoOwnerOfVehicle(Long userId, Long vehicleId) {
+        return isVehicleGroupMember(vehicleId, userId);
     }
 }

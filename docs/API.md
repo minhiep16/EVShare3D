@@ -95,19 +95,30 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/bookings/timeline` | Authenticated | `vehicleId`, `from`, `to` | Retrieve 3D timeline intervals & occupancy slots |
-| `POST` | `/bookings` | Co-Owner, Admin | `CreateBookingRequest` | Create reservation with concurrency locking |
-| `GET` | `/bookings/{id}` | Authenticated | None | View booking details |
-| `POST` | `/bookings/{id}/cancel` | Co-Owner, Admin | None | Cancel booking subject to penalty rules |
+| `GET` | `/bookings/availability` | Co-Owner (Member), Staff, Admin | Query params (`vehicleId`, `startTime`, `endTime`) | Evaluates operational status, 30-min turnaround buffer, and active reservations |
+| `GET` | `/bookings/timeline` | Co-Owner (Member), Staff, Admin | Query params (`vehicleId`, `from`, `to`) | Retrieve 3D chronological intervals and occupancy slots excluding cancelled |
+| `POST` | `/bookings` | Co-Owner (Member), Admin | `CreateBookingRequest` | Atomically create reservation with turnaround buffer and pessimistic write locking |
+| `GET` | `/bookings/{id}` | Authenticated | None | Retrieve reservation details by ID (enforcing user/member/staff ACL) |
+| `PUT` | `/bookings/{id}` | Co-Owner (Member), Admin | `UpdateBookingRequest` | Reschedule reservation window verifying turnaround buffer and conflict checks |
+| `POST` | `/bookings/{id}/cancel` | Co-Owner (Member), Admin | `CancelBookingRequest` (optional) | Cancel reservation applying BR-BKG-03 rules; safely releases booked vehicle |
+| `PATCH` | `/bookings/{id}/status` | Co-Owner, Staff, Admin | `UpdateBookingStatusRequest` | Controlled lifecycle state transition via `BookingStateMachine` |
+| `GET` | `/bookings/{id}/history` | Authenticated | None | Retrieve chronological immutable audit trail entries for booking |
+| `GET` | `/bookings/my-bookings` | Authenticated | Query params (`status`, `page`, `size`, `sort`) | Retrieve paginated reservations for authenticated user |
+| `GET` | `/bookings/vehicle/{vehicleId}` | Co-Owner (Member), Staff, Admin | Query params (`status`, `page`, `size`, `sort`) | Retrieve paginated reservations for a syndicate vehicle |
 
 ### 2.7. Operations & Usage Sessions (`/api/v1/usage-sessions`)
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/usage-sessions/generate-qr` | Co-Owner | `bookingId` | Generate signed 5-min QR check-in token |
-| `POST` | `/usage-sessions/check-in` | Co-Owner, Staff | `CheckInRequest` | Verify QR token, record start odometer & battery |
-| `POST` | `/usage-sessions/check-out` | Co-Owner, Staff | `CheckOutRequest` | Record return odometer, battery, and condition |
-| `POST` | `/usage-sessions/{id}/inspections` | Staff | `InspectionRequest` | Log 3D physical defect coordinate flags |
+| `POST` | `/usage-sessions/generate-qr` | Authenticated (Co-Owner, Staff) | `GenerateQrRequest` | Issues signed 5-min cryptographic HMAC-SHA256 token with zero sensitive PII |
+| `POST` | `/usage-sessions/validate-qr` | Authenticated (Co-Owner, Staff) | `QrValidationRequest` | Cross-validates cryptographic signature, expiry, time window, vehicle match, ACL |
+| `POST` | `/usage-sessions/check-in` | Authenticated (Co-Owner, Staff) | `CheckInRequest` | Commences trip: transitions booking & vehicle to `IN_USE`, logs initial telemetry & 3D inspection |
+| `POST` | `/usage-sessions/{id}/check-out` | Authenticated (Co-Owner, Staff) | `CheckOutRequest` | Concludes trip: logs ending telemetry, checks BR-OPS-02 battery surcharge, seals session |
+| `GET` | `/usage-sessions/{id}` | Authenticated (Co-Owner, Staff) | None | Retrieves session telemetry, physical inspection reports, and itemized surcharges |
+| `GET` | `/usage-sessions/booking/{bookingId}` | Authenticated (Co-Owner, Staff) | None | Retrieves active or completed session associated with a booking |
+| `GET` | `/usage-sessions/vehicle/{vehicleId}` | Authenticated (Co-Owner, Staff) | None | Retrieves all historical trip sessions logged for a vehicle |
+| `GET` | `/usage-sessions/my-sessions` | Authenticated | None | Retrieves all historical and active trip sessions for the authenticated user |
+| `GET` | `/usage-sessions/{id}/inspections` | Authenticated (Co-Owner, Staff) | None | Retrieves physical condition inspections, 3D mesh flags, and photo evidence |
 
 ### 2.8. Energy, Expenses & Cost Allocation (`/api/v1/expenses`)
 
@@ -147,6 +158,7 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/analytics/fair-usage/{groupId}` | Authenticated | None | Retrieve group fairness scores and ratios |
+| `GET` | `/analytics/fair-usage/{groupId}` | Authenticated (Co-Owner, Staff, Admin) | Query param `windowDays` (default 30) | Retrieve syndicate fair usage metrics, Gini coefficient, and individual member quotas |
+| `GET` | `/analytics/fair-usage/{groupId}/my-score` | Authenticated (Co-Owner, Staff, Admin) | Query param `windowDays` (default 30) | Retrieve authenticated user's personal fairness ratio, imbalance tier, and booking priority |
 | `GET` | `/ai/recommendations/{groupId}` | Authenticated | None | Retrieve AI mobility insights and suggestions |
 | `POST` | `/ai/recommendations/{id}/ack` | Co-Owner | None | Acknowledge / dismiss AI suggestion |

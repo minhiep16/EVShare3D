@@ -16,6 +16,11 @@ public class BusinessException extends RuntimeException {
         this.status = status != null ? status : HttpStatus.BAD_REQUEST;
     }
 
+    public BusinessException(String message, HttpStatus status, Throwable cause) {
+        super(message, cause);
+        this.status = status != null ? status : HttpStatus.BAD_REQUEST;
+    }
+
     public HttpStatus getStatus() {
         return status;
     }

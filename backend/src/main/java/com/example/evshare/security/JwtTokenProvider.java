@@ -245,4 +245,43 @@ public class JwtTokenProvider implements TokenService {
     public String getIssuer() {
         return issuer;
     }
+
+    @Override
+    public String generateQrToken(Long bookingId, Long vehicleId, Long userId, java.time.Duration ttl) {
+        Instant now = Instant.now();
+        Instant expiry = now.plus(ttl != null ? ttl : java.time.Duration.ofMinutes(5));
+        String jti = UUID.randomUUID().toString();
+
+        return Jwts.builder()
+                .id(jti)
+                .subject("QR_BOOKING_" + bookingId)
+                .issuer(issuer)
+                .claim("bookingId", bookingId)
+                .claim("vehicleId", vehicleId)
+                .claim("userId", userId)
+                .claim("tokenType", "QR_CHECK_IN")
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(expiry))
+                .signWith(key)
+                .compact();
+    }
+
+    public String generateExpiredQrToken(Long bookingId, Long vehicleId, Long userId, long offsetMs) {
+        Instant now = Instant.now();
+        Instant expiry = now.plusMillis(offsetMs);
+        String jti = UUID.randomUUID().toString();
+
+        return Jwts.builder()
+                .id(jti)
+                .subject("QR_BOOKING_" + bookingId)
+                .issuer(issuer)
+                .claim("bookingId", bookingId)
+                .claim("vehicleId", vehicleId)
+                .claim("userId", userId)
+                .claim("tokenType", "QR_CHECK_IN")
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(expiry))
+                .signWith(key)
+                .compact();
+    }
 }

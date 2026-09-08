@@ -73,21 +73,27 @@ The platform ensures that vehicle access is strictly equitable according to each
 
 ### BR-OPS-01: Cryptographic QR Check-In Protocol
 * 15 minutes before booking start, the backend generates a signed, time-bounded QR token (valid for 5 minutes).
+* **Check-In Time Window**: Check-in is eligible strictly within $[startTime - 15\text{m}, startTime + 30\text{m}]$.
+  * If check-in is attempted earlier than 15 minutes before scheduled start, access is rejected with `InvalidQrException`.
+  * If check-in is attempted $>30$ minutes after scheduled start, the reservation is automatically marked `NO_SHOW` in the database and access is rejected.
 * To check-in:
-  1. Co-owner approaches the 3D Check-In Station.
-  2. Token is verified against server public key and booking state.
+  1. Co-owner approaches the 3D Check-In Station or scans via mobile app.
+  2. Token is cryptographically verified (HMAC-SHA256) and cross-validated against live database records.
   3. Co-owner enters starting odometer and battery State of Charge (SoC).
   4. Co-owner inspects the 3D vehicle avatar to confirm pre-existing body conditions.
-  5. Upon confirmation, vehicle state transitions: `BOOKED` $\to$ `IN_USE`.
+  5. Upon confirmation, vehicle state transitions: `BOOKED` $\to$ `IN_USE` (or `AVAILABLE` $\to$ `BOOKED` $\to$ `IN_USE`).
 
 ### BR-OPS-02: Check-Out & Return Requirements
 * Upon trip completion:
   1. Co-owner parks vehicle in the designated garage stall.
   2. Telemetry logged: final odometer, final battery SoC, return timestamp.
-  3. Minimum Battery Rule: Vehicle must be returned with $\ge \mathbf{20\%}$ SoC unless plugged into an active charging station. Returning with $<20\%$ SoC without plugging in assesses an automatic charging service surcharge of 150,000 VND.
-  4. Physical Inspection: Any new scratch, dent, or interior flaw must be marked on the 3D vehicle model and photographed.
-  5. System computes actual usage hours and mileage against the booking schedule.
-  6. Vehicle state transitions: `IN_USE` $\to$ `AVAILABLE` (or `CHARGING` / `MAINTENANCE` if flagged).
+  3. **Minimum Battery Rule**: Vehicle must be returned with $\ge \mathbf{20\%}$ SoC unless plugged into an active charging station. Returning with $<20\%$ SoC without plugging in assesses an automatic charging service surcharge of 150,000 VND credited to the Shared Fund.
+  4. **Late Return Rule**: If returned $>15$ minutes past scheduled end time, a late fee of 50,000 VND per 30-minute block is assessed.
+  5. **Physical Inspection & Damage Rule**: Any new scratch, dent, or interior flaw must be marked on the 3D vehicle model and photographed.
+     * If damage is flagged (`hasDamage == true`), the vehicle transitions `IN_USE` $\to$ `DAMAGED`, immediately blocking future reservations until inspected and serviced via `DAMAGED` $\to$ `MAINTENANCE` $\to$ `AVAILABLE`.
+     * If plugged into a charging stall, vehicle transitions `IN_USE` $\to$ `CHARGING`.
+     * Otherwise, vehicle safely transitions `IN_USE` $\to$ `AVAILABLE`.
+  6. Historical usage session is sealed transactionally and becomes permanently immutable (`HistoricalUsageImmutableException` thrown on any rewrite attempt).
 
 ---
 

@@ -12,6 +12,8 @@ public interface VehicleInspectionRepository extends JpaRepository<VehicleInspec
 
     List<VehicleInspection> findByUsageSessionId(Long usageSessionId);
 
+    List<VehicleInspection> findByUsageSessionIdOrderByCreatedAtAsc(Long usageSessionId);
+
     List<VehicleInspection> findByInspectorUserId(Long inspectorUserId);
 
     List<VehicleInspection> findByInspectionType(InspectionType inspectionType);

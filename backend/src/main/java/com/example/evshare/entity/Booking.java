@@ -123,4 +123,63 @@ public class Booking {
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long id;
+        private Vehicle vehicle;
+        private User user;
+        private Instant startTime;
+        private Instant endTime;
+        private BookingStatus status = BookingStatus.CONFIRMED;
+        private BigDecimal estimatedCost = BigDecimal.ZERO;
+        private Instant createdAt = Instant.now();
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder vehicle(Vehicle vehicle) {
+            this.vehicle = vehicle;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder startTime(Instant startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder endTime(Instant endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        public Builder status(BookingStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder estimatedCost(BigDecimal estimatedCost) {
+            this.estimatedCost = estimatedCost;
+            return this;
+        }
+
+        public Builder createdAt(Instant createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Booking build() {
+            return new Booking(id, vehicle, user, startTime, endTime, status, estimatedCost, createdAt);
+        }
+    }
 }
