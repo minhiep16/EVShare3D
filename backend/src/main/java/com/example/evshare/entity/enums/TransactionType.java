@@ -5,5 +5,7 @@ public enum TransactionType {
     EXPENSE_PAYOUT,
     CAPITAL_CALL,
     INTEREST,
-    REFUND
+    REFUND,
+    CONTRIBUTION,
+    WITHDRAWAL
 }

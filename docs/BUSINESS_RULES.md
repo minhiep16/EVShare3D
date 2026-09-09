@@ -106,24 +106,54 @@ Every vehicle expenditure belongs to one of two categories:
 2. **Variable Operating Expenses**:
    * DC fast charging / AC charging power bills, tires, brake pads, wiper fluids, detailing / car wash, unexpected minor repairs.
 
-### BR-FIN-02: Cost Allocation Strategies
+### BR-FIN-02: Cost Allocation Strategies & Rounding Invariant
 The backend `CostAllocationService` implements three mathematical allocation models:
 1. **`OWNERSHIP_BASED`**:
-   $$\text{OwedAmount}_i = \text{TotalExpense} \times \left( \frac{\text{percentage}_i}{100} \right)$$
-   *Mandatory for all Fixed Overhead Expenses.*
+   $$\text{OwedAmount}_i = \text{TotalExpense} \times \left( \frac{\text{percentage}_i}{100.00} \right)$$
+   *Mandatory for all Fixed Overhead Expenses (insurance, taxes, inspection).*
 2. **`USAGE_BASED`**:
    $$\text{OwedAmount}_i = \text{TotalExpense} \times \left( \frac{\text{DistanceLogged}_i}{\sum \text{DistanceLogged}} \right) \quad \text{or} \quad \left( \frac{\text{HoursUsed}_i}{\sum \text{HoursUsed}} \right)$$
-   *Mandatory for variable charging and tire/brake consumables.*
+   *Mandatory for variable charging and tire/brake consumables. If zero utilization is recorded, gracefully falls back to active ownership equity percentages.*
 3. **`HYBRID`**:
-   * Fixed base (30%) split by Ownership %, variable remainder (70%) split by proportional monthly mileage.
+   $$\text{FixedPart} = \text{round}(\text{TotalExpense} \times 0.30, 2), \quad \text{VariablePart} = \text{TotalExpense} - \text{FixedPart}$$
+   $$\text{OwedAmount}_i = \text{round}\left(\text{FixedPart} \times \frac{\text{percentage}_i}{100.00}, 2\right) + \text{round}\left(\text{VariablePart} \times \frac{\text{DistanceLogged}_i}{\sum \text{DistanceLogged}}, 2\right)$$
+   *Fixed base (exactly 30.00%) split by Ownership equity %, variable remainder (exactly 70.00%) split by proportional usage telemetry.*
+
+**Rounding & Penny Absorption Invariant**:
+* All intermediate calculations enforce Banker's Rounding (`RoundingMode.HALF_EVEN`, scale 2).
+* Strict Invariant: $\sum_{i=1}^N \text{AllocatedAmount}_i \equiv \text{TotalExpense}$ exact to 0.01 VND.
+* Residual penny discrepancy ($\Delta = \text{TotalExpense} - \sum \text{AllocatedAmount}_i$) is deterministically absorbed by the co-owner with the highest allocated share (tie-breaker: lowest `userId`). Zero pseudo-randomness.
 
 ### BR-FIN-03: Shared Fund Vault & Minimum Liquidity Threshold
-* Each Ownership Group maintains a dedicated `SharedFund` account in the vault.
+* Each Ownership Group maintains a dedicated `SharedFund` 3D Vault account.
 * **Minimum Reserve Threshold**: 10,000,000 VND per vehicle.
 * If the fund balance falls below this threshold:
   * The 3D Vault enters `LOW_LIQUIDITY` warning mode (amber pulsing illumination).
   * Automated capital call notices are generated and dispatched to all co-owners pro-rata to their equity stake.
   * Booking privileges are suspended if a co-owner's required contribution remains unpaid after 7 calendar days.
+* **Immutable Double-Entry Ledger**: Every balance mutation must be accompanied by an immutable row in `fund_transactions` recording `amount`, `balance_after`, `entry_type` (`CREDIT`/`DEBIT`), `transaction_reference`, and `source`.
+* **Reconciliation Invariant**: $\sum \text{CREDITS} - \sum \text{DEBITS} \equiv \text{current\_balance}$ down to 0.01 VND.
+
+### BR-FIN-04: Authoritative Payment Lifecycle & Idempotency Rules
+* **Canonical States**: `PENDING`, `PROCESSING`, `SUCCESS` (alias `COMPLETED`), `FAILED`, `REFUNDED`, `CANCELLED`.
+* **Transition Matrix**: Exactly 8 valid transitions are permitted:
+  * `PENDING` $\to$ `PROCESSING`, `SUCCESS`, `FAILED`, `CANCELLED`
+  * `PROCESSING` $\to$ `SUCCESS`, `FAILED`, `CANCELLED`
+  * `SUCCESS` $\to$ `REFUNDED`
+* All other 28 permutations, backward transitions, and modifications of terminal states (`FAILED`, `REFUNDED`, `CANCELLED`) are strictly rejected with `InvalidPaymentStateTransitionException` (HTTP 409 Conflict).
+* **Payment Idempotency**:
+  * Client operations support optional or mandatory `Idempotency-Key` header.
+  * SHA-256 fingerprint digest of payload ensures tamper detection.
+  * Replayed requests with the same key and identical payload return the cached response without re-executing payments.
+  * Replaying a used key with an altered payload is rejected with `IdempotencyConflictException` (HTTP 409 Conflict).
+
+### BR-FIN-05: Financial Transaction Safety & Zero Partial State Invariant
+* All mutating financial operations enforce `@Transactional(rollbackFor = Exception.class)`.
+* Conflicting concurrent financial operations acquire pessimistic row-level write locks (`findByIdWithLock`, `SELECT ... FOR UPDATE`) in MySQL InnoDB.
+* **Atomic Cross-Entity Consistency**:
+  * On payment `SUCCESS`: Atomically credit `SharedFund.currentBalance`, record `FundTransaction` (`CREDIT`, `PAYMENT_SETTLEMENT`), and mark `ExpenseAllocation.isSettled = true`.
+  * On payment `REFUNDED`: Atomically debit `SharedFund.currentBalance`, record `FundTransaction` (`DEBIT`, `MANUAL_ADJUSTMENT`), and revert `ExpenseAllocation.isSettled = false`.
+* Downstream failures trigger total database rollback, leaving zero partial financial state or balance discrepancies.
 
 ---
 

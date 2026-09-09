@@ -18,26 +18,39 @@ public class FundTransaction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fund_id", nullable = false)
+    @JoinColumn(name = "fund_id", nullable = false, updatable = false)
     private SharedFund fund;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)
     @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.VARCHAR)
-    @Column(name = "transaction_type", nullable = false, length = 30)
+    @Column(name = "transaction_type", nullable = false, length = 30, updatable = false)
     private TransactionType transactionType;
 
-    @Column(name = "amount", nullable = false, precision = 15, scale = 2)
+    @Enumerated(EnumType.STRING)
+    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.VARCHAR)
+    @Column(name = "entry_type", nullable = false, length = 10, updatable = false)
+    private com.example.evshare.entity.enums.TransactionEntryType entryType = com.example.evshare.entity.enums.TransactionEntryType.CREDIT;
+
+    @Column(name = "amount", nullable = false, precision = 15, scale = 2, updatable = false)
     private BigDecimal amount;
 
-    @Column(name = "balance_after", nullable = false, precision = 15, scale = 2)
+    @Column(name = "balance_after", nullable = false, precision = 15, scale = 2, updatable = false)
     private BigDecimal balanceAfter;
 
-    @Column(name = "description", nullable = false, length = 255)
+    @Column(name = "transaction_reference", nullable = false, length = 64, unique = true, updatable = false)
+    private String transactionReference;
+
+    @Column(name = "description", nullable = false, length = 255, updatable = false)
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.VARCHAR)
+    @Column(name = "source", nullable = false, length = 50, updatable = false)
+    private com.example.evshare.entity.enums.FundTransactionSource source = com.example.evshare.entity.enums.FundTransactionSource.MEMBER_CONTRIBUTION;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -105,6 +118,47 @@ public class FundTransaction {
         this.balanceAfter = balanceAfter;
     }
 
+    public FundTransaction(Long id, SharedFund fund, User user, TransactionType transactionType,
+                           com.example.evshare.entity.enums.TransactionEntryType entryType, BigDecimal amount,
+                           BigDecimal balanceAfter, String transactionReference, String description,
+                           com.example.evshare.entity.enums.FundTransactionSource source, Instant createdAt) {
+        this.id = id;
+        this.fund = fund;
+        this.user = user;
+        this.transactionType = transactionType;
+        this.entryType = entryType != null ? entryType : (transactionType == TransactionType.WITHDRAWAL || transactionType == TransactionType.EXPENSE_PAYOUT ? com.example.evshare.entity.enums.TransactionEntryType.DEBIT : com.example.evshare.entity.enums.TransactionEntryType.CREDIT);
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.transactionReference = transactionReference;
+        this.description = description;
+        this.source = source != null ? source : com.example.evshare.entity.enums.FundTransactionSource.MEMBER_CONTRIBUTION;
+        this.createdAt = createdAt != null ? createdAt : Instant.now();
+    }
+
+    public com.example.evshare.entity.enums.TransactionEntryType getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(com.example.evshare.entity.enums.TransactionEntryType entryType) {
+        this.entryType = entryType;
+    }
+
+    public String getTransactionReference() {
+        return transactionReference;
+    }
+
+    public void setTransactionReference(String transactionReference) {
+        this.transactionReference = transactionReference;
+    }
+
+    public com.example.evshare.entity.enums.FundTransactionSource getSource() {
+        return source;
+    }
+
+    public void setSource(com.example.evshare.entity.enums.FundTransactionSource source) {
+        this.source = source;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -119,5 +173,23 @@ public class FundTransaction {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isCredit() {
+        return com.example.evshare.entity.enums.TransactionEntryType.CREDIT.equals(this.entryType);
+    }
+
+    public boolean isDebit() {
+        return com.example.evshare.entity.enums.TransactionEntryType.DEBIT.equals(this.entryType);
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        throw new IllegalStateException("FundTransaction records are strictly immutable and cannot be updated");
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        throw new IllegalStateException("FundTransaction records are strictly immutable and cannot be deleted");
     }
 }

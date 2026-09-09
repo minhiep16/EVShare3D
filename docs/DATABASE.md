@@ -32,8 +32,10 @@
 | `ExpenseCategory` | `expenses.category` | `'CHARGING'`, `'PREVENTIVE_MAINTENANCE'`, `'EMERGENCY_REPAIR'`, `'INSURANCE'`, `'INSPECTION'`, `'CLEANING'` |
 | `AllocationStrategy` | `expenses.allocation_strategy` | `'OWNERSHIP_BASED'`, `'USAGE_BASED'`, `'HYBRID'` |
 | `TransactionType` | `fund_transactions.transaction_type` | `'DEPOSIT'`, `'EXPENSE_PAYOUT'`, `'CAPITAL_CALL'`, `'INTEREST'`, `'REFUND'` |
-| `PaymentMethod` | `payments.payment_method` | `'BANK_TRANSFER'`, `'E_WALLET'`, `'CREDIT_CARD'` |
-| `PaymentStatus` | `payments.status` | `'PENDING'`, `'COMPLETED'`, `'FAILED'`, `'REFUNDED'` |
+| `FundTransactionType` | `fund_transactions.entry_type` | `'CREDIT'`, `'DEBIT'` |
+| `FundTransactionSource` | `fund_transactions.source` | `'MEMBER_CONTRIBUTION'`, `'PAYMENT_SETTLEMENT'`, `'EXPENSE_PAYOUT'`, `'CAPITAL_CALL'`, `'RESERVE_INJECTION'`, `'MANUAL_ADJUSTMENT'`, `'VAULT_INITIALIZATION'` |
+| `PaymentMethod` | `payments.payment_method` | `'MOCK'`, `'BANK_TRANSFER'`, `'E_WALLET'`, `'GATEWAY'` |
+| `PaymentStatus` | `payments.status` | `'PENDING'`, `'PROCESSING'`, `'SUCCESS'` (alias `'COMPLETED'`), `'FAILED'`, `'REFUNDED'`, `'CANCELLED'` |
 | `ProposalType` | `proposals.proposal_type` | `'ROUTINE_EXPENSE'`, `'MAJOR_EXPENSE'`, `'OPERATIONAL_RULE_CHANGE'`, `'OWNER_ADMISSION_OR_EXIT'` |
 | `ProposalStatus` | `proposals.status` | `'ACTIVE'`, `'PASSED'`, `'REJECTED'`, `'EXPIRED'` |
 | `VoteOptionKey` | `vote_options.option_key` | `'APPROVE'`, `'REJECT'`, `'ABSTAIN'` |
@@ -239,10 +241,13 @@
 | `id` | `BIGINT` | NO | AUTO_INCREMENT | `PK` | Ledger transaction ID |
 | `fund_id` | `BIGINT` | NO | None | `FK -> shared_funds(id)`| Target vault (`ON DELETE RESTRICT`) |
 | `user_id` | `BIGINT` | YES | NULL | `FK -> users(id)` | Initiating/contributing user (`ON DELETE SET NULL`) |
-| `transaction_type`| `VARCHAR(30)` | NO | None | None | `DEPOSIT`, `EXPENSE_PAYOUT`, `CAPITAL_CALL`, `INTEREST`, `REFUND` |
-| `amount` | `DECIMAL(15, 2)`| NO | None | None | Transaction amount (+ or -) |
+| `transaction_type`| `VARCHAR(30)` | NO | None | None | Historical narrative type |
+| `entry_type` | `VARCHAR(10)` | NO | `'CREDIT'` | None | Immutable ledger entry: `CREDIT` (+) or `DEBIT` (-) |
+| `amount` | `DECIMAL(15, 2)`| NO | None | None | Transaction amount |
 | `balance_after` | `DECIMAL(15, 2)`| NO | None | None | Resulting vault balance after mutation |
+| `transaction_reference`| `VARCHAR(64)` | NO | None | `UNIQUE` | Unique immutable alphanumeric transaction reference |
 | `description` | `VARCHAR(255)` | NO | None | None | Ledger narrative / expense reference |
+| `source` | `VARCHAR(50)` | NO | `'MANUAL'` | None | Financial source origin (`MEMBER_CONTRIBUTION`, `PAYMENT_SETTLEMENT`, `EXPENSE_PAYOUT`, etc.) |
 | `created_at` | `TIMESTAMP` | NO | `CURRENT_TIMESTAMP`| None | Transaction execution timestamp |
 
 #### Table: `expenses`
@@ -250,11 +255,14 @@
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | `id` | `BIGINT` | NO | AUTO_INCREMENT | `PK` | Operating expense ID |
 | `group_id` | `BIGINT` | NO | None | `FK -> ownership_groups(id)`| Target syndicate (`ON DELETE RESTRICT`) |
+| `vehicle_id` | `BIGINT` | YES | NULL | `FK -> vehicles(id)` | Target digital twin EV (`ON DELETE RESTRICT`) |
 | `title` | `VARCHAR(150)` | NO | None | None | Expense description / invoice title |
 | `category` | `VARCHAR(40)` | NO | None | None | `CHARGING`, `PREVENTIVE_MAINTENANCE`, `EMERGENCY_REPAIR`, `INSURANCE`, `INSPECTION`, `CLEANING` |
 | `total_amount` | `DECIMAL(15, 2)`| NO | None | `CHECK (> 0.00)` | Total invoice cost |
+| `currency` | `VARCHAR(10)` | NO | `'VND'` | None | Monetary currency identifier |
 | `allocation_strategy`| `VARCHAR(30)` | NO | `'OWNERSHIP_BASED'`| None | `OWNERSHIP_BASED`, `USAGE_BASED`, `HYBRID` |
 | `invoice_reference` | `VARCHAR(100)`| YES | NULL | None | External vendor receipt/invoice reference |
+| `evidence_url` | `VARCHAR(255)` | YES | NULL | None | URI to uploaded receipt/invoice image or PDF |
 | `logged_by_user_id`| `BIGINT` | NO | None | `FK -> users(id)` | User who recorded the bill (`ON DELETE RESTRICT`) |
 | `incurred_date` | `DATE` | NO | None | None | Date expense was incurred |
 | `created_at` | `TIMESTAMP` | NO | `CURRENT_TIMESTAMP`| None | System entry timestamp |
@@ -277,10 +285,24 @@
 | `fund_id` | `BIGINT` | NO | None | `FK -> shared_funds(id)`| Credited vault (`ON DELETE RESTRICT`) |
 | `expense_allocation_id`| `BIGINT` | YES | NULL | `FK -> expense_allocations(id)`| Linked expense offset (`ON DELETE SET NULL`) |
 | `amount` | `DECIMAL(15, 2)`| NO | None | `CHECK (> 0.00)` | Settled amount |
-| `payment_method` | `VARCHAR(30)` | NO | None | None | `BANK_TRANSFER`, `E_WALLET`, `CREDIT_CARD` |
+| `payment_method` | `VARCHAR(30)` | NO | None | None | `MOCK`, `BANK_TRANSFER`, `E_WALLET`, `GATEWAY` |
 | `transaction_reference`| `VARCHAR(100)`| NO | None | `UNIQUE` | Unique external banking/gateway reference |
-| `status` | `VARCHAR(30)` | NO | `'PENDING'` | None | `PENDING`, `COMPLETED`, `FAILED`, `REFUNDED` |
+| `status` | `VARCHAR(30)` | NO | `'PENDING'` | None | `PENDING`, `PROCESSING`, `SUCCESS`, `FAILED`, `REFUNDED`, `CANCELLED` |
 | `created_at` | `TIMESTAMP` | NO | `CURRENT_TIMESTAMP`| None | Payment initiation timestamp |
+
+#### Table: `idempotency_records`
+| Column | Data Type | Nullable | Default | Constraints | Description / Relationships |
+| :--- | :--- | :---: | :--- | :--- | :--- |
+| `id` | `BIGINT` | NO | AUTO_INCREMENT | `PK` | Idempotency record ID |
+| `idempotency_key` | `VARCHAR(100)` | NO | None | `UNIQUE` | Client-provided idempotency key (`Idempotency-Key` header) |
+| `operation` | `VARCHAR(50)` | NO | None | None | Target operation name (e.g., `PAYMENT_INITIATION`) |
+| `request_hash` | `VARCHAR(64)` | NO | None | None | SHA-256 deterministic payload digest |
+| `status` | `VARCHAR(30)` | NO | `'PROCESSING'` | None | Execution state (`PROCESSING`, `COMPLETED`, `FAILED`) |
+| `payment_id` | `BIGINT` | YES | NULL | `FK -> payments(id)` | Associated payment entity (`ON DELETE SET NULL`) |
+| `response_body` | `TEXT` | YES | NULL | None | Cached serialized JSON response for replay deduplication |
+| `created_at` | `TIMESTAMP` | NO | `CURRENT_TIMESTAMP`| None | Initial request registration timestamp |
+| `updated_at` | `TIMESTAMP` | NO | `CURRENT_TIMESTAMP`| `ON UPDATE` | Last modification timestamp |
+| `expires_at` | `TIMESTAMP` | YES | NULL | None | TTL expiration timestamp for record eviction |
 
 ---
 

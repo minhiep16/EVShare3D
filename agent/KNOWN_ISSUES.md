@@ -106,3 +106,29 @@
 * **Mitigation Strategy**:
   1. Zero-safe mathematical guards: If total group usage is zero, each member's fairness ratio defaults safely to `1.0000` (`BALANCED` tier), and the group Gini coefficient defaults to `0.0000` (perfect equality).
   2. Time window scaling: The default evaluation window is 30 days, smoothing out short-term fluctuations.
+
+---
+
+## 14. Financial Transaction Rollback & Partial State Commits
+* **Risk**: Complex operations touching multiple tables (`payments`, `shared_funds`, `fund_transactions`, `expense_allocations`) could leave orphan records or partially updated balances if a downstream service or network exception occurs mid-execution.
+* **Mitigation Strategy**:
+  1. Class-level and method-level `@Transactional(rollbackFor = Exception.class)` applied across all financial services (`PaymentServiceImpl`, `PaymentLifecycleServiceImpl`, `SharedFundServiceImpl`).
+  2. Spring AOP proxy self-invocation bypass eliminated by keeping sub-methods public and calling through bean references where transactional boundaries are required.
+  3. Integration tests explicitly verify that intentional runtime exceptions trigger complete rollbacks, leaving zero balance drift or uncommitted ledger records.
+
+---
+
+## 15. Concurrent Payment State Transitions & Webhook / Cancellation Race Conditions
+* **Risk**: A user clicking "Cancel" simultaneously with an asynchronous payment gateway webhook delivering a "Success/Capture" notification could result in an inconsistent state or duplicate refund/credit actions.
+* **Mitigation Strategy**:
+  1. Pessimistic row locking on `Payment`: Status transitions acquire `@Lock(LockModeType.PESSIMISTIC_WRITE)` (`findByIdWithLock`) before reading the current state.
+  2. Authoritative state machine guard: `PaymentStateMachine` enforces that only valid transitions are accepted. The first transaction to acquire the lock transitions the state (e.g. `PROCESSING -> SUCCESS`), and the competing transaction is rejected with `InvalidPaymentStateTransitionException` (HTTP 409 Conflict) upon attempting an illegal transition (e.g. `SUCCESS -> CANCELLED`).
+
+---
+
+## 16. Payment Gateway Network Retries & Idempotency Key Replay Attacks
+* **Risk**: Network interruptions or repeated client checkout submissions can cause duplicate payments, while reusing an idempotency key with modified payment details could trick the system into fulfilling an altered order.
+* **Mitigation Strategy**:
+  1. Mandatory SHA-256 request payload fingerprinting: `IdempotencyService` computes `SHA-256(requestBody)` and persists it in `idempotency_records` alongside the key.
+  2. Identical request replay: Requests with an identical key and identical hash return the cached HTTP response immediately without re-executing business logic.
+  3. Tampered request rejection: Reusing a key with a different payload hash throws `IdempotencyConflictException` (HTTP 409 Conflict), preventing parameter manipulation.

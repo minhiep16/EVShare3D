@@ -92,4 +92,11 @@ public class SharedFund {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public boolean isLowLiquidity() {
+        if (currentBalance == null || minimumReserveThreshold == null) {
+            return true;
+        }
+        return currentBalance.compareTo(minimumReserveThreshold) < 0;
+    }
 }

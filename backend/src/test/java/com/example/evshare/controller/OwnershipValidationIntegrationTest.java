@@ -109,7 +109,7 @@ class OwnershipValidationIntegrationTest {
 
     private OwnershipGroup createGroup(String name) {
         String uid = UUID.randomUUID().toString().substring(0, 8);
-        Vehicle vehicle = createVehicle("VIN_VLD_" + uid, "51H-" + (10000 + (int) (Math.random() * 89999)));
+        Vehicle vehicle = createVehicle("VIN_VLD_" + uid, "51H-" + uid);
         OwnershipGroup group = new OwnershipGroup();
         group.setGroupName(name);
         group.setVehicle(vehicle);

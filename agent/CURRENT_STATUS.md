@@ -1,11 +1,169 @@
 # EVShare 3D – CURRENT PROJECT STATUS
 
 ## 1. Active Phase & Checkpoint
-* **CURRENT_PHASE**: `PHASE 05 — BOOKING, FAIR USAGE & VEHICLE OPERATION`
-* **PHASE 05 STATUS**: **`COMPLETE / QUALITY GATE PASSED`**
-* **CURRENT_CHECKPOINT**: `05-O — FINAL VERIFICATION`
-* **CHECKPOINT 05-O STATUS**: **`COMPLETE`**
-* **Build Verification (`mvn clean test`)**: **`BUILD SUCCESS`** (0 errors, 0 failures, 668/668 tests pass in ~4m 34s)
+* **CURRENT_PHASE**: `PHASE 06 — ENERGY, FINANCE, COST ALLOCATION & SHARED FUND`
+* **PHASE 06 STATUS**: **`COMPLETE / QUALITY GATE PASSED`**
+* **CURRENT_CHECKPOINT**: `06-P — FINAL VERIFICATION`
+* **CHECKPOINT 06-P STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-O STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-N STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-M STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-L STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-K STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-J STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-I STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-H STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-G STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-F STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-E STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-D STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-C STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-B STATUS**: **`COMPLETE`**
+* **CHECKPOINT 06-A STATUS**: **`COMPLETE`** ([`docs/PHASE_06_FINANCE_AUDIT.md`](file:///e:/EVShare3D/docs/PHASE_06_FINANCE_AUDIT.md))
+* **PREVIOUS_PHASE**: `PHASE 05 — BOOKING, FAIR USAGE & VEHICLE OPERATION` (VERIFIED / COMMITTED / PUSHED)
+* **Build Verification (`mvn clean test`)**: **`BUILD SUCCESS`** (0 errors, 0 failures across all 888 tests in the codebase)
+* **Phase 06 Comprehensive Master Test Suite**: [`com.example.evshare.controller.ComprehensivePhase06TestSuiteTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ComprehensivePhase06TestSuiteTest.java) (12/12 PASS)
+* **Cost Allocation Unit Tests**: [`com.example.evshare.service.CostAllocationServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/CostAllocationServiceTest.java) (34/34 PASS)
+* **Cost Allocation Integration Tests**: [`com.example.evshare.service.CostAllocationIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/CostAllocationIntegrationTest.java) (6/6 PASS)
+* **Expense Service Unit Tests**: [`com.example.evshare.service.ExpenseServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/ExpenseServiceTest.java) (21/21 PASS)
+* **Expense Integration Tests**: [`com.example.evshare.controller.ExpenseIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ExpenseIntegrationTest.java) (15/15 PASS)
+* **Shared Fund Service Unit Tests**: [`com.example.evshare.service.SharedFundServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/SharedFundServiceTest.java) (20/20 PASS)
+* **Shared Fund Integration Tests**: [`com.example.evshare.controller.SharedFundIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/SharedFundIntegrationTest.java) (9/9 PASS)
+* **Fund Transaction Concurrency Integration Tests**: [`com.example.evshare.service.FundTransactionConcurrencyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FundTransactionConcurrencyIntegrationTest.java) (2/2 PASS)
+* **Payment Provider Unit Tests**: [`com.example.evshare.service.payment.PaymentProviderTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentProviderTest.java) (27/27 PASS)
+* **Payment Provider Registry Tests**: [`com.example.evshare.service.payment.PaymentProviderRegistryTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentProviderRegistryTest.java) (5/5 PASS)
+* **Payment State Machine Unit Tests**: [`com.example.evshare.service.payment.PaymentStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentStateMachineTest.java) (34/34 PASS, covering all 36 canonical permutations)
+* **Payment Lifecycle Integration Tests**: [`com.example.evshare.service.payment.PaymentLifecycleIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentLifecycleIntegrationTest.java) (13/13 PASS)
+* **Idempotency Service Unit Tests**: [`com.example.evshare.service.payment.IdempotencyServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/IdempotencyServiceTest.java) (6/6 PASS)
+* **Payment Idempotency Concurrency Integration Tests**: [`com.example.evshare.service.payment.PaymentIdempotencyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentIdempotencyIntegrationTest.java) (4/4 PASS)
+* **Financial Transaction Safety Integration Tests**: [`com.example.evshare.service.FinancialTransactionSafetyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FinancialTransactionSafetyIntegrationTest.java) (7/7 PASS)
+* **Total Phase 06 Tests**: **215 / 215 PASS** (12 comprehensive master suite tests + 203 specialized domain tests). Total full repository test suite: **888 / 888 PASS**.
+* **Summary of Checkpoint 06-P (Final Verification)**:
+  - Conducted comprehensive audit of all Phase 06 financial requirements against implementation, tests, and documentation.
+  - Verified 100% test pass rate (888 / 888 tests, 0 failures, 0 errors, 0 skipped) under `mvn clean test`.
+  - Updated architectural and technical documentation:
+    - `docs/API.md`: Synced complete REST API endpoint catalogs for Expenses, Cost Allocations, Shared Funds, and Payments.
+    - `docs/DATABASE.md`: Documented Flyway V8, V9, V10 schema enhancements (`expenses`, `fund_transactions`, `payments`, `idempotency_records`).
+    - `docs/BUSINESS_RULES.md`: Fully specified BR-FIN-02 through BR-FIN-05 (deterministic rounding, double-entry ledger reconciliation, payment lifecycle, transaction safety).
+    - `agent/DECISIONS.md`: Recorded ADR-16, ADR-17, ADR-18 for financial domain architecture.
+    - `agent/KNOWN_ISSUES.md`: Documented concurrency mitigations for financial transactions, state machine transitions, and idempotency key replays.
+    - `agent/PHASE_06_REPORT.md`: Published definitive formal verification report with full dimension audit table.
+  - Zero new features introduced in Checkpoint 06-P; zero test fabrication; Phase 07 has not been started.
+* **Summary of Checkpoint 06-O**:
+  - Executed full suite verification (`mvn clean test`) across all 12 Phase 06 domains:
+    1. **Expense**: Creation, validation, duplicate rejection (409 Conflict), audit trail logging.
+    2. **Cost Allocation**: Allocation engine calculation, penny parity invariant ($\sum \text{shares} \equiv \text{total}$ down to 0.01 VND).
+    3. **Ownership Allocation**: Proportional equity distribution (60/40) with deterministic penny absorption.
+    4. **Usage Allocation**: Proportional telemetry usage allocation (25% / 75%) based on odometer distance logged.
+    5. **Hybrid Allocation**: Combined dual-factor model adhering to BR-FIN-02 (30% fixed ownership + 70% variable usage).
+    6. **Shared Fund**: Vault balance inquiries, minimum reserve threshold enforcement, and currency verification.
+    7. **Fund Transactions**: Deposit/withdrawal operations, immutable transaction ledger, and mathematical balance reconciliation.
+    8. **Payment Provider**: SPI registry dispatch across MOCK, BANK_TRANSFER, E_WALLET, GATEWAY with sandbox disclaimers.
+    9. **Payment Lifecycle**: 6 canonical states, valid transitions, invalid transition rejections (409 Conflict), terminal state immutability.
+    10. **Idempotency**: SHA-256 fingerprinting, duplicate request deduplication, and payload tampering rejection.
+    11. **Rollback**: Full transactional rollback under downstream exception, ensuring zero balance drift or partial persistence.
+    12. **Authorization**: RBAC & syndicate ACL data scoping (401 unauthenticated, 403 outsider forbidden, 200 co-owner permitted, staff/admin override).
+  - Audited and hardened all financial transaction operations across the platform:
+    1. **@Transactional Boundaries & Proxies**: Added class-level `@Transactional(rollbackFor = Exception.class)` and made execution methods public in `PaymentServiceImpl` and `PaymentLifecycleServiceImpl`, preventing Spring AOP proxy self-invocation bypass.
+    2. **Pessimistic Concurrency**: Added `@Lock(LockModeType.PESSIMISTIC_WRITE)` methods to `PaymentRepository` (`findByIdWithLock`, `findByTransactionReferenceWithLock`) and enforced row-level locking during state transitions to serialize conflicting concurrent updates.
+    3. **Cross-Entity Financial Consistency**: Coordinated atomic updates across `Payment`, `SharedFund`, and `ExpenseAllocation`:
+       - On `SUCCESS`: Atomically marks `ExpenseAllocation.isSettled = true`, credits `SharedFund.currentBalance`, and inserts an immutable `FundTransaction` (`CREDIT`, `PAYMENT_SETTLEMENT`).
+       - On `REFUNDED`: Atomically reverts `ExpenseAllocation.isSettled = false`, debits `SharedFund.currentBalance`, and inserts an immutable `FundTransaction` (`DEBIT`, `MANUAL_ADJUSTMENT`).
+    4. **Zero Partial Financial State**: Verified full rollback semantics under downstream exceptions and overdraft rejections; zero dirty state or partial updates committed to MySQL.
+    5. **Automated Test Suite**: Created [`FinancialTransactionSafetyIntegrationTest.java`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FinancialTransactionSafetyIntegrationTest.java) asserting 7 comprehensive scenarios across rollbacks, 10-thread concurrent updates, payment transition race conditions, and end-to-end multi-entity consistency.
+* **Directive**: Checkpoint 06-N completed. STOPPED. Awaiting explicit user command for next checkpoint.
+* **Summary of Checkpoint 06-L**:
+  - Implemented the authoritative Payment Lifecycle State Machine and history preservation service:
+    1. **Canonical States**:
+       - `PENDING`: Initial checkout / initiation state.
+       - `PROCESSING`: Intermediate asynchronous clearing / 3DS challenge.
+       - `SUCCESS`: Settled funds captured (retains `COMPLETED` alias for backward compatibility).
+       - `FAILED`: Terminal failure / card decline / insufficient funds.
+       - `REFUNDED`: Terminal state for refunded / reversed transactions.
+       - `CANCELLED`: Terminal state for user-cancelled / timed-out checkouts.
+    2. **Transition Rules & Enforcement**:
+       - Authoritative `PaymentStateMachine`: allows exactly 8 canonical valid transitions (`PENDING -> PROCESSING`, `PENDING -> SUCCESS`, `PENDING -> FAILED`, `PENDING -> CANCELLED`, `PROCESSING -> SUCCESS`, `PROCESSING -> FAILED`, `PROCESSING -> CANCELLED`, `SUCCESS -> REFUNDED`).
+       - Strictly rejects all other 28 permutations, backwards transitions, self/redundant transitions, and terminal state mutations with `InvalidPaymentStateTransitionException` (HTTP 409 Conflict).
+    3. **Payment History Preservation**:
+       - `PaymentLifecycleServiceImpl` executes transactional state transitions by payment ID or transaction reference.
+       - Every valid transition generates an immutable `AuditLog` entry storing `oldStateJson`, `newStateJson`, actor user ID, reference, amount, reason, and timestamp.
+       - Provenance query endpoints: `getPaymentHistory` and `getPaymentHistoryByReference`.
+    4. **Comprehensive Test Suite**:
+       - Exhaustive 36-permutation test matrix asserting every valid and invalid state transition pair.
+       - Full integration tests verifying multi-hop trajectories, database persistence, invalid transition state preservation, and chronological audit trail querying.
+* **Directive**: Checkpoint 06-L completed. STOPPED. Awaiting explicit user command for next checkpoint.
+* **Summary of Checkpoint 06-K**:
+  - Implemented dedicated development/test mock payment provider simulation:
+    1. **Core Scenarios**:
+       - `SUCCESS`: Instant settlement or verification to `COMPLETED` with simulated authorization code.
+       - `FAILURE`: Simulated decline to `FAILED` with customizable decline codes (`INSUFFICIENT_FUNDS`, `CARD_EXPIRED_OR_STOLEN`, etc.).
+       - `PROCESSING`: Asynchronous in-progress state (`PENDING`) representing simulated clearing.
+       - `REFUND`: Full or partial refund reversals to `REFUNDED` with reversal references, as well as simulated refund rejections.
+    2. **Prominent Development/Test Marking (No Fake Production Claims)**:
+       - Universal constant `DEVELOPMENT_DISCLAIMER`: `"DEVELOPMENT/TEST PAYMENT SIMULATION ONLY - NO REAL FINANCIAL TRANSACTION TOOK PLACE - NOT A REAL PAYMENT"`.
+       - All initiation instructions, verification messages, and refund responses tagged with `"[TEST/SANDBOX ONLY - NOT A REAL PAYMENT]"`.
+       - Structured metadata on every result: `isDevelopmentOrTest = true`, `simulationEnvironment = "SANDBOX_TEST"`.
+       - Zero real credentials, real banking APIs, or claims of live fund movement.
+    3. **Scenario Triggers**:
+       - Metadata control (`simulationMode`, `simulatedStatus`, `failureReason`, `autoConfirm`, `simulateRefundFailure`).
+       - Reference naming convention fallback (`-FAIL`, `-PROCESSING`, etc.).
+* **Directive**: Checkpoint 06-K completed. STOPPED. Awaiting explicit user command for next checkpoint.
+  - Implemented `PaymentProvider` abstraction SPI and dynamic registry decoupled from specific payment channels:
+    1. **PaymentProvider SPI**:
+       - Standardized methods: `initiate`, `verify`, `refund`, and `mapStatus`.
+       - Standard command and result DTOs: `PaymentInitiationCommand`, `PaymentInitiationResult`, `PaymentVerificationCommand`, `PaymentVerificationResult`, `PaymentRefundCommand`, `PaymentRefundResult`.
+    2. **Isolated Conceptual Providers (No Real External Credentials)**:
+       - `MockPaymentProvider`: Sandbox simulation with deterministic auto-confirm/failure and simulated authorization codes.
+       - `BankTransferPaymentProvider`: Domestic wire transfer simulation with VietQR format (`vietqr://pay?...`), transfer memo syntax (`EVSHARE TX-...`), account details, and statement reconciliation.
+       - `EWalletPaymentProvider`: Mobile e-wallet simulation (MoMo/ZaloPay) with app deep-links (`evshare://ewallet/pay?...`), QR code payloads, and HMAC signature check simulation.
+       - `GatewayPaymentProvider`: Hosted card checkout simulation (Credit Card / PayOS / Stripe) with checkout session redirect URLs (`https://checkout.gateway.evshare.io/pay/cs_test_...`) and card refund processing.
+    3. **Provider Registry & Dynamic Routing**:
+       - `PaymentProviderRegistry` Spring component discovering all registered providers.
+       - Resolves providers by `PaymentProviderType` (`MOCK`, `BANK_TRANSFER`, `E_WALLET`, `GATEWAY`) and by customer `PaymentMethod` (`BANK_TRANSFER`, `E_WALLET`, `CREDIT_CARD`, `MOCK`, `GATEWAY`).
+       - Graceful handling and rejection of unsupported provider requests with HTTP 400 Bad Request.
+    4. **Status Mapping**:
+       - Standardized vendor-specific status strings normalized to platform `PaymentStatus` (`PENDING`, `COMPLETED`, `FAILED`, `REFUNDED`).
+* **Directive**: Checkpoint 06-J completed. STOPPED. Awaiting explicit user command for next checkpoint.
+  - Implemented complete syndicate Shared Fund transaction ledger and balance reconciliation according to requirements:
+    1. **CREDIT / DEBIT Semantics**:
+       - Explicit `TransactionEntryType` (`CREDIT` for deposits/inflows, `DEBIT` for withdrawals/outflows).
+       - Enforced across service, repository, entity, and DTO levels.
+    2. **Immutable Transaction History**:
+       - Database schema constraints with non-null `entry_type`, `transaction_reference`, and `source`.
+       - JPA `@Column(updatable = false)` on ledger fields.
+       - Entity lifecycle callbacks (`@PreUpdate`, `@PreRemove`) throwing `IllegalStateException` on any tampering.
+    3. **Mathematical Balance Reconciliation**:
+       - `reconcileFundBalance` audits historical transactions in strict chronological order.
+       - Computes $\sum \text{CREDITS} - \sum \text{DEBITS} \equiv \text{currentBalance}$ down to 0.01 VND.
+       - Generates `FundReconciliationResponse` with `isReconciled`, `calculatedLedgerBalance`, `reconciliationDelta`, credit/debit counts, and audit summary.
+    4. **Transaction Reference & Uniqueness**:
+       - Unique 64-char `transaction_reference` (e.g., `TX-CRD-YYYYMMDD-XXXXXXXX`, `TX-DBT-YYYYMMDD-XXXXXXXX`, or user-supplied reference code).
+       - Duplicate reference detection with HTTP 409 Conflict.
+       - Reference lookup endpoint `GET /api/v1/ownership-groups/{groupId}/fund/transactions/{reference}`.
+    5. **Actor Attribution & Timestamps**:
+       - Explicit co-owner actor attribution on every transaction and associated audit log.
+       - Immutable `created_at` timestamp.
+    6. **Source Classification**:
+       - `FundTransactionSource` enum categorizing inflows and outflows (`MEMBER_CONTRIBUTION`, `EXPENSE_PAYOUT`, `CAPITAL_CALL_REPLENISHMENT`, `LATE_CANCELLATION_PENALTY`, `BATTERY_SURCHARGE`, `PAYMENT_SETTLEMENT`, `VAULT_INITIALIZATION`, `MANUAL_ADJUSTMENT`).
+    7. **Comprehensive Concurrency & Ledger Testing**:
+       - 10 concurrent threads executing simultaneous deposits and withdrawals with zero lost updates under pessimistic write locking.
+       - Full verification of insufficient balance rejection and mathematical reconciliation equality.
+* **Directive**: Checkpoint 06-I completed. STOPPED. Awaiting explicit user command for next checkpoint.
+* **Summary of Checkpoints 06-D & 06-E**:
+  - **06-D — Cost Allocation Engine**:
+    1. Implemented strategy abstraction `CostAllocationService` & `CostAllocationStrategy` supporting `OWNERSHIP_BASED`, `USAGE_BASED`, and `HYBRID` modes.
+    2. Deterministic execution: Verified via 1,000 continuous iterations test yielding identical output without variance.
+    3. Documented rounding strategy: Banker's Rounding (`RoundingMode.HALF_EVEN`, scale 2). Residual pennies are absorbed deterministically by the highest active equity/usage holder with deterministic tie-breaking (lowest `userId`).
+    4. Exact total reconciliation: Proved mathematically that $\sum_{i=1}^N \text{allocated}_i \equiv \text{totalExpenseAmount}$ down to 0.01 VND across all strategies and amounts.
+    5. Explainability: Transparent audit explanation strings generated for every member share showing base calculation, ratios, percentages, and any residual rounding adjustments.
+  - **06-E — Ownership-Based Allocation**:
+    1. Active ownership only: Inactive shares (`isActive == false`) are strictly excluded from allocation calculation and persistence.
+    2. 100.00% equity total invariant: Validated prior to calculation; throws `InvalidOwnershipDistributionException` if sum of active shares $\ne 100.00\%$.
+    3. Tested multiple distributions: 50/50, 60/40, 33.33/33.33/33.34 (penny absorption), 70/20/10, 25/25/25/25 (4 equal shares with lowest `userId` tie-break), and odd/micro amounts.
+    4. Database integration: Verified end-to-end persistence in `expense_allocations` table with exact ledger reconciliation.
+  - Total Phase 06 tests: **57 / 57 PASS** (17 cost allocation unit tests, 4 cost allocation integration tests, 21 expense unit tests, 15 expense integration tests).
+  - Total platform test suite: **725 / 725 PASS** (`BUILD SUCCESS` across all 48 test classes).
+* **Directive**: Checkpoint 06-E completed. STOPPED. Awaiting explicit user command for next checkpoint.
 * **Vehicle State Integration Tests**: [`com.example.evshare.controller.VehicleStateIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/VehicleStateIntegrationTest.java) (5/5 PASS)
 * **Usage Session Service Unit Tests**: [`com.example.evshare.service.UsageSessionServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/UsageSessionServiceTest.java) (37/37 PASS)
 * **Usage Session Integration Tests**: [`com.example.evshare.controller.UsageSessionIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/UsageSessionIntegrationTest.java) (18/18 PASS)

@@ -124,18 +124,37 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/expenses/group/{groupId}` | Authenticated | Query params | List group expenses with allocation breakdowns |
-| `POST` | `/expenses` | Staff, Admin | `CreateExpenseRequest` | Log new expense and execute allocation formula |
-| `GET` | `/expenses/my-dues` | Co-Owner | None | List unpaid expense allocations for authenticated user |
+| `POST` | `/expenses` | Staff, Admin, Co-Owner (Member) | `CreateExpenseRequest` | Record syndicate vehicle expense with validation, receipt evidence, and audit logging |
+| `GET` | `/expenses/{id}` | Staff, Admin, Co-Owner (Member) | None | Retrieve expense details and itemized member allocations |
+| `GET` | `/expenses/group/{groupId}` | Staff, Admin, Co-Owner (Member) | Query params (`category`, `startDate`, `endDate`, `page`, `size`, `sort`) | Retrieve paginated syndicate expenses with date/category filters |
+| `GET` | `/expenses/{id}/history` | Staff, Admin, Co-Owner (Member) | None | Retrieve chronological immutable audit trail entries for an expense |
+| `POST` | `/expenses/{expenseId}/allocate` | Staff, Admin | None | Calculate and persist cost allocations according to assigned strategy (`OWNERSHIP_BASED`, `USAGE_BASED`, `HYBRID`) |
+| `GET` | `/expenses/{expenseId}/allocations`| Staff, Admin, Co-Owner (Member) | None | Retrieve individual member cost allocations for an expense |
+| `GET` | `/expenses/allocations/user/{userId}`| Staff, Admin, Authenticated (Self) | Query params (`settled`, `page`, `size`, `sort`) | Retrieve paginated allocations for a specific user |
+| `GET` | `/expenses/allocations/my-allocations`| Authenticated | Query params (`settled`, `page`, `size`, `sort`) | Retrieve paginated allocations and payment dues for authenticated user |
+| `POST` | `/expenses/allocations/{allocationId}/settle`| Staff, Admin, Co-Owner (Debtor) | None | Mark individual expense allocation as settled |
 
-### 2.9. Shared Fund Vault & Payments (`/api/v1/funds`, `/api/v1/payments`)
+### 2.9. Shared Fund 3D Vault & Payments (`/api/v1/ownership-groups/{groupId}/fund`, `/api/v1/payments`)
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/funds/group/{groupId}` | Co-Owner, Admin | None | View 3D Vault balance and reserve status |
-| `GET` | `/funds/{fundId}/transactions`| Co-Owner, Admin | Query params | List fund transactions (deposits, payouts) |
-| `POST` | `/payments/initiate` | Co-Owner | `InitiatePaymentRequest` | Generate payment transaction reference |
-| `POST` | `/payments/confirm` | Co-Owner, Staff | `ConfirmPaymentRequest` | Finalize payment & credit vault balance |
+| `GET` | `/ownership-groups/{groupId}/fund` | Staff, Admin, Co-Owner (Member) | None | Retrieve 3D Vault shared fund balance, minimum reserve threshold, and liquidity warning status |
+| `GET` | `/ownership-groups/{groupId}/fund/balance` | Staff, Admin, Co-Owner (Member) | None | Quick balance and reserve status check |
+| `POST` | `/ownership-groups/{groupId}/fund/contributions` | Staff, Admin, Co-Owner (Member) | `FundContributionRequest` | Deposit capital into syndicate vault atomically under pessimistic write lock |
+| `POST` | `/ownership-groups/{groupId}/fund/withdrawals` | Staff, Admin, Co-Owner (Member) | `FundWithdrawalRequest` | Execute authorized expense payout / withdrawal from vault with overdraft check |
+| `GET` | `/ownership-groups/{groupId}/fund/transactions` | Staff, Admin, Co-Owner (Member) | None | Retrieve chronological immutable transaction ledger |
+| `GET` | `/ownership-groups/{groupId}/fund/reconcile` | Staff, Admin, Co-Owner (Member) | None | Mathematical ledger reconciliation verifying $\sum \text{CREDIT} - \sum \text{DEBIT} \equiv \text{balance}$ |
+| `GET` | `/ownership-groups/{groupId}/fund/history` | Staff, Admin, Co-Owner (Member) | None | Retrieve chronological vault audit trail |
+| `POST` | `/payments/initiate` | Co-Owner, Staff, Admin | `InitiatePaymentRequest` | Initiate payment with SHA-256 idempotency key deduplication (`Idempotency-Key` header) |
+| `POST` | `/payments/{id}/confirm` | Co-Owner, Staff, Admin | `ConfirmPaymentRequest` | Confirm payment, update status to `SUCCESS`, credit vault, settle allocation |
+| `GET` | `/payments/{id}` | Staff, Admin, Co-Owner (Payer) | None | Retrieve payment record details by ID |
+| `GET` | `/payments/reference/{reference}` | Staff, Admin, Co-Owner (Payer) | None | Lookup payment by external transaction reference |
+| `GET` | `/payments/my-payments` | Authenticated | Query params (`page`, `size`, `sort`) | Retrieve paginated payment history for authenticated user |
+| `GET` | `/payments/fund/{fundId}` | Staff, Admin, Co-Owner (Member) | Query params (`page`, `size`, `sort`) | Retrieve paginated payments associated with a specific shared fund vault |
+| `GET` | `/payments/providers` | Authenticated | None | Enumerate active payment SPI providers (`MOCK`, `BANK_TRANSFER`, `E_WALLET`, `GATEWAY`) with sandbox notices |
+| `POST` | `/payments/{id}/transition` | Staff, Admin | `PaymentStatusTransitionRequest` | Execute controlled finite state machine transition (`PENDING`, `PROCESSING`, `SUCCESS`, `FAILED`, `REFUNDED`, `CANCELLED`) |
+| `GET` | `/payments/{id}/history` | Staff, Admin, Co-Owner (Payer) | None | Retrieve chronological state transition history and audit trail |
+| `POST` | `/payments/webhook/{provider}` | Public / Gateway Service | Webhook payload | Ingest payment gateway webhook notifications with signature verification and idempotency |
 
 ### 2.10. Decision Chamber & Voting (`/api/v1/proposals`)
 

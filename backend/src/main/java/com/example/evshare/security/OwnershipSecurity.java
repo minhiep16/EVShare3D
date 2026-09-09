@@ -22,13 +22,24 @@ public class OwnershipSecurity {
     private final OwnershipShareRepository ownershipShareRepository;
     private final com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository;
     private final com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository;
+    private final com.example.evshare.repository.ExpenseRepository expenseRepository;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
+                             com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
+                             com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository,
+                             @org.springframework.beans.factory.annotation.Autowired(required = false)
+                             com.example.evshare.repository.ExpenseRepository expenseRepository) {
+        this.ownershipShareRepository = ownershipShareRepository;
+        this.coOwnershipContractRepository = coOwnershipContractRepository;
+        this.ownershipGroupRepository = ownershipGroupRepository;
+        this.expenseRepository = expenseRepository;
+    }
 
     public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
                              com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
                              com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository) {
-        this.ownershipShareRepository = ownershipShareRepository;
-        this.coOwnershipContractRepository = coOwnershipContractRepository;
-        this.ownershipGroupRepository = ownershipGroupRepository;
+        this(ownershipShareRepository, coOwnershipContractRepository, ownershipGroupRepository, null);
     }
 
     /**
@@ -120,5 +131,23 @@ public class OwnershipSecurity {
      */
     public boolean isCoOwnerOfVehicle(Long userId, Long vehicleId) {
         return isVehicleGroupMember(vehicleId, userId);
+    }
+
+    /**
+     * Checks if the specified user holds an active equity share in the ownership group
+     * to which the given expense belongs.
+     *
+     * @param expenseId the expense ID
+     * @param userId the user ID
+     * @return true if user is an active equity holder in the expense's group; false otherwise
+     */
+    public boolean isExpenseGroupMember(Long expenseId, Long userId) {
+        if (expenseId == null || userId == null || expenseRepository == null) {
+            return false;
+        }
+
+        return expenseRepository.findById(expenseId)
+                .map(expense -> isGroupMember(expense.getGroup().getId(), userId))
+                .orElse(false);
     }
 }

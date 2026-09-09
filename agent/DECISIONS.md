@@ -119,3 +119,34 @@
 * **Context**: Fast, contactless check-in at physical parking bays or charging stalls requires a secure QR code. Exposing user credentials or sensitive booking data in a QR payload introduces security risks, while trusting offline QR claims alone risks unauthorized access to damaged or cancelled vehicles.
 * **Decision**: Implement a two-tiered QR validation protocol. The backend issues a short-lived (5-minute TTL) signed JWT with `tokenType="QR_CHECK_IN"` containing strictly non-sensitive public identifiers (`bookingId`, `vehicleId`, `userId`, `jti`, `exp`), signed with server-side HMAC-SHA256. Upon scanning, the server verifies the cryptographic signature and expiration, then performs authoritative live queries against `BookingRepository`, `VehicleRepository`, `OwnershipGroupRepository`, and `UserRepository` to verify active co-owner equity ACLs, vehicle operational status (`AVAILABLE` or `BOOKED`), and the check-in time window ($[startTime - 15\text{m}, startTime + 30\text{m}]$). Scans $>30$ minutes overdue automatically mark the booking as `NO_SHOW` in the database per BR-OPS-01.
 * **Consequences**: Guarantees zero sensitive data leakage inside QR codes, prevents replay or forged token attacks, and enforces live physical station verification before vehicles can be operated.
+
+---
+
+## ADR-16: Mathematical Cost Allocation Engine & Deterministic Residual Penny Absorption (BR-FIN-02)
+* **Status**: ACCEPTED
+* **Context**: Irregular expenses split across multiple fractional co-owners inevitably produce fractional pennies due to division precision limits. Floating-point math introduces unacceptable financial drift, and arbitrary remainder assignment causes dispute risks.
+* **Decision**: Define a pluggable strategy pattern (`CostAllocationStrategy`) with three mathematical implementations:
+  1. `OwnershipBasedAllocationStrategy`: Allocates purely pro-rata to active ownership equity percentages for fixed overhead.
+  2. `UsageBasedAllocationStrategy`: Allocates pro-rata to telemetry odometer distance logged across completed `UsageSession` records, safely falling back to active ownership equity if zero utilization is recorded.
+  3. `HybridAllocationStrategy`: Exactly 30.00% fixed base (ownership equity) + 70.00% variable remainder (usage distance).
+  All arithmetic uses Java `BigDecimal` with Banker's Rounding (`RoundingMode.HALF_EVEN`, scale 2). Any residual discrepancy ($\Delta = \text{totalExpense} - \sum \text{allocatedShares}$) is deterministically absorbed by the co-owner with the highest allocated share (tie-breaker: lowest `userId`).
+* **Consequences**: Enforces mathematical penny equality ($\sum \text{allocatedShares} \equiv \text{totalExpense}$ down to 0.01 VND) and eliminates arbitrary remainder assignment.
+
+---
+
+## ADR-17: Shared Fund Immutable Double-Entry Ledger, Pessimistic Row-Level Locking & Balance Reconciliation
+* **Status**: ACCEPTED
+* **Context**: Syndicate 3D Vault funds receive concurrent deposits, member contributions, automated surcharge credits, and expense payouts. Uncontrolled concurrency can cause lost updates or balance inconsistencies between the summary balance and the transaction log.
+* **Decision**: Implement an immutable append-only ledger in `fund_transactions`. Every balance mutation executes within `@Transactional(isolation = Isolation.READ_COMMITTED)` under a pessimistic write lock (`SELECT ... FOR UPDATE`) on the `shared_funds` row. Each transaction records an immutable entry with `amount`, `balance_after`, `entry_type` (`CREDIT` or `DEBIT`), unique `transaction_reference`, and `source`. Provide an automated reconciliation engine that asserts $\sum \text{CREDITS} - \sum \text{DEBITS} \equiv \text{currentBalance}$. Overdrafts are strictly rejected unless explicitly flagged.
+* **Consequences**: Mathematically prevents lost updates, ensures 100% auditability, and guarantees ledger reconciliation parity.
+
+---
+
+## ADR-18: Pluggable Payment Provider SPI, Authoritative 6-State Lifecycle Machine & Idempotency Key Fingerprinting
+* **Status**: ACCEPTED
+* **Context**: Modern EV co-ownership requires flexible payment settlement (banking transfer QR, e-wallets, third-party payment gateways, sandbox mock) with zero vendor lock-in. Furthermore, network retries and duplicate user clicks must not create duplicate payments, and state transitions must follow a strict finite state machine.
+* **Decision**:
+  1. Define a pluggable `PaymentProvider` Service Provider Interface (SPI) managed by `PaymentProviderRegistry`, supporting `MOCK`, `BANK_TRANSFER`, `E_WALLET`, and `GATEWAY` implementations.
+  2. Implement `PaymentStateMachine` governing 6 canonical states (`PENDING`, `PROCESSING`, `SUCCESS`, `FAILED`, `REFUNDED`, `CANCELLED`). Enforce exactly 8 valid state transitions while strictly rejecting the other 28 permutations with HTTP 409 Conflict. State transitions acquire a pessimistic write lock on the `Payment` row and synchronize related entities (`SharedFund` balance credit/debit and `ExpenseAllocation` settlement status) in a single atomic transaction.
+  3. Implement `IdempotencyService` storing request records in `idempotency_records`. Incoming requests evaluate the client `Idempotency-Key` header with a SHA-256 payload fingerprint. Identical replays return cached responses; tampered payloads with a used key are rejected with HTTP 409 Conflict.
+* **Consequences**: Eliminates duplicate charges, guarantees clean transaction rollback under downstream failures, preserves full transition audit lineage, and allows effortless addition of future payment processors.
