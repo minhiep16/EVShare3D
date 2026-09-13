@@ -1,54 +1,55 @@
 # EVShare 3D – CURRENT PROJECT STATUS
 
 ## 1. Active Phase & Checkpoint
-* **CURRENT_PHASE**: `PHASE 06 — ENERGY, FINANCE, COST ALLOCATION & SHARED FUND`
-* **PHASE 06 STATUS**: **`COMPLETE / QUALITY GATE PASSED`**
-* **CURRENT_CHECKPOINT**: `06-P — FINAL VERIFICATION`
-* **CHECKPOINT 06-P STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-O STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-N STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-M STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-L STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-K STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-J STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-I STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-H STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-G STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-F STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-E STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-D STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-C STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-B STATUS**: **`COMPLETE`**
-* **CHECKPOINT 06-A STATUS**: **`COMPLETE`** ([`docs/PHASE_06_FINANCE_AUDIT.md`](file:///e:/EVShare3D/docs/PHASE_06_FINANCE_AUDIT.md))
-* **PREVIOUS_PHASE**: `PHASE 05 — BOOKING, FAIR USAGE & VEHICLE OPERATION` (VERIFIED / COMMITTED / PUSHED)
-* **Build Verification (`mvn clean test`)**: **`BUILD SUCCESS`** (0 errors, 0 failures across all 888 tests in the codebase)
-* **Phase 06 Comprehensive Master Test Suite**: [`com.example.evshare.controller.ComprehensivePhase06TestSuiteTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ComprehensivePhase06TestSuiteTest.java) (12/12 PASS)
-* **Cost Allocation Unit Tests**: [`com.example.evshare.service.CostAllocationServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/CostAllocationServiceTest.java) (34/34 PASS)
-* **Cost Allocation Integration Tests**: [`com.example.evshare.service.CostAllocationIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/CostAllocationIntegrationTest.java) (6/6 PASS)
-* **Expense Service Unit Tests**: [`com.example.evshare.service.ExpenseServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/ExpenseServiceTest.java) (21/21 PASS)
-* **Expense Integration Tests**: [`com.example.evshare.controller.ExpenseIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ExpenseIntegrationTest.java) (15/15 PASS)
-* **Shared Fund Service Unit Tests**: [`com.example.evshare.service.SharedFundServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/SharedFundServiceTest.java) (20/20 PASS)
-* **Shared Fund Integration Tests**: [`com.example.evshare.controller.SharedFundIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/SharedFundIntegrationTest.java) (9/9 PASS)
-* **Fund Transaction Concurrency Integration Tests**: [`com.example.evshare.service.FundTransactionConcurrencyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FundTransactionConcurrencyIntegrationTest.java) (2/2 PASS)
-* **Payment Provider Unit Tests**: [`com.example.evshare.service.payment.PaymentProviderTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentProviderTest.java) (27/27 PASS)
-* **Payment Provider Registry Tests**: [`com.example.evshare.service.payment.PaymentProviderRegistryTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentProviderRegistryTest.java) (5/5 PASS)
-* **Payment State Machine Unit Tests**: [`com.example.evshare.service.payment.PaymentStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentStateMachineTest.java) (34/34 PASS, covering all 36 canonical permutations)
-* **Payment Lifecycle Integration Tests**: [`com.example.evshare.service.payment.PaymentLifecycleIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentLifecycleIntegrationTest.java) (13/13 PASS)
-* **Idempotency Service Unit Tests**: [`com.example.evshare.service.payment.IdempotencyServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/IdempotencyServiceTest.java) (6/6 PASS)
-* **Payment Idempotency Concurrency Integration Tests**: [`com.example.evshare.service.payment.PaymentIdempotencyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/payment/PaymentIdempotencyIntegrationTest.java) (4/4 PASS)
-* **Financial Transaction Safety Integration Tests**: [`com.example.evshare.service.FinancialTransactionSafetyIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/FinancialTransactionSafetyIntegrationTest.java) (7/7 PASS)
-* **Total Phase 06 Tests**: **215 / 215 PASS** (12 comprehensive master suite tests + 203 specialized domain tests). Total full repository test suite: **888 / 888 PASS**.
-* **Summary of Checkpoint 06-P (Final Verification)**:
-  - Conducted comprehensive audit of all Phase 06 financial requirements against implementation, tests, and documentation.
-  - Verified 100% test pass rate (888 / 888 tests, 0 failures, 0 errors, 0 skipped) under `mvn clean test`.
-  - Updated architectural and technical documentation:
-    - `docs/API.md`: Synced complete REST API endpoint catalogs for Expenses, Cost Allocations, Shared Funds, and Payments.
-    - `docs/DATABASE.md`: Documented Flyway V8, V9, V10 schema enhancements (`expenses`, `fund_transactions`, `payments`, `idempotency_records`).
-    - `docs/BUSINESS_RULES.md`: Fully specified BR-FIN-02 through BR-FIN-05 (deterministic rounding, double-entry ledger reconciliation, payment lifecycle, transaction safety).
-    - `agent/DECISIONS.md`: Recorded ADR-16, ADR-17, ADR-18 for financial domain architecture.
-    - `agent/KNOWN_ISSUES.md`: Documented concurrency mitigations for financial transactions, state machine transitions, and idempotency key replays.
-    - `agent/PHASE_06_REPORT.md`: Published definitive formal verification report with full dimension audit table.
-  - Zero new features introduced in Checkpoint 06-P; zero test fabrication; Phase 07 has not been started.
+* **CURRENT_PHASE**: `PHASE 07 — GOVERNANCE, VOTING & DISPUTES`
+* **PHASE 07 STATUS**: **`COMPLETE / QUALITY GATE PASSED`**
+* **CURRENT_CHECKPOINT**: `07-Q — FINAL VERIFICATION`
+* **CHECKPOINT 07-Q STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-P STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-O STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-N STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-M STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-L STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-K STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-J STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-I STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-H STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-G STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-F STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-E STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-D STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-C STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-B STATUS**: **`COMPLETE`**
+* **CHECKPOINT 07-A STATUS**: **`COMPLETE`**
+* **PREVIOUS_PHASE**: `PHASE 06 — ENERGY, FINANCE, COST ALLOCATION & SHARED FUND` (VERIFIED / COMMITTED / PUSHED)
+* **Build Verification (`mvn clean test`)**: **`BUILD SUCCESS`** (0 errors, 0 failures across all 1,145 tests in the codebase)
+* **Comprehensive Phase 07 Governance Test Suite**: [`com.example.evshare.controller.ComprehensivePhase07GovernanceTestSuiteTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ComprehensivePhase07GovernanceTestSuiteTest.java) (15/15 PASS)
+* **Dispute Fund Adjustment Integration Tests**: [`com.example.evshare.controller.DisputeFundAdjustmentIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/DisputeFundAdjustmentIntegrationTest.java) (9/9 PASS)
+* **Dispute Controller Integration Tests**: [`com.example.evshare.controller.DisputeIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/DisputeIntegrationTest.java) (23/23 PASS)
+* **Proposal Controller Integration Tests**: [`com.example.evshare.controller.ProposalIntegrationTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/controller/ProposalIntegrationTest.java) (15/15 PASS)
+* **Dispute Service Unit & Domain Tests**: [`com.example.evshare.service.DisputeServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/DisputeServiceTest.java) (70/70 PASS)
+* **Dispute State Machine Unit Tests**: [`com.example.evshare.service.DisputeStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/DisputeStateMachineTest.java) (16/16 PASS)
+* **Proposal State Machine Unit Tests**: [`com.example.evshare.service.ProposalStateMachineTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/ProposalStateMachineTest.java) (15/15 PASS)
+* **Voting Service Unit & Domain Tests**: [`com.example.evshare.service.VotingServiceTest`](file:///e:/EVShare3D/backend/src/test/java/com/example/evshare/service/VotingServiceTest.java) (93/93 PASS)
+* **Total Phase 07 Tests**: **256 / 256 PASS** (15 master suite + 241 specialized domain tests). Total full repository test suite: **1,145 / 1,145 PASS**.
+* **Summary of Checkpoint 07-Q (Final Verification)**:
+  - Verified 100% test pass rate across the full repository (`mvn clean test` executed 1,145 tests with 0 failures, 0 errors, 0 skipped).
+  - Validated all Phase 07 governance, voting, dispute mediation, admin arbitration, and fund adjustment requirements against code, tests, and documentation.
+  - Updated project documentation:
+    - `docs/API.md`: Updated Section 2.10 (Proposals & Voting) and Section 2.11 (Dispute Resolution, Evidence, Mediation, Arbitration, Fund Adjustment) with complete REST API catalogs.
+    - `docs/BUSINESS_RULES.md`: Synchronized BR-VOT-01 through BR-VOT-04 and BR-DIS-01 through BR-DIS-06.
+    - `agent/CURRENT_STATUS.md`: Recorded Phase 07 completion, test breakdown, and current checkpoint status.
+    - `agent/DECISIONS.md`: Recorded ADR-19 (Democratic Governance & Voting), ADR-20 (Dispute Lifecycle & Mediation/Arbitration), and ADR-21 (Dispute Fund Adjustment & Treasury Integration).
+    - `agent/KNOWN_ISSUES.md`: Documented concurrency mitigations for voting ballot races, dispute state transition locking, and fund adjustment overdraft rollbacks.
+    - `agent/PHASE_07_REPORT.md`: Published formal Phase 07 verification report.
+  - Zero new features introduced in Checkpoint 07-Q; truthful statuses only.
+  - STOPPED. Phase 08 has not been started.
+* **Summary of Checkpoint 07-P (Governance & Dispute Tests)**:
+  - Executed full test suite verifying proposal eligibility, proposal lifecycle, vote casting, duplicate vote prevention, equity weighting, quorum calculation, decision thresholds, voting results privacy, dispute lifecycle, evidence immutability, staff mediation, admin arbitration, SharedFund transactional adjustments, RBAC enforcement, and transactional safety.
+* **Summary of Checkpoint 07-O (Dispute Fund Adjustment)**:
+  - Integrated dispute resolution with `SharedFund` treasury and ledger subsystem in compliance with `BR-DIS-06`.
+  - Implemented atomic `@Transactional` boundary for dispute resolution and fund balance modification with pessimistic write locking.
+  - Persisted immutable `FundTransaction` ledger records (`DISPUTE_ADJUSTMENT`), bidirectional entity linking, overdraft validation, and dual audit logging.
 * **Summary of Checkpoint 06-O**:
   - Executed full suite verification (`mvn clean test`) across all 12 Phase 06 domains:
     1. **Expense**: Creation, validation, duplicate rejection (409 Conflict), audit trail logging.

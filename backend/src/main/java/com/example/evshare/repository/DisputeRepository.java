@@ -17,4 +17,8 @@ public interface DisputeRepository extends JpaRepository<Dispute, Long> {
     List<Dispute> findByComplainantUserId(Long complainantUserId);
 
     List<Dispute> findByUsageSessionId(Long usageSessionId);
+
+    List<Dispute> findByStatus(DisputeStatus status);
+
+    List<Dispute> findByStatusIn(List<DisputeStatus> statuses);
 }

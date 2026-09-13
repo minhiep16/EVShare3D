@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -45,6 +46,30 @@ public class Dispute {
 
     @Column(name = "resolution_summary", columnDefinition = "TEXT")
     private String resolutionSummary;
+
+    @Column(name = "mediation_notes", columnDefinition = "TEXT")
+    private String mediationNotes;
+
+    @Column(name = "proposed_resolution", columnDefinition = "TEXT")
+    private String proposedResolution;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mediator_user_id")
+    private User mediatorUser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "arbitrator_user_id")
+    private User arbitratorUser;
+
+    @Column(name = "resolved_at")
+    private Instant resolvedAt;
+
+    @Column(name = "fund_adjustment_amount", precision = 15, scale = 2)
+    private BigDecimal fundAdjustmentAmount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fund_transaction_id")
+    private FundTransaction fundTransaction;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -136,6 +161,62 @@ public class Dispute {
 
     public void setResolutionSummary(String resolutionSummary) {
         this.resolutionSummary = resolutionSummary;
+    }
+
+    public String getMediationNotes() {
+        return mediationNotes;
+    }
+
+    public void setMediationNotes(String mediationNotes) {
+        this.mediationNotes = mediationNotes;
+    }
+
+    public String getProposedResolution() {
+        return proposedResolution;
+    }
+
+    public void setProposedResolution(String proposedResolution) {
+        this.proposedResolution = proposedResolution;
+    }
+
+    public User getMediatorUser() {
+        return mediatorUser;
+    }
+
+    public void setMediatorUser(User mediatorUser) {
+        this.mediatorUser = mediatorUser;
+    }
+
+    public User getArbitratorUser() {
+        return arbitratorUser;
+    }
+
+    public void setArbitratorUser(User arbitratorUser) {
+        this.arbitratorUser = arbitratorUser;
+    }
+
+    public Instant getResolvedAt() {
+        return resolvedAt;
+    }
+
+    public void setResolvedAt(Instant resolvedAt) {
+        this.resolvedAt = resolvedAt;
+    }
+
+    public BigDecimal getFundAdjustmentAmount() {
+        return fundAdjustmentAmount;
+    }
+
+    public void setFundAdjustmentAmount(BigDecimal fundAdjustmentAmount) {
+        this.fundAdjustmentAmount = fundAdjustmentAmount;
+    }
+
+    public FundTransaction getFundTransaction() {
+        return fundTransaction;
+    }
+
+    public void setFundTransaction(FundTransaction fundTransaction) {
+        this.fundTransaction = fundTransaction;
     }
 
     public Instant getCreatedAt() {

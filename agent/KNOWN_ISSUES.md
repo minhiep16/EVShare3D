@@ -132,3 +132,32 @@
   1. Mandatory SHA-256 request payload fingerprinting: `IdempotencyService` computes `SHA-256(requestBody)` and persists it in `idempotency_records` alongside the key.
   2. Identical request replay: Requests with an identical key and identical hash return the cached HTTP response immediately without re-executing business logic.
   3. Tampered request rejection: Reusing a key with a different payload hash throws `IdempotencyConflictException` (HTTP 409 Conflict), preventing parameter manipulation.
+
+---
+
+## 17. Concurrent Voting Ballot Races & Duplicate Ballot Injection
+* **Risk**: Multiple rapid clicks or concurrent client requests attempting to cast votes for the same co-owner on a single proposal could lead to double-counting equity weights or skewing quorum calculations.
+* **Mitigation Strategy**:
+  1. Service-level validation checks `voteRepository.findByProposalIdAndUserId(proposalId, userId)` prior to ballot insertion.
+  2. Database-level composite uniqueness: The `votes` table enforces a composite unique constraint `uk_proposal_user_vote (proposal_id, user_id)`.
+  3. Concurrent race conditions that bypass the application check trigger a `DataIntegrityViolationException`, which is caught and mapped to `DuplicateVoteException` (HTTP 409 Conflict), guaranteeing that exactly one ballot per co-owner is recorded.
+
+---
+
+## 18. Unauthorized Dispute Arbitration & State Transition Race Conditions
+* **Risk**: Co-owners or unauthorized staff attempting to unilaterally settle disputes, or concurrent administrative requests attempting contradictory lifecycle transitions (e.g. concurrent escalation and resolution).
+* **Mitigation Strategy**:
+  1. Strict RBAC enforcement: Arbitration endpoints (`/arbitrate`, `/fund-adjustment`, `/arbitration-dossier`) enforce `@PreAuthorize("hasRole('ADMIN')")`. Staff attempts to transition disputes to `RESOLVED` are programmatically rejected with HTTP 403 Forbidden ("Staff members cannot perform final binding dispute arbitration. Final resolution is restricted to administrators.").
+  2. Transactional locking: Dispute lifecycle mutations acquire pessimistic write locks (`findDisputeByIdForUpdate`) under `@Transactional`.
+  3. Authoritative state machine: `DisputeStateMachine` rejects invalid transitions, reverse jumps, and mutations on terminal `RESOLVED` records with `InvalidDisputeStateTransitionException` (HTTP 409 Conflict).
+
+---
+
+## 19. Dispute Fund Adjustment Overdraft & Partial Settlement Inconsistency
+* **Risk**: An administrative dispute resolution awarding a treasury reimbursement (`DEBIT`) could overdraft the syndicate's `SharedFund` vault if concurrent withdrawals reduce the balance, or an exception during ledger entry creation could leave a dispute marked `RESOLVED` without actual payment.
+* **Mitigation Strategy**:
+  1. Single atomic `@Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)` boundary spanning dispute status update (`RESOLVED`), `SharedFund` balance mutation, and `FundTransaction` ledger creation.
+  2. Pessimistic row-level lock: Acquires `SELECT ... FOR UPDATE` via `sharedFundRepository.findByGroupIdWithLock(groupId)` before reading balance.
+  3. Overdraft prevention: Validates `currentBalance >= adjustmentAmount` for `DEBIT` operations; throws `InsufficientFundBalanceException` (HTTP 400 Bad Request) on insufficient funds.
+  4. Automatic rollback: Downstream errors trigger complete transaction rollback, preserving unchanged dispute status, untouched fund balance, and zero partial ledger records.
+  5. Duplicate prevention: Validates that the dispute is not already `RESOLVED` and has no existing `fund_transaction_id`, rejecting duplicate adjustment requests with HTTP 409 Conflict.

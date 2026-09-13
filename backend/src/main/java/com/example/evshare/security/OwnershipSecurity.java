@@ -23,23 +23,46 @@ public class OwnershipSecurity {
     private final com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository;
     private final com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository;
     private final com.example.evshare.repository.ExpenseRepository expenseRepository;
+    private final com.example.evshare.repository.ProposalRepository proposalRepository;
+    private final com.example.evshare.repository.DisputeRepository disputeRepository;
 
     @org.springframework.beans.factory.annotation.Autowired
     public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
                              com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
                              com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository,
                              @org.springframework.beans.factory.annotation.Autowired(required = false)
-                             com.example.evshare.repository.ExpenseRepository expenseRepository) {
+                             com.example.evshare.repository.ExpenseRepository expenseRepository,
+                             @org.springframework.beans.factory.annotation.Autowired(required = false)
+                             com.example.evshare.repository.ProposalRepository proposalRepository,
+                             @org.springframework.beans.factory.annotation.Autowired(required = false)
+                             com.example.evshare.repository.DisputeRepository disputeRepository) {
         this.ownershipShareRepository = ownershipShareRepository;
         this.coOwnershipContractRepository = coOwnershipContractRepository;
         this.ownershipGroupRepository = ownershipGroupRepository;
         this.expenseRepository = expenseRepository;
+        this.proposalRepository = proposalRepository;
+        this.disputeRepository = disputeRepository;
+    }
+
+    public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
+                             com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
+                             com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository,
+                             com.example.evshare.repository.ExpenseRepository expenseRepository,
+                             com.example.evshare.repository.ProposalRepository proposalRepository) {
+        this(ownershipShareRepository, coOwnershipContractRepository, ownershipGroupRepository, expenseRepository, proposalRepository, null);
+    }
+
+    public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
+                             com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
+                             com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository,
+                             com.example.evshare.repository.ExpenseRepository expenseRepository) {
+        this(ownershipShareRepository, coOwnershipContractRepository, ownershipGroupRepository, expenseRepository, null, null);
     }
 
     public OwnershipSecurity(OwnershipShareRepository ownershipShareRepository,
                              com.example.evshare.repository.CoOwnershipContractRepository coOwnershipContractRepository,
                              com.example.evshare.repository.OwnershipGroupRepository ownershipGroupRepository) {
-        this(ownershipShareRepository, coOwnershipContractRepository, ownershipGroupRepository, null);
+        this(ownershipShareRepository, coOwnershipContractRepository, ownershipGroupRepository, null, null);
     }
 
     /**
@@ -148,6 +171,42 @@ public class OwnershipSecurity {
 
         return expenseRepository.findById(expenseId)
                 .map(expense -> isGroupMember(expense.getGroup().getId(), userId))
+                .orElse(false);
+    }
+
+    /**
+     * Checks if the specified user holds an active equity share in the ownership group
+     * to which the given proposal belongs.
+     *
+     * @param proposalId the proposal ID
+     * @param userId the user ID
+     * @return true if user is an active equity holder in the proposal's group; false otherwise
+     */
+    public boolean isProposalGroupMember(Long proposalId, Long userId) {
+        if (proposalId == null || userId == null || proposalRepository == null) {
+            return false;
+        }
+
+        return proposalRepository.findById(proposalId)
+                .map(proposal -> isGroupMember(proposal.getGroup().getId(), userId))
+                .orElse(false);
+    }
+
+    /**
+     * Checks if the specified user holds an active equity share in the ownership group
+     * to which the given dispute belongs.
+     *
+     * @param disputeId the dispute ID
+     * @param userId the user ID
+     * @return true if user is an active equity holder in the dispute's group; false otherwise
+     */
+    public boolean isDisputeGroupMember(Long disputeId, Long userId) {
+        if (disputeId == null || userId == null || disputeRepository == null) {
+            return false;
+        }
+
+        return disputeRepository.findById(disputeId)
+                .map(dispute -> isGroupMember(dispute.getGroup().getId(), userId))
                 .orElse(false);
     }
 }

@@ -160,18 +160,38 @@
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/proposals/group/{groupId}` | Co-Owner, Admin | Status filter | List active/past group proposals |
-| `POST` | `/proposals` | Co-Owner | `CreateProposalRequest` | Submit new voting proposal ($\ge 10\%$ equity) |
-| `POST` | `/proposals/{id}/vote` | Co-Owner | `CastVoteRequest` | Cast APPROVE / REJECT / ABSTAIN vote |
-| `GET` | `/proposals/{id}/results` | Co-Owner, Admin | None | View equity-weighted tally and passing state |
+| `POST` | `/proposals` | Co-Owner ($\ge 10\%$ equity), Admin | `CreateProposalRequest` | Initiates new proposal with automated ballot options seeding (`APPROVE`, `REJECT`, `ABSTAIN`), enforcing minimum 10.00% active equity eligibility per `BR-VOT-01` |
+| `GET` | `/proposals/{id}` | Co-Owner (Member), Staff, Admin | None | Retrieves proposal metadata, category, deadlines, and available voting options |
+| `GET` | `/proposals/group/{groupId}` | Co-Owner (Member), Staff, Admin | Query param (`status`) | Retrieves all proposals for group with optional lifecycle status filtering (`ACTIVE`, `PASSED`, `REJECTED`, `EXPIRED`) |
+| `POST` | `/proposals/{id}/transition` | Admin | `TransitionProposalStatusRequest` | Transitions proposal lifecycle status (`ACTIVE` $\to$ `PASSED`, `REJECTED`, `EXPIRED`) per `ProposalStateMachine` |
+| `GET` | `/proposals/{id}/history` | Co-Owner (Member), Staff, Admin | None | Chronological audit log of proposal lifecycle state transitions |
+| `GET` | `/proposals/group/{groupId}/eligibility` | Co-Owner, Admin | None | Evaluates authenticated co-owner's active equity against the 10.00% proposal sponsorship threshold |
+| `POST` | `/proposals/{id}/votes` | Co-Owner (Member), Admin | `CastVoteRequest` | Casts equity-weighted ballot (`APPROVE`, `REJECT`, `ABSTAIN`) on `ACTIVE` proposal with duplicate ballot prevention |
+| `GET` | `/proposals/{id}/votes` | Co-Owner (Member), Staff, Admin | None | Lists all ballots cast on the proposal |
+| `GET` | `/proposals/{id}/votes/my-vote` | Co-Owner, Admin | None | Retrieves caller's cast ballot on the specified proposal |
+| `GET` | `/proposals/{id}/tally` | Co-Owner (Member), Staff, Admin | None | Retrieves deterministic equity-weighted vote tally, participation percentage, and quorum progress |
+| `GET` | `/proposals/{id}/results` | Co-Owner (Member), Staff, Admin | None | Retrieves official voting results, quorum status, decision thresholds, and final outcome while preserving ballot anonymity |
 
-### 2.11. Dispute Resolution (`/api/v1/disputes`)
+### 2.11. Dispute Resolution & Arbitration (`/api/v1/disputes`)
 
 | HTTP Verb | Path | Roles Allowed | Request Body | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/disputes/group/{groupId}` | Authenticated | Status filter | List open or resolved group disputes |
-| `POST` | `/disputes` | Co-Owner, Staff | `CreateDisputeRequest` | File dispute linked to session/expense |
-| `POST` | `/disputes/{id}/resolve` | Staff, Admin | `ResolveDisputeRequest` | Issue formal resolution and ledger settlement |
+| `POST` | `/disputes` | Co-Owner (Member), Staff, Admin | `CreateDisputeRequest` | Files grievance within ownership group with mandatory evidence, vehicle/session link, and respondent validation |
+| `GET` | `/disputes/{id}` | Co-Owner (Member), Staff, Admin | None | Retrieves dispute metadata and attached evidence records |
+| `GET` | `/disputes/group/{groupId}` | Co-Owner (Member), Staff, Admin | Query param (`status`) | Lists disputes for specified ownership group with optional lifecycle status filter (`OPEN`, `UNDER_REVIEW`, `RESOLVED`, `ESCALATED`) |
+| `POST` | `/disputes/{id}/transition` | Staff, Admin | `TransitionDisputeStatusRequest` | Transitions dispute status per `DisputeStateMachine` (staff restricted from resolving) |
+| `POST` | `/disputes/{id}/evidence` | Co-Owner (Member/Party), Staff, Admin | `CreateDisputeEvidenceRequest` | Attaches supplementary evidence (media URL, 3D defect coordinate mesh annotations, description) |
+| `GET` | `/disputes/{id}/evidence` | Co-Owner (Member), Staff, Admin | None | Lists all evidence records attached to the dispute |
+| `GET` | `/disputes/{id}/evidence/{evidenceId}` | Co-Owner (Member), Staff, Admin | None | Retrieves specific dispute evidence record including 3D defect coordinate annotations |
+| `PUT` | `/disputes/{id}/evidence/{evidenceId}` | Any | Any | Returns HTTP 405 Method Not Allowed (evidence is legally immutable) |
+| `DELETE` | `/disputes/{id}/evidence/{evidenceId}` | Any | Any | Returns HTTP 405 Method Not Allowed (evidence is legally immutable) |
+| `GET` | `/disputes/{id}/history` | Co-Owner (Member), Staff, Admin | None | Chronological audit trail of dispute lifecycle transitions, mediation notes, and evidence attachments |
+| `GET` | `/disputes/staff/review` | Staff, Admin | Query param (`status`) | Staff mediation dashboard listing disputes requiring operational review or mediation |
+| `POST` | `/disputes/{id}/mediation-notes` | Staff, Admin | `AddMediationNotesRequest` | Records factual staff mediation review notes and observations |
+| `POST` | `/disputes/{id}/propose-resolution` | Staff, Admin | `ProposeResolutionRequest` | Records non-binding staff resolution proposal and recommended settlement terms |
+| `POST` | `/disputes/{id}/arbitrate` | Admin | `AdminArbitrateDisputeRequest` | Executes administrator final binding dispute arbitration per `BR-DIS-05` |
+| `GET` | `/disputes/{id}/arbitration-dossier` | Admin | None | Comprehensive arbitration dossier retrieving all evidence attachments, mediation notes, and full audit logs for evidence review |
+| `POST` | `/disputes/{id}/fund-adjustment` | Admin | `DisputeFundAdjustmentRequest` | Executes administrator final binding arbitration with atomic `SharedFund` treasury adjustment (`DEBIT`/`CREDIT`) and immutable ledger entry per `BR-DIS-06` |
 
 ### 2.12. AI Recommendations & Analytics (`/api/v1/ai`, `/api/v1/analytics`)
 

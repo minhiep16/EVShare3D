@@ -7,5 +7,6 @@ public enum TransactionType {
     INTEREST,
     REFUND,
     CONTRIBUTION,
-    WITHDRAWAL
+    WITHDRAWAL,
+    DISPUTE_ADJUSTMENT
 }

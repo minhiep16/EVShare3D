@@ -16,20 +16,20 @@ public class DisputeEvidence {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dispute_id", nullable = false)
+    @JoinColumn(name = "dispute_id", nullable = false, updatable = false)
     private Dispute dispute;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uploaded_by_user_id", nullable = false)
+    @JoinColumn(name = "uploaded_by_user_id", nullable = false, updatable = false)
     private User uploadedByUser;
 
-    @Column(name = "file_url", nullable = false, length = 255)
+    @Column(name = "file_url", nullable = false, length = 255, updatable = false)
     private String fileUrl;
 
-    @Column(name = "mesh_3d_defect_coordinates", columnDefinition = "json")
+    @Column(name = "mesh_3d_defect_coordinates", columnDefinition = "json", updatable = false)
     private String mesh3dDefectCoordinates;
 
-    @Column(name = "description", length = 255)
+    @Column(name = "description", length = 255, updatable = false)
     private String description;
 
     @CreatedDate

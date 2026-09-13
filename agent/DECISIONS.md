@@ -150,3 +150,44 @@
   2. Implement `PaymentStateMachine` governing 6 canonical states (`PENDING`, `PROCESSING`, `SUCCESS`, `FAILED`, `REFUNDED`, `CANCELLED`). Enforce exactly 8 valid state transitions while strictly rejecting the other 28 permutations with HTTP 409 Conflict. State transitions acquire a pessimistic write lock on the `Payment` row and synchronize related entities (`SharedFund` balance credit/debit and `ExpenseAllocation` settlement status) in a single atomic transaction.
   3. Implement `IdempotencyService` storing request records in `idempotency_records`. Incoming requests evaluate the client `Idempotency-Key` header with a SHA-256 payload fingerprint. Identical replays return cached responses; tampered payloads with a used key are rejected with HTTP 409 Conflict.
 * **Consequences**: Eliminates duplicate charges, guarantees clean transaction rollback under downstream failures, preserves full transition audit lineage, and allows effortless addition of future payment processors.
+
+---
+
+## ADR-19: Syndicate Democratic Governance & Equity-Weighted Voting Protocol (BR-VOT-01..04)
+* **Status**: ACCEPTED
+* **Context**: Fractional EV co-ownership requires democratic self-governance for syndicate operational decisions, routine vs. major expenses, and co-owner admissions. Tokenized governance often suffers from voter apathy, Sybil attacks, duplicate voting, and opaque voting tallies. Co-owners need clear eligibility criteria, deterministic mathematical equity weighting, robust quorum checks, and voter privacy.
+* **Decision**: Implement the `VotingService` and `ProposalStateMachine` architecture:
+  1. **Proposal Eligibility**: Enforces $\ge 10.00\%$ active equity ownership stake in the syndicate group to sponsor proposals (`BR-VOT-01`).
+  2. **Automated Ballot Seeding**: Proposals automatically seed canonical ballot options (`APPROVE`, `REJECT`, `ABSTAIN`).
+  3. **Equity-Weighted Ballots**: Ballots cast are weighted strictly by the voter's active equity share percentage (`BigDecimal` precision). Duplicate votes are blocked both at the service layer and by database constraint `uk_proposal_user_vote (proposal_id, user_id)`.
+  4. **Quorum Enforcement**: Quorum requires $\ge 60.00\%$ active equity participation (`BR-VOT-02`). Ballots selecting `ABSTAIN` count toward reaching quorum.
+  5. **Tiered Passing Thresholds**: Routine expenses (`ROUTINE_EXPENSE`) require simple majority of participating equity ($> 50.00\%$), while major actions (`MAJOR_EXPENSE`, `OPERATIONAL_RULE_CHANGE`, `OWNER_ADMISSION_OR_EXIT`) require supermajority ($\ge 75.00\%$) of total active syndicate equity.
+  6. **Ballot Immutability & Privacy**: Ballots remain immutable and append-only. The official voting results endpoint (`/results`) provides transparent mathematical tallies while concealing individual ballots to preserve voter privacy (`BR-VOT-03`, `BR-VOT-04`).
+* **Consequences**: Guarantees mathematically unalterable democratic decision-making, prevents minority takeover or rogue proposals, and preserves voter confidentiality.
+
+---
+
+## ADR-20: Dispute Resolution Lifecycle, Multi-Role Mediation, and Administrative Arbitration Dossier (BR-DIS-01..05)
+* **Status**: ACCEPTED
+* **Context**: Fractional co-ownership syndicates experience interpersonal conflicts over vehicle damage, telemetry discrepancies, late returns, hygiene, and expense allocations. Unstructured disputes lead to deadlock or offline legal exposure. The system requires structured dispute progression, mandatory evidence verification, staff mediation capabilities, and authoritative administrative arbitration.
+* **Decision**: Implement `DisputeService` and `DisputeStateMachine`:
+  1. **Canonical Lifecycle**: Formalize canonical dispute lifecycle: `OPEN -> UNDER_REVIEW -> RESOLVED` or `OPEN / UNDER_REVIEW -> ESCALATED -> RESOLVED`.
+  2. **Mandatory Evidence & 3D Spatial Defects**: Enforce mandatory evidence attachment (`CreateDisputeEvidenceRequest`) with high-precision timestamping and optional 3D mesh defect coordinates (`mesh3dDefectCoordinates`) for physical vehicle inspections (`BR-DIS-02`, `BR-DIS-03`).
+  3. **Evidence Immutability**: Dispute evidence is strictly append-only and immutable; `PUT` and `DELETE` on evidence return `HTTP 405 Method Not Allowed`.
+  4. **Staff Mediation vs. Admin Authority**: Platform Staff (`ROLE_STAFF`) can record mediation notes and propose non-binding resolution terms (`BR-DIS-04`), but are strictly forbidden from executing final binding arbitration (`HTTP 403 Forbidden`).
+  5. **Administrative Arbitration Dossier**: Platform Administrators (`ROLE_ADMIN`) hold exclusive authority to execute final binding arbitration (`BR-DIS-05`) backed by comprehensive evidence review via the unified arbitration dossier (`GET /api/v1/disputes/{id}/arbitration-dossier`).
+* **Consequences**: Eliminates informal or unprovable accusations, ensures complete due process and evidence transparency, and enforces strict RBAC separation between mediation and final legal rulings.
+
+---
+
+## ADR-21: Dispute-Treasury Settlement Integration with Atomic Balance Adjustment and Immutable Financial History (BR-DIS-06)
+* **Status**: ACCEPTED
+* **Context**: Resolving disputes often mandates financial compensation—either reimbursing an aggrieved co-owner from the syndicate SharedFund or assessing damages/penalties deposited into the fund. If dispute resolution and treasury fund modification execute in separate transactions, network failures or overdrafts could result in resolved disputes without payment or deducted balances without dispute closure.
+* **Decision**: Integrate `DisputeService` with `SharedFundRepository` and `FundTransactionRepository` under a single atomic `@Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)` boundary (`POST /api/v1/disputes/{id}/fund-adjustment`):
+  1. **Pessimistic Row-Level Locking**: Acquire pessimistic write lock (`SELECT ... FOR UPDATE` via `findByGroupIdWithLock`) on the syndicate's `SharedFund` vault row.
+  2. **Overdraft Protection**: For `DEBIT` adjustments, validate that `currentBalance >= adjustmentAmount`; throw `InsufficientFundBalanceException` (`HTTP 400 Bad Request`) on overdraft.
+  3. **Atomic Multi-Entity Sync**: Atomically mutate fund balance, create an immutable `FundTransaction` (`DISPUTE_ADJUSTMENT`, `DISPUTE_RESOLUTION`, unique reference `DISP-<disputeId>-<UUID8>`), transition dispute status to `RESOLVED`, and bind `fund_transaction_id` and `fund_adjustment_amount` on the `Dispute` entity.
+  4. **Strict Rollback on Failure**: Enforce strict rollback on any exception: zero balance drift, zero partial transactions.
+  5. **Double-Adjustment Prevention**: Prevent duplicate resolution or double fund adjustments: terminal `RESOLVED` status and existing `fund_transaction_id` strictly reject subsequent attempts with `HTTP 409 Conflict`.
+  6. **Dual Audit Trails**: Record dual immutable audit logs (`DISPUTE_ARBITRATED` on Dispute, `SHARED_FUND_DISPUTE_ADJUSTMENT` on SharedFund).
+* **Consequences**: Eliminates all risk of ledger discrepancy, double payouts, or partial settlement state between the governance dispute subsystem and the treasury banking ledger.
