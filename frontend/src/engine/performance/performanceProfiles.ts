@@ -1,0 +1,47 @@
+import * as THREE from 'three';
+import { PerformanceProfile, PerformanceTier } from './performanceTypes';
+
+export const PERFORMANCE_PROFILES: Record<PerformanceTier, PerformanceProfile> = {
+  HIGH: {
+    tier: 'HIGH',
+    dprRange: [1.0, 2.0],
+    targetFps: 60,
+    shadowsEnabled: true,
+    shadowMapSize: 2048,
+    shadowType: THREE.PCFSoftShadowMap,
+    antialias: true,
+    maxTextureResolution: 2048,
+    maxAnisotropy: 16,
+    lodBias: 1.0,
+    enablePostProcessing: true,
+    powerPreference: 'high-performance',
+  },
+  MEDIUM: {
+    tier: 'MEDIUM',
+    dprRange: [0.85, 1.5],
+    targetFps: 60,
+    shadowsEnabled: true,
+    shadowMapSize: 1024,
+    shadowType: THREE.PCFShadowMap,
+    antialias: true,
+    maxTextureResolution: 1024,
+    maxAnisotropy: 4,
+    lodBias: 1.2,
+    enablePostProcessing: true,
+    powerPreference: 'high-performance',
+  },
+  LOW: {
+    tier: 'LOW',
+    dprRange: [0.65, 1.0],
+    targetFps: 30,
+    shadowsEnabled: false,
+    shadowMapSize: 0,
+    shadowType: THREE.BasicShadowMap,
+    antialias: false,
+    maxTextureResolution: 512,
+    maxAnisotropy: 1,
+    lodBias: 1.5,
+    enablePostProcessing: false,
+    powerPreference: 'default',
+  },
+};

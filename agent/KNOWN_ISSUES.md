@@ -161,3 +161,28 @@
   3. Overdraft prevention: Validates `currentBalance >= adjustmentAmount` for `DEBIT` operations; throws `InsufficientFundBalanceException` (HTTP 400 Bad Request) on insufficient funds.
   4. Automatic rollback: Downstream errors trigger complete transaction rollback, preserving unchanged dispute status, untouched fund balance, and zero partial ledger records.
   5. Duplicate prevention: Validates that the dispute is not already `RESOLVED` and has no existing `fund_transaction_id`, rejecting duplicate adjustment requests with HTTP 409 Conflict.
+
+---
+
+## 20. Mobile GPU Thermal Throttling & DPR Scaling
+* **Risk**: Rendering high-polygon 3D meshes with real-time PBR lighting and soft shadows on mobile devices with high-density Retina displays (e.g. 3x DPR on modern iPhones) causes rapid thermal throttling, severe frame drops, and heavy battery drain.
+* **Mitigation Strategy**:
+  1. `ResponsiveViewportController` and `usePerformanceStore` enforce a strict DPR clamp on mobile devices ($\le 1.25$ on mobile phones, $\le 1.5$ on tablets), reducing fragment shader load by up to $60\%$.
+  2. Mobile screens automatically boot with `LOW` tier profile (shadows disabled, unneeded post-processing removed, aggressive geometry LOD reduction).
+
+---
+
+## 21. WebGL Context Loss on Mobile Browser Backgrounding
+* **Risk**: When mobile users switch apps, receive phone calls, or lock their screens, mobile operating systems (iOS Safari, Android Chrome) aggressively terminate or suspend the WebGL context to conserve VRAM, causing unhandled renderer crashes when returning to the tab.
+* **Mitigation Strategy**:
+  1. `Canvas3DFoundation` binds directly to `webglcontextlost` and `webglcontextrestored` events on the HTML Canvas.
+  2. The recovery store halts active render loops during context loss, frees pending texture uploads, and automatically reinitializes scene pipelines upon receiving `webglcontextrestored`.
+  3. If context restoration fails, the cybernetic `RecoveryScreen` is presented with retry and Safe Mode recovery options.
+
+---
+
+## 22. Touch Gesture Conflicts with Native Browser Scrolling & Navigation
+* **Risk**: Touch interactions in the 3D canvas (such as virtual joystick movement, pinch-to-zoom, or look drag) could inadvertently trigger native browser gestures, such as pull-to-refresh, pinch-zoom on the webpage DOM, or edge-swipe back navigation.
+* **Mitigation Strategy**:
+  1. The `#root` and `canvas` container enforce `touch-action: none; overflow: hidden; overscroll-behavior: none; user-select: none;` in `index.css`.
+  2. `VirtualTouchJoystick` and `TouchGestureController` call `e.preventDefault()` and `e.stopPropagation()` on active touch events, locking input exclusively into the 3D spatial engine.

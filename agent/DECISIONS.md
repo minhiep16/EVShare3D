@@ -191,3 +191,38 @@
   5. **Double-Adjustment Prevention**: Prevent duplicate resolution or double fund adjustments: terminal `RESOLVED` status and existing `fund_transaction_id` strictly reject subsequent attempts with `HTTP 409 Conflict`.
   6. **Dual Audit Trails**: Record dual immutable audit logs (`DISPUTE_ARBITRATED` on Dispute, `SHARED_FUND_DISPUTE_ADJUSTMENT` on SharedFund).
 * **Consequences**: Eliminates all risk of ledger discrepancy, double payouts, or partial settlement state between the governance dispute subsystem and the treasury banking ledger.
+
+---
+
+## ADR-22: Multi-Tier Dynamic Performance Engine & Adaptive DPR Scaling
+* **Status**: ACCEPTED
+* **Context**: The master specification requires EVShare 3D to maintain a smooth 60 FPS visual experience across high-end discrete GPUs, laptops with integrated GPUs, and mobile devices without suffering thermal throttling or frame stutter.
+* **Decision**: Implement `usePerformanceStore` and calibrated `PerformanceProfile` tiers (`HIGH`, `MEDIUM`, `LOW`):
+  1. `HIGH`: Native Retina DPR `[1.0, 2.0]`, 2048 PCF soft shadows, $16\times$ anisotropy, $1.0\times$ LOD bias, full bloom/SSAO.
+  2. `MEDIUM`: Balanced DPR `[0.85, 1.5]`, 1024 PCF shadows, $4\times$ anisotropy, $1.2\times$ LOD bias, subtle bloom.
+  3. `LOW`: Clamped DPR `[0.65, 1.0]`, shadows disabled, $1\times$ filtering, $1.5\times$ aggressive polygon reduction, post-processing off.
+  4. Dynamic degradation engine: Measures frame render time via moving average buffer ($N=60$). If FPS drops below $28\text{fps}$ for $\ge 3\text{s}$, automatically steps down tier without page reloads.
+* **Consequences**: Ensures high-end machines display hyper-realistic cyber-industrial visuals while lower-spec machines automatically maintain stable framerates.
+
+---
+
+## ADR-23: Cybernetic WebGL Diagnostics & Safe Mode Recovery (Anti-2D Fallback Mandate)
+* **Status**: ACCEPTED
+* **Context**: When WebGL experiences context loss, memory exhaustion, or hardware capability failure, traditional Web3/3D apps often silently degrade into an ordinary HTML 2D dashboard or display a blank white page. Both violate the master Pure 3D mandate.
+* **Decision**: Implement a dedicated WebGL recovery architecture in `frontend/src/engine/recovery/`:
+  1. `webglDetector`: Queries WebGL2, GPU vendor, renderer, and unmasked hardware telemetry, flagging software CPU emulators.
+  2. `useWebGLRecoveryStore`: Tracks context loss/restore events, catches initialization faults, and persists diagnostic reports.
+  3. `RecoveryScreen`: Cybernetic diagnostic HUD offering detailed GPU readout, copyable JSON telemetry, retry loop (up to 3 attempts), and a lightweight 3D "Safe Mode" (booting with `LOW` tier profile).
+  4. `ErrorBoundary3D`: Catches R3F rendering and buffer overflow faults.
+* **Consequences**: Strictly prevents blank screens and eliminates silent 2D dashboard fallback while empowering users and engineers with deep GPU diagnostic visibility.
+
+---
+
+## ADR-24: Unified Touch Control & Responsive Viewport Adaptation
+* **Status**: ACCEPTED
+* **Context**: Metaverse EV co-ownership must be accessible on smartphones and tablets. Standard mouse/pointer controls fail on touchscreens, and narrow portrait aspect ratios can clip 3D vehicle showrooms or terminals.
+* **Decision**: Implement the mobile/tablet touch subsystem in `frontend/src/engine/touch/`:
+  1. `VirtualTouchJoystick`: Bottom-left HUD thumbstick computing 360° normalized analog vectors `[strafe, forward]`, mapping displacement magnitude to `WALKING` vs `SPRINTING` with spring-recentering.
+  2. `TouchGestureController`: Filters taps ($\le 250\text{ms}$, $\le 10\text{px}$) for raycasting selection via normalized NDC coordinates, while touch drags on the right viewport orbit and pitch the spatial camera. Two-finger pinch controls camera zoom/FOV.
+  3. `ResponsiveViewportController`: Dynamically adapts vertical FOV on portrait viewports ($aspect < 1.0$, scaling up to $1.4\times$) and automatically clamps DPR ($\le 1.25$ mobile, $\le 1.5$ tablet) to prevent thermal degradation.
+* **Consequences**: Provides smooth, intuitive tactile navigation on mobile devices within the exact same pure 3D canvas experience.

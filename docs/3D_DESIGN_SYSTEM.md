@@ -80,43 +80,62 @@ Every UI component is a genuine Three.js group composed of 3D meshes, collider v
 
 ---
 
-## 5. 3D Interactive States Lifecycle
+## 5. 3D Interactive States Lifecycle & Visual State System (08-AC)
 
-Every interactive element implements a uniform 8-state state machine:
+Every interactive element implements a uniform 8-state state machine resolved by the central `VisualStateEngine`:
 
 ```text
         ┌─────────────┐
-        │    IDLE     │
+        │    IDLE     │ ◄─── Rest state, neutral emission, standard scale
         └──────┬──────┘
                │ onPointerOver
                ▼
         ┌─────────────┐
-        │    HOVER    │ ◄─── Glow expands, subtle scale (1.05x), audio hum
+        │    HOVER    │ ◄─── Levitation (+0.025m), 1.04x scale, glow expansion, UI_HOVER chirp
         └──────┬──────┘
                │ onPointerDown
                ▼
         ┌─────────────┐
-        │   ACTIVE    │ ◄─── Physical Z-depression, emissive pulse, click sound
+        │   ACTIVE    │ ◄─── Tactile Z-depression (-0.018m), emissive pulse (2.5), UI_CLICK snap
         └──────┬──────┘
                │ onPointerUp (Selected)
                ▼
         ┌─────────────┐
-        │  SELECTED   │ ◄─── Persistent highlight ring, camera alignment
+        │  SELECTED   │ ◄─── High elevation (+0.035m), 1.06x scale, persistent amber gold glow
         └──────┬──────┘
                │ Async Action Triggered
                ▼
         ┌─────────────┐
-        │   LOADING   │ ◄─── Pulsing orb animation, disabled collider
+        │   LOADING   │ ◄─── Revolving holographic 3D spinner ring, pulsing opacity, WAIT cursor
         └──────┬──────┘
                ├─────────────────────────┐
                ▼ (success)               ▼ (failure)
         ┌─────────────┐           ┌─────────────┐
         │   SUCCESS   │           │    ERROR    │
-        │ Green Burst │           │  Red Jitter │
+        │ Emerald     │           │ Crimson     │
+        │ Burst       │           │ Jitter      │
+        │ (+0.015m,   │           │ (0.02m shake│
+        │ 1.08x,      │           │ 35Hz,       │
+        │ NOTIF_CHIME)│           │ NOTIF_ERROR)│
         └─────────────┘           └─────────────┘
 ```
 
-* **Disabled State (`DISABLED`)**: Desaturated matte gray material, zero emissive emission, raycast interactions completely ignored.
+### Shared 8-State Specification Matrix
+
+| Visual State | Elevation $\Delta Z$ | Scale | Emissive | Emissive Color | Cursor | Transition / Easing | Audio Trigger | Interactivity |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`IDLE`** | `0.000m` | `1.00x` | `0.35` | Variant Glow | `POINTER` | $180\text{ms}$ Spring Damp | — | Interactive |
+| **`HOVER`** | `+0.025m` | `1.04x` | `1.60` | Variant Glow | `POINTER` | $120\text{ms}$ Spring Damp | `UI_HOVER` | Interactive |
+| **`ACTIVE`** | `-0.018m` | `1.00x` | `2.50` | `#ffffff` / Variant | `POINTER` | $60\text{ms}$ Fast Snap | `UI_CLICK` | Interactive |
+| **`SELECTED`** | `+0.035m` | `1.06x` | `2.00` | `#ffab00` (Amber) | `POINTER` | $200\text{ms}$ Spring Damp | — | Interactive |
+| **`DISABLED`** | `0.000m` | `1.00x` | `0.00` | `#000000` (Matte) | `NOT_ALLOWED`| $150\text{ms}$ Linear Fade | — | **Blocked** |
+| **`LOADING`** | `0.000m` | `1.00x` | `0.80` | Variant Glow | `WAIT` | $6.0\text{rad/s}$ Spinner Orbit | — | **Blocked** |
+| **`SUCCESS`** | `+0.015m` | `1.08x` | `2.40` | `#00e676` (Emerald)| `POINTER` | $350\text{ms}$ Punch & Settle | `NOTIF_SUCCESS`| Interactive |
+| **`ERROR`** | `0.000m` | `1.00x` | `2.40` | `#ff1744` (Crimson)| `POINTER` | $35\text{Hz}$ Harmonic Shake | `NOTIF_ERROR` | Interactive |
+
+### State Priority Hierarchy
+When multiple flags are simultaneously set on a component, the `VisualStateEngine` resolves states strictly by precedence:
+$$\text{controlledState} \succ \text{DISABLED} \succ \text{LOADING} \succ \text{ACTIVE} \succ \text{SELECTED} \succ \text{HOVER} \succ \text{IDLE}$$
 
 ---
 
@@ -140,3 +159,77 @@ Every interactive element implements a uniform 8-state state machine:
   * `payment_success.mp3`: Harmonic chime on ledger balance credit.
   * `alert_dispute.mp3`: Dual-tone warning pulse in the Dispute Room.
 * Global audio toggle and volume sliders readily accessible on the user's 3D wristwatch / companion terminal.
+
+---
+
+## 8. Multi-Tier Adaptive Performance & Quality Control (08-AD)
+
+To guarantee fluid 60 FPS performance across diverse hardware without sacrificing visual fidelity on high-end GPUs, the engine implements three calibrated performance profiles managed by `usePerformanceStore`:
+
+| Setting / Metric | `HIGH` Tier (Dedicated GPU) | `MEDIUM` Tier (Integrated GPU / Tablet) | `LOW` Tier (Mobile / Safe Mode) |
+| :--- | :--- | :--- | :--- |
+| **Target Frame Rate** | 60 FPS | 60 FPS | 30–60 FPS |
+| **Device Pixel Ratio (DPR)** | `[1.0, 2.0]` (Native Retina) | `[0.85, 1.5]` (Balanced) | `[0.65, 1.0]` (Clamped) |
+| **Shadow Quality** | PCF Soft Shadows (2048x2048) | Standard PCF Shadows (1024x1024) | Shadows Disabled (Ambient Occlusion only) |
+| **Anisotropic Filtering** | $16\times$ Anisotropy | $4\times$ Anisotropy | $1\times$ (Bilinear / Trilinear) |
+| **Geometry LOD Bias** | $1.0\times$ Full Geometry Detail | $1.2\times$ Moderate Simplification | $1.5\times$ Aggressive Polygon Reduction |
+| **Post-Processing** | Full Bloom, SSAO, Motion Blur | Subtle Bloom Only | Disabled |
+
+### Dynamic Degradation Engine
+The engine continuously samples render frame times via a moving average buffer ($N=60$). If sustained framerate drops below $28\text{fps}$ for $\ge 3$ consecutive seconds, the engine automatically downgrades the tier (`HIGH -> MEDIUM -> LOW`) and recalculates DPR without triggering a full page reload or interrupting the user.
+
+---
+
+## 9. WebGL Diagnostics, Failure Detection & Safe Mode Recovery (08-AE)
+
+In strict adherence to the **Pure 3D Mandate**, when WebGL encounters critical errors or hardware incompatibility, the application **NEVER silently degrades into a traditional 2D dashboard website**. Instead, the platform deploys a dedicated cybernetic WebGL diagnostics and recovery cockpit:
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                 WEBGL RECOVERY ENGINE                       │
+│                                                             │
+│  [Status Alert]  CONTEXT_LOST / INIT_FAILED / RENDER_ERROR   │
+│  [Diagnostics]   GPU Vendor, Renderer, WebGL2, Max Textures │
+│                                                             │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────┐  │
+│  │ RETRY INIT (3x)  │  │ SAFE MODE (LOW)  │  │ FULL BOOT │  │
+│  └──────────────────┘  └──────────────────┘  └───────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+1. **Hardware & Capability Probe (`webglDetector.ts`)**:
+   * Evaluates WebGL2 and WebGL1 context availability.
+   * Queries unmasked GPU vendor and renderer via `WEBGL_debug_renderer_info`.
+   * Flags software rasterizers (SwiftShader, llvmpipe, softpipe, VirtualBox).
+   * Generates a copyable JSON diagnostic telemetry report.
+2. **Context Loss & Restoration Hooks**:
+   * Direct listeners on canvas `webglcontextlost` and `webglcontextrestored`.
+   * Captures context exhaustion and frees GPU textures and geometries.
+3. **React 3D Error Boundary (`ErrorBoundary3D.tsx`)**:
+   * Catches runtime shader compilation, buffer overflow, and R3F lifecycle errors.
+4. **Safe Mode Profile**:
+   * Strips dynamic shadow maps, disables post-processing, clamps DPR to 1.0, and boots the 3D scene in lightweight mode.
+
+---
+
+## 10. Mobile & Tablet 3D Touch Interaction Architecture (08-AF)
+
+EVShare 3D is fully operable on touchscreen devices (smartphones, tablets, iPads) without compromising the spatial 3D paradigm:
+
+1. **Virtual Touch Joystick (`VirtualTouchJoystick.tsx`)**:
+   * Positioned on the lower-left corner of the viewport.
+   * Computes normalized 360-degree analog vectors `[strafe, forward]`.
+   * Maps displacement magnitude to avatar velocity:
+     * $|\vec{v}| \le 0.85 \implies$ `WALKING` mode.
+     * $|\vec{v}| > 0.85 \implies$ `SPRINTING` mode.
+   * Auto-recenters with spring physics on finger release.
+2. **Touch Tap Selection Raycasting (`TouchGestureController.tsx`)**:
+   * Discriminates rapid taps from camera drags ($t \le 250\text{ms}$ and $\Delta d \le 10\text{px}$).
+   * Projects tap coordinates directly into NDC space `[-1, 1]` to trigger 3D raycast selection on vehicles, terminals, and buttons.
+3. **Camera Touch Drag & Pinch-to-Zoom**:
+   * Single-finger swipe across the right 65% of the viewport orbits or pitches the spatial camera.
+   * Two-finger pinch computes inter-touch euclidean distance delta and adjusts camera zoom/FOV smoothly.
+4. **Responsive Viewport Adaptation (`ResponsiveViewportController.tsx`)**:
+   * Automatically monitors screen aspect ratios ($W/H$).
+   * For narrow portrait viewports ($aspect < 1.0$), scales camera vertical FOV up to $1.4\times$ to guarantee that vehicle showrooms and terminals remain completely visible.
+   * Clamps DPR to $\le 1.25$ on mobile phones and $\le 1.5$ on tablets to prevent thermal throttling.
