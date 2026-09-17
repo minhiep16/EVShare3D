@@ -226,3 +226,38 @@
   2. `TouchGestureController`: Filters taps ($\le 250\text{ms}$, $\le 10\text{px}$) for raycasting selection via normalized NDC coordinates, while touch drags on the right viewport orbit and pitch the spatial camera. Two-finger pinch controls camera zoom/FOV.
   3. `ResponsiveViewportController`: Dynamically adapts vertical FOV on portrait viewports ($aspect < 1.0$, scaling up to $1.4\times$) and automatically clamps DPR ($\le 1.25$ mobile, $\le 1.5$ tablet) to prevent thermal degradation.
 * **Consequences**: Provides smooth, intuitive tactile navigation on mobile devices within the exact same pure 3D canvas experience.
+
+---
+
+## ADR-25: Central Garage Spatial Layout & Digital Twin Architecture
+* **Status**: ACCEPTED
+* **Context**: The Central Garage serves as the primary physical showroom in the virtual metaverse where co-owners inspect their vehicles, monitor battery telemetry, observe charging status, and manage physical locks. Traditional 2D modal dialogs are forbidden.
+* **Decision**: Implement a dedicated 3D Central Garage sector with procedural digital twin vehicles:
+  1. **Radial Showroom Geometry**: Central showroom disc ($24\text{m}$ radius) at coordinate origin `[0, 0, 0]` with perimeter curb rings, overhead illumination halo, and 6 demarcated parking stalls (`BAY-01` to `BAY-06`).
+  2. **High-Power Charging Hub**: Dedicated Supercharger kiosks (`CHG-01`, `CHG-02`) at bays 5 and 6 with holographic kW readouts and animated charging status aura.
+  3. **Digital Twin Procedural Models**: Aerodynamic procedural EV models with metallic body paint, glass canopy, alloy wheels with glowing calipers, Cyberpunk LED lightbars, underglow reflecting vehicle status, and 3D floating holographic cards displaying model name, license plate, status badge, battery SoC progress bar, and co-ownership syndicate breakdown.
+  4. **Spatial Inspection Terminal**: In-world interactive terminal positioned beside the selected vehicle allowing spatial interaction (lock toggle, charging toggle, live telemetry) without taking the player out of the 3D world.
+  5. **Backend Data Hydration**: REST client integration with `/api/vehicles` and `/api/ownership-groups` with graceful bootstrap fallback when the backend is offline.
+* **Consequences**: Brings the vehicle co-ownership experience to life as an interactive 3D digital twin showroom fully integrated into the metaverse navigation and camera system.
+
+---
+
+## ADR-26: Pure 3D WebGL Spatial Interfaces vs. Traditional 2D Web Artifacts
+* **Status**: ACCEPTED
+* **Context**: Traditional web development uses HTML navbars, sidebars, dashboard grids, CRUD tables, and overlay modal dialogs. The master specification explicitly prohibits these constructs.
+* **Decision**: All user interactions across all 13 sectors of the EVShare 3D metaverse are constructed as authentic Three.js entities inside the WebGL canvas:
+  1. No traditional HTML navbar or sidebar.
+  2. No 2D dashboard or normal CRUD web pages.
+  3. No HTML modal or `<Html>` overlay replacing 3D interaction.
+  4. All user inputs, keyboards, terminals, biometric readers, contract lecterns, voting consoles, and defect holotanks are pure WebGL meshes using SDF text rendering, physical raycasting, and tactile feedback.
+* **Consequences**: Fulfills the revolutionary vision of an authentic 3D spatial metaverse for EV fractional co-ownership.
+
+---
+
+## ADR-27: Dual-Layer World Access Security ("Frontend Visibility is NOT Security")
+* **Status**: ACCEPTED
+* **Context**: Role-based access control (RBAC) in 3D worlds can easily confuse spatial visual cues (e.g. laser gates, portal colors, or boundary collision bounce) with true security boundaries.
+* **Decision**: Architect a strict dual-layer model:
+  1. **Frontend Layer (Spatial UX & Ergonomics)**: Portals render glowing red wireframe security barriers when unpermitted; cursor sets to `NOT_ALLOWED`; hovering displays dynamic warnings (`[UNAUTHORIZED] LOGIN REQUIRED` or `[RESTRICTED] REQUIRES ${role}`); physical boundary detection bounces unpermitted avatars back to safety.
+  2. **Authoritative Backend Security Boundary**: Spring Security enforces `@PreAuthorize("hasRole('...')")` and ownership ACL scoping at the REST API gateway. Direct HTTP requests without valid JWT Bearer credentials or sufficient role authorities are rejected with `HTTP 401 Unauthorized` or `HTTP 403 Forbidden`.
+* **Consequences**: Ensures that client-side state manipulation or coordinate teleportation can never bypass authoritative backend data security, voting rules, financial ledgers, or contract signing.

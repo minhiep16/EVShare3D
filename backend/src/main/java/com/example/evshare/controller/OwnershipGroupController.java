@@ -54,6 +54,19 @@ public class OwnershipGroupController {
                 .body(ApiResponse.ok("Ownership group created successfully", response));
     }
 
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "List all active ownership groups",
+            description = "Retrieves all active co-ownership syndicates. Accessible by authenticated users.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Ownership groups retrieved successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Authentication required")
+    })
+    public ResponseEntity<ApiResponse<List<OwnershipGroupResponse>>> getAllGroups() {
+        List<OwnershipGroupResponse> response = ownershipGroupService.getAllGroups();
+        return ResponseEntity.ok(ApiResponse.ok("Ownership groups retrieved successfully", response));
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN') or (hasRole('CO_OWNER') and @ownershipSecurity.isGroupMember(#id, principal.id))")
     @Operation(summary = "Retrieve ownership group details by ID",

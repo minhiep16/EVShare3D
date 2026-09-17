@@ -43,6 +43,18 @@ export const SceneManager: React.FC<SceneManagerProps> = ({
   const setProgress = useLoadingStore((state) => state.setProgress);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
 
+  const onLifecycleChangeRef = useRef(onLifecycleChange);
+  useEffect(() => {
+    onLifecycleChangeRef.current = onLifecycleChange;
+  }, [onLifecycleChange]);
+
+  const currentSceneRef = useRef(currentScene);
+  useEffect(() => {
+    currentSceneRef.current = currentScene;
+  }, [currentScene]);
+
+  const isFirstMountRef = useRef(true);
+
   // Scene transition orchestration
   useEffect(() => {
     let isCancelled = false;
@@ -54,18 +66,37 @@ export const SceneManager: React.FC<SceneManagerProps> = ({
       return;
     }
 
+    if (isFirstMountRef.current) {
+      isFirstMountRef.current = false;
+      setCameraPosition(nextScene.camera.position);
+      setCameraTarget(nextScene.camera.target);
+      setCameraFov(nextScene.camera.fov);
+      setLightingProfile(nextScene.environment.lightingProfile);
+      setSectorLoaded(true);
+      setLifecycle('ACTIVE');
+      onLifecycleChangeRef.current?.('ACTIVE', nextScene.id);
+      if (nextScene.onEnter) {
+        nextScene.onEnter().catch((err) => {
+          console.error(`[SceneManager] Error in initial onEnter for scene "${nextScene.id}":`, err);
+        });
+      }
+      return;
+    }
+
     const performTransition = async (): Promise<void> => {
+      const prevScene = currentSceneRef.current;
+
       // 1. EXITING outgoing scene
       setLifecycle('EXITING');
-      onLifecycleChange?.('EXITING', currentScene?.id || '');
+      onLifecycleChangeRef.current?.('EXITING', prevScene?.id || '');
       startLoading('scene_transition', `Loading environment: ${nextScene.name}...`);
       setProgress(15);
 
-      if (currentScene?.onExit) {
+      if (prevScene?.onExit) {
         try {
-          await currentScene.onExit();
+          await prevScene.onExit();
         } catch (err) {
-          console.error(`[SceneManager] Error in onExit for scene "${currentScene.id}":`, err);
+          console.error(`[SceneManager] Error in onExit for scene "${prevScene.id}":`, err);
         }
       }
 
@@ -87,7 +118,7 @@ export const SceneManager: React.FC<SceneManagerProps> = ({
 
       // 3. INITIALIZING incoming scene environment & camera
       setLifecycle('INITIALIZING');
-      onLifecycleChange?.('INITIALIZING', nextScene.id);
+      onLifecycleChangeRef.current?.('INITIALIZING', nextScene.id);
 
       // Update camera framing to scene defaults
       setCameraPosition(nextScene.camera.position);
@@ -114,7 +145,7 @@ export const SceneManager: React.FC<SceneManagerProps> = ({
       // 5. ACTIVE
       setLifecycle('ACTIVE');
       setSectorLoaded(true);
-      onLifecycleChange?.('ACTIVE', nextScene.id);
+      onLifecycleChangeRef.current?.('ACTIVE', nextScene.id);
       setProgress(100);
       stopLoading('scene_transition');
     };
@@ -124,19 +155,7 @@ export const SceneManager: React.FC<SceneManagerProps> = ({
     return () => {
       isCancelled = true;
     };
-  }, [
-    activeSceneId,
-    setCameraPosition,
-    setCameraTarget,
-    setCameraFov,
-    setLightingProfile,
-    setSectorLoaded,
-    startLoading,
-    setProgress,
-    stopLoading,
-    transitionDurationMs,
-    onLifecycleChange,
-  ]);
+  }, [activeSceneId, transitionDurationMs]);
 
   // Clean up on component unmount
   useEffect(() => {

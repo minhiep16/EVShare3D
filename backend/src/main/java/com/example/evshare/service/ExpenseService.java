@@ -1,9 +1,8 @@
 package com.example.evshare.service;
 
 import com.example.evshare.dto.request.CreateExpenseRequest;
-import com.example.evshare.dto.response.ExpenseAuditLogResponse;
-import com.example.evshare.dto.response.ExpenseResponse;
-import com.example.evshare.dto.response.PagedData;
+import com.example.evshare.dto.response.*;
+import com.example.evshare.entity.enums.AllocationStrategy;
 import com.example.evshare.entity.enums.ExpenseCategory;
 import org.springframework.data.domain.Pageable;
 
@@ -55,4 +54,20 @@ public interface ExpenseService {
      * @return list of audit log entries
      */
     List<ExpenseAuditLogResponse> getExpenseHistory(Long id, Long currentUserId);
+
+    /**
+     * Authoritatively calculates the syndicate group cost allocation summary across all active expenses
+     * using the specified AllocationStrategy (OWNERSHIP_BASED, USAGE_BASED, HYBRID).
+     */
+    GroupAllocationSummaryResponse getGroupAllocationSummary(Long groupId, AllocationStrategy strategy, Long currentUserId);
+
+    /**
+     * Retrieves the persisted itemized member cost allocations for an expense.
+     */
+    List<ExpenseAllocationResponse> getExpenseAllocations(Long expenseId, Long currentUserId);
+
+    /**
+     * Authoritatively calculates and persists itemized member cost allocations for an expense.
+     */
+    ExpenseResponse allocateExpense(Long expenseId, Long currentUserId);
 }

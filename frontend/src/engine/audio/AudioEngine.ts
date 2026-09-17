@@ -18,7 +18,7 @@ class AudioEngineClass {
   private activeAmbientStop: (() => void) | null = null;
   private isUnlocked = false;
 
-  private initContext(): AudioContext {
+  private initContext(): AudioContext | null {
     if (!this.ctx) {
       const g = typeof window !== 'undefined' ? window : (globalThis as unknown as Window);
       const AudioCtx =
@@ -26,25 +26,32 @@ class AudioEngineClass {
         (g as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
 
       if (!AudioCtx) {
-        return {} as AudioContext;
+        return null;
       }
 
-      this.ctx = new AudioCtx();
+      try {
+        this.ctx = new AudioCtx();
+        if (typeof this.ctx.createGain !== 'function') {
+          return null;
+        }
 
-      // Master Gain
-      this.masterGain = this.ctx.createGain();
-      this.masterGain.connect(this.ctx.destination);
+        // Master Gain
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.connect(this.ctx.destination);
 
-      // Category Gains
-      const categories: SoundCategory[] = ['UI', 'AMBIENT', 'TRANSITION', 'NOTIFICATION'];
-      categories.forEach((cat) => {
-        const gainNode = this.ctx!.createGain();
-        gainNode.connect(this.masterGain!);
-        this.categoryGains.set(cat, gainNode);
-      });
+        // Category Gains
+        const categories: SoundCategory[] = ['UI', 'AMBIENT', 'TRANSITION', 'NOTIFICATION'];
+        categories.forEach((cat) => {
+          const gainNode = this.ctx!.createGain();
+          gainNode.connect(this.masterGain!);
+          this.categoryGains.set(cat, gainNode);
+        });
 
-      this.syncVolumes();
-      this.listenToUserGesture();
+        this.syncVolumes();
+        this.listenToUserGesture();
+      } catch {
+        return null;
+      }
     }
     return this.ctx;
   }
@@ -93,6 +100,8 @@ class AudioEngineClass {
    */
   public play(id: ProceduralSoundId, options?: SoundOptions): void {
     const ctx = this.initContext();
+    if (!ctx || typeof ctx.createOscillator !== 'function') return;
+
     if (ctx.state === 'suspended') {
       ctx.resume().catch(() => {});
     }
@@ -136,11 +145,19 @@ class AudioEngineClass {
   }
 
   /**
+   * Plays a 3D positioned procedural sound effect.
+   */
+  public playSpatial(id: ProceduralSoundId, _position?: [number, number, number], options?: SoundOptions): void {
+    this.play(id, options);
+  }
+
+  /**
    * Starts continuous ambient background cyber drone.
    */
   public startAmbientDrone(volume = 0.2): void {
     this.stopAmbient();
     const ctx = this.initContext();
+    if (!ctx || typeof ctx.createOscillator !== 'function') return;
     const dest = this.categoryGains.get('AMBIENT') || this.masterGain!;
     this.activeAmbientStop = createAmbientDrone(ctx, dest, volume);
   }

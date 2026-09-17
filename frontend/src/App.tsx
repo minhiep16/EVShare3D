@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import * as THREE from 'three';
+import { useAuthStore } from '@/auth/useAuthStore';
 import {
   Canvas3DFoundation,
   SceneManager,
@@ -38,6 +39,9 @@ export const App: React.FC = () => {
   const setQuality = useEngineStore((state) => state.setQuality);
   const dimensions = useEngineStore((state) => state.canvasDimensions);
   const isReady = useEngineStore((state) => state.isReady);
+
+  // Auth store
+  const currentUser = useAuthStore((state) => state.currentUser);
 
   // Performance store
   const currentTier = usePerformanceStore((state) => state.currentTier);
@@ -90,10 +94,29 @@ export const App: React.FC = () => {
 
   // Scene lifecycle tracking
   const [sceneLifecycle, setSceneLifecycle] = useState<SceneLifecycleState>('ACTIVE');
+  const handleLifecycleChange = useCallback((state: SceneLifecycleState) => {
+    setSceneLifecycle(state);
+  }, []);
+
+  // 3D Boot: Initialize and bootstrap authentication session
+  useEffect(() => {
+    useAuthStore.getState().bootstrapAuth();
+  }, []);
 
   const availableSectors: { id: SectorId; label: string }[] = [
     { id: 'SECURITY_CHECKPOINT', label: 'SECURITY GATE' },
     { id: 'CENTRAL_GARAGE', label: 'EV SHOWROOM' },
+    { id: 'CO_OWNERSHIP_HALL', label: 'OWNERSHIP HALL' },
+    { id: 'BOOKING_CHAMBER', label: 'BOOKING CHAMBER' },
+    { id: 'ENERGY_FINANCE_CENTER', label: 'FINANCE CENTER' },
+    { id: 'SHARED_FUND_VAULT', label: 'SHARED FUND VAULT' },
+    { id: 'DIGITAL_CONTRACT_ROOM', label: 'CONTRACT ROOM' },
+    { id: 'DECISION_CHAMBER', label: 'DECISION CHAMBER' },
+    { id: 'AI_INTELLIGENCE_CENTER', label: 'AI INTELLIGENCE' },
+    { id: 'OPERATIONS_CENTER', label: 'OPERATIONS' },
+    { id: 'SERVICE_WORKSHOP', label: 'WORKSHOP' },
+    { id: 'DISPUTE_ROOM', label: 'DISPUTE ROOM' },
+    { id: 'ADMIN_COMMAND_CENTER', label: 'ADMIN COMMAND' },
   ];
 
   const cameraModes: { id: CameraMode; label: string }[] = [
@@ -143,7 +166,7 @@ export const App: React.FC = () => {
         {/* Reusable SceneManager Orchestrating Environments & Lifecycles */}
         <SceneManager
           activeSceneId={currentSector}
-          onLifecycleChange={(state) => setSceneLifecycle(state)}
+          onLifecycleChange={handleLifecycleChange}
           transitionDurationMs={600}
         />
       </Canvas3DFoundation>
@@ -569,6 +592,109 @@ export const App: React.FC = () => {
             </div>
           </div>
 
+          {/* Identity & RBAC Authentication Controls */}
+          <div style={{ marginBottom: '0.75rem' }}>
+            <div
+              style={{
+                fontSize: '0.68rem',
+                color: '#8a94a6',
+                fontFamily: "'JetBrains Mono', monospace",
+                marginBottom: '0.3rem',
+                letterSpacing: '0.5px',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span>AUTHENTICATION &amp; IDENTITY:</span>
+              <span id="hud-auth-status" style={{ color: currentUser ? '#00e676' : '#ffab00' }}>
+                {currentUser ? `${currentUser.fullName} (${currentUser.roles.join(', ')})` : 'UNAUTHENTICATED (GUEST)'}
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '0.3rem' }}>
+              <button
+                id="btn-auth-co-owner"
+                onClick={() => {
+                  useAuthStore.getState().fillDemoCredentials('CO_OWNER');
+                  useAuthStore.getState().login();
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.3rem 0.2rem',
+                  fontSize: '0.62rem',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: 600,
+                  borderRadius: '5px',
+                  border: '1px solid rgba(0, 229, 255, 0.4)',
+                  background: 'rgba(0, 229, 255, 0.12)',
+                  color: '#00e5ff',
+                  cursor: 'pointer',
+                }}
+              >
+                LOGIN CO-OWNER
+              </button>
+              <button
+                id="btn-auth-staff"
+                onClick={() => {
+                  useAuthStore.getState().fillDemoCredentials('STAFF');
+                  useAuthStore.getState().login();
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.3rem 0.2rem',
+                  fontSize: '0.62rem',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: 600,
+                  borderRadius: '5px',
+                  border: '1px solid rgba(249, 115, 22, 0.4)',
+                  background: 'rgba(249, 115, 22, 0.12)',
+                  color: '#f97316',
+                  cursor: 'pointer',
+                }}
+              >
+                LOGIN STAFF
+              </button>
+              <button
+                id="btn-auth-admin"
+                onClick={() => {
+                  useAuthStore.getState().fillDemoCredentials('ADMIN');
+                  useAuthStore.getState().login();
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.3rem 0.2rem',
+                  fontSize: '0.62rem',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: 600,
+                  borderRadius: '5px',
+                  border: '1px solid rgba(255, 255, 255, 0.4)',
+                  background: 'rgba(255, 255, 255, 0.12)',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                }}
+              >
+                LOGIN ADMIN
+              </button>
+              <button
+                id="btn-auth-logout"
+                onClick={() => useAuthStore.getState().logout()}
+                style={{
+                  flex: 0.8,
+                  padding: '0.3rem 0.2rem',
+                  fontSize: '0.62rem',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: 600,
+                  borderRadius: '5px',
+                  border: '1px solid rgba(255, 23, 68, 0.4)',
+                  background: 'rgba(255, 23, 68, 0.12)',
+                  color: '#ff1744',
+                  cursor: 'pointer',
+                }}
+              >
+                LOGOUT
+              </button>
+            </div>
+          </div>
+
           {/* Environment Switching Controls */}
           <div style={{ marginBottom: '0.85rem' }}>
             <div
@@ -578,22 +704,27 @@ export const App: React.FC = () => {
                 fontFamily: "'JetBrains Mono', monospace",
                 marginBottom: '0.3rem',
                 letterSpacing: '0.5px',
+                display: 'flex',
+                justifyContent: 'space-between',
               }}
             >
-              SWITCH ACTIVE ENVIRONMENT:
+              <span>SWITCH ACTIVE ENVIRONMENT:</span>
+              <span id="hud-active-sector" style={{ color: '#00e5ff' }}>
+                {currentSector}
+              </span>
             </div>
-            <div style={{ display: 'flex', gap: '0.35rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.3rem' }}>
               {availableSectors.map((sector) => (
                 <button
+                  id={`nav-sector-${sector.id}`}
                   key={sector.id}
                   onClick={() => setCurrentSector(sector.id)}
                   style={{
-                    flex: 1,
-                    padding: '0.35rem 0.4rem',
-                    fontSize: '0.68rem',
+                    padding: '0.32rem 0.15rem',
+                    fontSize: '0.6rem',
                     fontFamily: "'Orbitron', sans-serif",
                     fontWeight: 600,
-                    borderRadius: '6px',
+                    borderRadius: '5px',
                     border:
                       currentSector === sector.id
                         ? '1px solid #00e5ff'

@@ -1,6 +1,19 @@
 import { create } from 'zustand';
 
-export type LightingProfile = 'CYBER_NEON' | 'CLEAN_DAYLIGHT' | 'DEEP_NIGHT' | 'VAULT_AMBER';
+export type LightingProfile =
+  | 'CYBER_NEON'
+  | 'CLEAN_DAYLIGHT'
+  | 'DEEP_NIGHT'
+  | 'VAULT_AMBER'
+  | 'AMBER_WARM'
+  | 'FINANCE_EMERALD'
+  | 'EXECUTIVE_SLATE'
+  | 'PARLIAMENT_INDIGO'
+  | 'NEURAL_PURPLE'
+  | 'OPERATIONS_ORANGE'
+  | 'WORKSHOP_STEEL'
+  | 'DISPUTE_CRIMSON'
+  | 'COMMAND_HORIZON';
 
 interface RoomBounds {
   minX: number;

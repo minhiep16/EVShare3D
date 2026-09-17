@@ -111,6 +111,19 @@ public class OwnershipGroupServiceImpl implements OwnershipGroupService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<OwnershipGroupResponse> getAllGroups() {
+        log.debug("Fetching all active ownership groups");
+        List<OwnershipGroup> groups = ownershipGroupRepository.findByIsActiveTrue();
+        return groups.stream()
+                .map(g -> {
+                    List<OwnershipShare> shares = ownershipShareRepository.findByGroupIdAndIsActiveTrue(g.getId());
+                    return OwnershipGroupResponse.fromEntity(g, shares);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<OwnershipGroupResponse> getMyGroups(Long userId) {
         log.debug("Fetching ownership groups for userId={}", userId);
         List<OwnershipGroup> groups = ownershipGroupRepository.findGroupsByUserId(userId);

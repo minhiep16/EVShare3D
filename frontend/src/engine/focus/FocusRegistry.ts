@@ -50,6 +50,10 @@ class FocusRegistryClass {
     };
   }
 
+  public unregisterTarget(id: string): boolean {
+    return this.targets.delete(id);
+  }
+
   public getTarget(id: string): FocusTargetConfig | undefined {
     return this.targets.get(id);
   }

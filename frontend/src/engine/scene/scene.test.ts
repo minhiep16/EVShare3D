@@ -29,11 +29,22 @@ describe('Scene Initialization & Management (08-AG)', () => {
     it('registers all default scenes cleanly', () => {
       registerDefaultScenes();
       const all = SceneRegistry.getAllScenes();
-      expect(all.length).toBe(2);
+      expect(all.length).toBe(13);
 
       const sceneIds = all.map((s) => s.id);
       expect(sceneIds).toContain('SECURITY_CHECKPOINT');
       expect(sceneIds).toContain('CENTRAL_GARAGE');
+      expect(sceneIds).toContain('CO_OWNERSHIP_HALL');
+      expect(sceneIds).toContain('BOOKING_CHAMBER');
+      expect(sceneIds).toContain('ENERGY_FINANCE_CENTER');
+      expect(sceneIds).toContain('SHARED_FUND_VAULT');
+      expect(sceneIds).toContain('DIGITAL_CONTRACT_ROOM');
+      expect(sceneIds).toContain('DECISION_CHAMBER');
+      expect(sceneIds).toContain('AI_INTELLIGENCE_CENTER');
+      expect(sceneIds).toContain('OPERATIONS_CENTER');
+      expect(sceneIds).toContain('SERVICE_WORKSHOP');
+      expect(sceneIds).toContain('DISPUTE_ROOM');
+      expect(sceneIds).toContain('ADMIN_COMMAND_CENTER');
     });
 
     it('unregisters scenes on demand', () => {

@@ -24,11 +24,6 @@ export const disposeObject3D = (object: THREE.Object3D | null): void => {
       }
     }
   });
-
-  // Remove from parent if still attached
-  if (object.parent) {
-    object.parent.remove(object);
-  }
 };
 
 /**

@@ -27,6 +27,13 @@ public interface OwnershipGroupService {
     OwnershipGroupResponse getGroupById(Long id);
 
     /**
+     * Retrieves all active ownership groups in the platform.
+     *
+     * @return List of active ownership group responses
+     */
+    List<OwnershipGroupResponse> getAllGroups();
+
+    /**
      * Retrieves all active ownership groups where the specified user is an active member.
      *
      * @param userId User ID

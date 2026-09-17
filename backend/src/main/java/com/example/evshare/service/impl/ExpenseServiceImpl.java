@@ -1,10 +1,7 @@
 package com.example.evshare.service.impl;
 
 import com.example.evshare.dto.request.CreateExpenseRequest;
-import com.example.evshare.dto.response.ExpenseAllocationResponse;
-import com.example.evshare.dto.response.ExpenseAuditLogResponse;
-import com.example.evshare.dto.response.ExpenseResponse;
-import com.example.evshare.dto.response.PagedData;
+import com.example.evshare.dto.response.*;
 import com.example.evshare.entity.*;
 import com.example.evshare.entity.enums.AllocationStrategy;
 import com.example.evshare.entity.enums.ExpenseCategory;
@@ -13,7 +10,10 @@ import com.example.evshare.exception.BusinessException;
 import com.example.evshare.exception.ResourceNotFoundException;
 import com.example.evshare.repository.*;
 import com.example.evshare.security.OwnershipSecurity;
+import com.example.evshare.service.CostAllocationService;
 import com.example.evshare.service.ExpenseService;
+import com.example.evshare.service.allocation.AllocatedMemberShare;
+import com.example.evshare.service.allocation.AllocationResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +47,32 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final AuditLogRepository auditLogRepository;
     private final OwnershipSecurity ownershipSecurity;
     private final ObjectMapper objectMapper;
+    private final CostAllocationService costAllocationService;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public ExpenseServiceImpl(ExpenseRepository expenseRepository,
+                              ExpenseAllocationRepository expenseAllocationRepository,
+                              OwnershipGroupRepository ownershipGroupRepository,
+                              OwnershipShareRepository ownershipShareRepository,
+                              VehicleRepository vehicleRepository,
+                              UserRepository userRepository,
+                              SharedFundRepository sharedFundRepository,
+                              AuditLogRepository auditLogRepository,
+                              OwnershipSecurity ownershipSecurity,
+                              ObjectMapper objectMapper,
+                              CostAllocationService costAllocationService) {
+        this.expenseRepository = expenseRepository;
+        this.expenseAllocationRepository = expenseAllocationRepository;
+        this.ownershipGroupRepository = ownershipGroupRepository;
+        this.ownershipShareRepository = ownershipShareRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.userRepository = userRepository;
+        this.sharedFundRepository = sharedFundRepository;
+        this.auditLogRepository = auditLogRepository;
+        this.ownershipSecurity = ownershipSecurity;
+        this.objectMapper = objectMapper;
+        this.costAllocationService = costAllocationService;
+    }
 
     public ExpenseServiceImpl(ExpenseRepository expenseRepository,
                               ExpenseAllocationRepository expenseAllocationRepository,
@@ -58,16 +84,8 @@ public class ExpenseServiceImpl implements ExpenseService {
                               AuditLogRepository auditLogRepository,
                               OwnershipSecurity ownershipSecurity,
                               ObjectMapper objectMapper) {
-        this.expenseRepository = expenseRepository;
-        this.expenseAllocationRepository = expenseAllocationRepository;
-        this.ownershipGroupRepository = ownershipGroupRepository;
-        this.ownershipShareRepository = ownershipShareRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.userRepository = userRepository;
-        this.sharedFundRepository = sharedFundRepository;
-        this.auditLogRepository = auditLogRepository;
-        this.ownershipSecurity = ownershipSecurity;
-        this.objectMapper = objectMapper;
+        this(expenseRepository, expenseAllocationRepository, ownershipGroupRepository, ownershipShareRepository,
+                vehicleRepository, userRepository, sharedFundRepository, auditLogRepository, ownershipSecurity, objectMapper, null);
     }
 
     @Override
@@ -206,8 +224,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         Expense savedExpense = expenseRepository.save(expense);
 
-        // NOTE: In compliance with Checkpoint 06-C ("Do not allocate costs yet"),
-        // cost allocations are decoupled and will be handled in subsequent checkpoints.
+        // Decoupled on creation per Checkpoint 06-C; allocations persisted via allocateExpense()
 
         // 12. Record Audit Log for Historical Auditability
         recordAuditLog(savedExpense, creator, "EXPENSE_CREATED", ipAddress);
@@ -313,5 +330,134 @@ public class ExpenseServiceImpl implements ExpenseService {
         } catch (Exception ex) {
             log.error("Failed to serialize audit log for expense ID [{}]: {}", expense.getId(), ex.getMessage(), ex);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GroupAllocationSummaryResponse getGroupAllocationSummary(Long groupId, AllocationStrategy strategy, Long currentUserId) {
+        verifyGroupReadAccess(groupId, currentUserId);
+        OwnershipGroup group = ownershipGroupRepository.findById(groupId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ownership group not found with ID: " + groupId));
+
+        AllocationStrategy chosenStrategy = strategy != null ? strategy : AllocationStrategy.HYBRID;
+        List<Expense> expenses = expenseRepository.findByGroupId(groupId);
+        List<OwnershipShare> activeShares = ownershipShareRepository.findByGroupIdAndIsActiveTrue(groupId);
+
+        BigDecimal totalExpenseAmount = expenses.stream()
+                .map(Expense::getTotalAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Map<Long, BigDecimal> userAllocations = new HashMap<>();
+        Map<Long, BigDecimal> userUsagePct = new HashMap<>();
+
+        if (costAllocationService != null) {
+            for (Expense expense : expenses) {
+                try {
+                    Expense calcExpense = expense;
+                    if (expense.getAllocationStrategy() != chosenStrategy) {
+                        calcExpense = new Expense();
+                        calcExpense.setId(expense.getId());
+                        calcExpense.setGroup(expense.getGroup());
+                        calcExpense.setVehicle(expense.getVehicle());
+                        calcExpense.setTitle(expense.getTitle());
+                        calcExpense.setCategory(expense.getCategory());
+                        calcExpense.setTotalAmount(expense.getTotalAmount());
+                        calcExpense.setCurrency(expense.getCurrency());
+                        calcExpense.setAllocationStrategy(chosenStrategy);
+                        calcExpense.setIncurredDate(expense.getIncurredDate());
+                    }
+                    AllocationResult result = costAllocationService.getStrategy(chosenStrategy).allocate(calcExpense);
+                    for (AllocatedMemberShare share : result.getShares()) {
+                        userAllocations.merge(share.getUserId(), share.getAllocatedAmount(), BigDecimal::add);
+                        userUsagePct.put(share.getUserId(), share.getEffectivePercentage());
+                    }
+                } catch (Exception e) {
+                    log.warn("Could not calculate allocation for expense {}: {}", expense.getId(), e.getMessage());
+                }
+            }
+        }
+
+        List<MemberCostSummaryResponse> memberSummaries = new ArrayList<>();
+        BigDecimal totalAllocated = BigDecimal.ZERO;
+
+        for (OwnershipShare share : activeShares) {
+            User user = share.getUser();
+            Long userId = user.getId();
+            BigDecimal equity = share.getPercentage();
+            BigDecimal allocated = userAllocations.getOrDefault(userId, BigDecimal.ZERO);
+            totalAllocated = totalAllocated.add(allocated);
+
+            List<ExpenseAllocation> userSavedAllocs = expenseAllocationRepository.findByUserId(userId);
+            BigDecimal paidTotal = userSavedAllocs.stream()
+                    .filter(a -> a.getExpense() != null && groupId.equals(a.getExpense().getGroup().getId()) && Boolean.TRUE.equals(a.getIsSettled()))
+                    .map(ExpenseAllocation::getAllocatedAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            BigDecimal outstanding = allocated.subtract(paidTotal);
+            if (outstanding.compareTo(BigDecimal.ZERO) < 0) {
+                outstanding = BigDecimal.ZERO;
+            }
+
+            String settlementStatus = outstanding.compareTo(BigDecimal.ZERO) == 0 ? "SETTLED" :
+                    (paidTotal.compareTo(BigDecimal.ZERO) > 0 ? "PARTIAL" : "OVERDUE");
+
+            BigDecimal usagePct = userUsagePct.getOrDefault(userId, equity);
+
+            memberSummaries.add(new MemberCostSummaryResponse(
+                    userId,
+                    user.getFullName(),
+                    equity,
+                    usagePct,
+                    allocated,
+                    paidTotal,
+                    outstanding,
+                    settlementStatus
+            ));
+        }
+
+        return new GroupAllocationSummaryResponse(
+                group.getId(),
+                group.getGroupName(),
+                chosenStrategy,
+                totalExpenseAmount,
+                totalAllocated,
+                true,
+                memberSummaries
+        );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExpenseAllocationResponse> getExpenseAllocations(Long expenseId, Long currentUserId) {
+        Expense expense = expenseRepository.findById(expenseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found with ID: " + expenseId));
+        verifyGroupReadAccess(expense.getGroup().getId(), currentUserId);
+
+        List<ExpenseAllocation> allocations = expenseAllocationRepository.findByExpenseId(expenseId);
+        return allocations.stream()
+                .map(a -> new ExpenseAllocationResponse(
+                        a.getId(),
+                        expense.getId(),
+                        a.getUser() != null ? a.getUser().getId() : null,
+                        a.getUser() != null ? a.getUser().getFullName() : null,
+                        a.getUser() != null ? a.getUser().getEmail() : null,
+                        a.getAllocatedAmount(),
+                        a.getIsSettled(),
+                        a.getSettledAt()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ExpenseResponse allocateExpense(Long expenseId, Long currentUserId) {
+        Expense expense = expenseRepository.findById(expenseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found with ID: " + expenseId));
+        verifyGroupReadAccess(expense.getGroup().getId(), currentUserId);
+
+        if (costAllocationService != null) {
+            List<ExpenseAllocation> allocations = costAllocationService.applyAndPersistAllocations(expenseId);
+            expense.setAllocations(allocations);
+        }
+        return ExpenseResponse.fromEntity(expense);
     }
 }

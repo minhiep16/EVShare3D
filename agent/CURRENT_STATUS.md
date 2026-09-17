@@ -1,32 +1,324 @@
 # EVShare 3D – CURRENT PROJECT STATUS
 
 ## 1. Active Phase & Checkpoint
-* **CURRENT_PHASE**: `PHASE 08 — PURE 3D ENGINE & 3D DESIGN SYSTEM`
-* **PHASE 08 STATUS**: **`COMPLETE`**
-* **CURRENT_CHECKPOINT**: `08-AH — FINAL VERIFICATION`
-* **CHECKPOINT 08-AH STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-AG STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-AF STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-AE STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-AD STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-AC STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-O STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-N STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-M STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-L STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-K STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-J STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-I STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-H STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-G STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-F STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-E STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-D STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-C STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-B STATUS**: **`COMPLETE`**
-* **CHECKPOINT 08-A STATUS**: **`COMPLETE`**
-* **PREVIOUS_PHASE**: `PHASE 07 — GOVERNANCE, VOTING & DISPUTES` (VERIFIED / COMMITTED / PUSHED at `11806cf`)
-* **Frontend Verification (`npm run test && npm run typecheck && npm run build`)**: **`BUILD & TEST SUCCESS`** (131/131 unit tests PASS across scene, camera, movement, raycast, interaction, focus, animation, UI3D states, 3D button, input, terminal, portal, WebGL recovery, touch & responsive, performance, and audio suites; 0 errors, 0 warnings across TypeScript typecheck and Vite production build; browser console inspected with 0 errors)
+* **CURRENT_PHASE**: `PHASE 09 — PURE 3D WORLD & FULL INTEGRATION`
+* **PHASE 09 STATUS**: **`COMPLETE`**
+* **CURRENT_CHECKPOINT**: `09-AB — FINAL VERIFICATION`
+* **CHECKPOINT 09-AB STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-AA STATUS**: **`COMPLETE`** (Real Browser E2E: 14-step journey verified with WebP recording)
+* **CHECKPOINT 09-Z STATUS**: **`COMPLETE`** (Role-Based World Access & Perimeter Defense)
+* **CHECKPOINT 09-Y STATUS**: **`COMPLETE`** (AI API Integration & Honest NOT_AVAILABLE Disclosure)
+* **CHECKPOINT 09-X STATUS**: **`COMPLETE`** (Dispute Room & RBAC Arbitration)
+* **CHECKPOINT 09-W STATUS**: **`COMPLETE`** (Voting & Authoritative Decision Chamber)
+* **CHECKPOINT 09-V STATUS**: **`COMPLETE`** (Digital Contract Room & Holographic Signatures)
+* **CHECKPOINT 09-U STATUS**: **`COMPLETE`** (Finance Center, Vault & Payment Terminal)
+* **CHECKPOINT 09-T STATUS**: **`COMPLETE`** (Booking Chamber & Chrono-Spatial Timeline)
+* **CHECKPOINT 09-S STATUS**: **`COMPLETE`** (Vehicle Digital Twin Full Integration)
+* **CHECKPOINT 09-R STATUS**: **`COMPLETE`** (Central Garage Integration)
+* **CHECKPOINT 09-Q STATUS**: **`COMPLETE`** (Security Checkpoint Auth Integration)
+* **CHECKPOINT 09-P STATUS**: **`COMPLETE`** (Digital Twin Store & Synchronization)
+* **CHECKPOINT 09-O STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-N STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-M STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-L STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-K STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-J STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-I STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-H STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-G STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-F STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-E STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-D STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-C STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-B STATUS**: **`COMPLETE`**
+* **CHECKPOINT 09-A STATUS**: **`COMPLETE`**
+* **PREVIOUS_PHASE**: `PHASE 08 — PURE 3D ENGINE & 3D DESIGN SYSTEM` (VERIFIED / COMMITTED / PUSHED at `1e299b3`)
+* **Frontend Verification (`npm test -- --run && npx tsc --noEmit && npm run build`)**: **`BUILD & TEST SUCCESS`** (43/43 unit test suites, 442/442 unit tests PASS; 0 errors across TypeScript typecheck and Vite production build in 7.04s)
+* **Summary of Checkpoint 09-AB (Final Verification & Comprehensive 20-Point System Audit)**:
+  - Conducted complete, rigorous final verification of Phase 09 across all 20 requirement dimensions:
+    1. **All 12 Metaverse Environments (+ Security Gate = 13 Sectors)**: `SECURITY_CHECKPOINT`, `CENTRAL_GARAGE`, `CO_OWNERSHIP_HALL`, `BOOKING_CHAMBER`, `ENERGY_FINANCE_CENTER`, `SHARED_FUND_VAULT`, `DIGITAL_CONTRACT_ROOM`, `DECISION_CHAMBER`, `AI_INTELLIGENCE_CENTER`, `OPERATIONS_CENTER`, `SERVICE_WORKSHOP`, `DISPUTE_ROOM`, and `ADMIN_COMMAND_CENTER`. All 13 registered in `SceneRegistry` and rendered within `WorldRoot.tsx`.
+    2. **Pure 3D Requirement (Strict Negative Invariant)**: Verified zero traditional navbars, sidebars, dashboard grids, CRUD pages, HTML modals as primary UI, or HTML overlays replacing 3D interaction. 100% of primary interactions execute as Three.js WebGL objects using raycasting, SDF text, and tactile 3D mesh depression.
+    3. **Digital Twins**: Verified 4-stage unidirectional pipeline ($\text{Backend} \rightarrow \text{Store} \rightarrow \text{Facets} \rightarrow \text{Mesh}$) across 7 facets (Battery, Status, Ownership, Booking, Usage, Maintenance, Finance) with zero fake truth.
+    4. **API Integration**: Complete `apiClient.ts` integration across all 12 REST API modules with RFC 6819 refresh queue, token renewal, and `ApiResponse<T>` unwrapping.
+    5. **Authentication**: Stateless dual-token JWT (15-minute access, 7-day refresh) integrated into 3D holographic security gate console and backend `authApi`.
+    6. **RBAC**: Dual-layer defense model ("Frontend visibility is NOT security"): Spring Security `@PreAuthorize` backend gating, `canAccessSector` in `useNavigationStore.ts`, in-world red laser portal rejection, and boundary collision bounce.
+    7. **Vehicle Subsystem**: 7-state authoritative FSM, pessimistic locking, Superchargers, and in-world 3D inspection terminal.
+    8. **Ownership Subsystem**: Absolute 100.00% equity invariant (`BR-OWN-01`), `BigDecimal` Banker's rounding, and cryptographic cap table audit.
+    9. **Booking Subsystem**: 30-minute automated turnaround buffer (`BR-BKG-02`), interval overlap rejection, and 3D Chrono-Timeline helix.
+    10. **Usage Subsystem**: 15-minute TTL QR verification, check-in/out, odometer/battery validation, and late return penalty logging.
+    11. **Finance Subsystem**: 3 expense allocation strategies (Ownership, Usage, Hybrid), residual penny distribution, and safety reserve floor (`BR-FIN-03`).
+    12. **Payment Subsystem**: Multi-channel 3D payment kiosk (VietQR, E-Wallet, NFC), idempotency key fingerprinting, and zero fake financial success.
+    13. **Contract Subsystem**: Multi-page 3D lectern, version tree (`v1.0`, `v1.1`, `v2.0`), SHA-256 cryptographic signatures, and permanent rejection of `DELETE`.
+    14. **Voting Subsystem**: 60.00% quorum threshold, weighted equity ballots, authoritative backend calculations, and duplicate vote rejection.
+    15. **Dispute Subsystem**: 3D defect coordinate holotank, immutable evidence attachments, staff mediation desk, and admin binding arbitration with atomic `SharedFund` deductions.
+    16. **AI Subsystem**: Honest and transparent `NOT_AVAILABLE` disclosure when model is unreachable, advisory-only representation, and hard safety interlock (`BR-AI-SAFE-01`).
+    17. **Staff Operations**: Dedicated hangar, maintenance bay with hydraulic lift, OBD-II diagnostic scanner, spare parts rack, and dispute mediation console.
+    18. **Admin Command Center**: Orbital panopticon deck ($Y=25\text{m}$) housing the 7 conceptual cores with sovereign lockdown and cap table audits.
+    19. **Browser E2E**: Live real-browser session verified the complete 14-step user journey (`Open → 3D Boot → Login → Garage → Vehicle → Ownership → Booking → Usage → Finance → Contract → Voting → Dispute → AI → Return`), recorded as `browser_e2e_09aa_1789651372549.webp` with status PASS.
+    20. **Console Errors**: 0 JavaScript runtime errors, 0 WebGL crashes, 0 404 broken assets. 442/442 unit tests PASS; production build completes in 7.04s.
+  - Zero new features introduced (strict Phase 09 boundary).
+  - Directive: STOP. Do not start Phase 10. Awaiting explicit user command.
+* **Summary of Checkpoint 09-O (Vehicle Digital Twin Synchronization Layer)**:
+  - Designed and implemented the authoritative synchronization layer between backend Vehicle domain models and 3D vehicle representations in `frontend/src/digitalTwin/`:
+    - Strict Unidirectional Pipeline: $\text{Backend Response} \longrightarrow \text{Application State} \longrightarrow \text{Digital Twin State} \longrightarrow \text{Visual Update}$.
+    - Prohibition of Independent Fake Truth: The 3D vehicle does not maintain independent fake truth; it derives geometry, lighting, status indicators, and holographic HUDs directly from the authoritative store (`useDigitalTwinStore`).
+    - 7 Conceptual Facets Verified:
+      1. **Battery Facet**: Live state of charge (SoC %), charging power (kW), charging state (`IDLE`, `CHARGING`, `DISCHARGING`), remaining range (km), battery temperature ($^\circ\text{C}$), and state of health (SoH %). Dynamically illuminates the 3D undercarriage battery tray.
+      2. **Status Facet**: Operational status (`AVAILABLE`, `RESERVED`, `IN_USE`, `MAINTENANCE`, `CHARGING`, `OFFLINE`), remote door lock indicator, ignition readiness, physical bay/stall location, and audit reason trail. Dynamically tints the 3D ground ring beacon.
+      3. **Ownership Facet**: Co-ownership syndicate name, total members count, user equity share %, calculated voting power %, and cryptographic cap table hash.
+      4. **Booking Facet**: Active reservation ID, reserved member name, booking window start/end timestamps, and turnaround conflict status.
+      5. **Usage Facet**: Active telemetry session ID, driver name, odometer (km), real-time velocity, speed limit compliance, and structural damage flags.
+      6. **Maintenance Facet**: Overall vehicle condition grade, open work order ID, inspection timestamp, OBD-II DTC diagnostic trouble codes, and subsystem status matrix (Brakes, LiDAR ADAS, HV Battery, Suspension, Thermal Inverter).
+      7. **Finance Facet**: Co-ownership SharedFund vault balance (VND), outstanding expense liabilities, operating cost per km, deposit status, and safety reserve ratio.
+    - Components & Modules:
+      - `digitalTwinTypes.ts`: Domain models for all 7 facets, camera presets, and digital twin vehicles.
+      - `useDigitalTwinStore.ts`: Authoritative Zustand store maintaining baseline vehicles, facet mutation actions, and backend re-synchronization (`syncFromBackend`, `syncAllFromBackend`).
+      - `DigitalTwinVehicle3D.tsx`: Procedural 3D WebGL Vehicle that visually responds to all 7 facets (paint finish, emissive ground aura, undercarriage battery glow, lock indicator, and an interactive 3D Holographic Telemetry Inspector with 7 selectable 3D tabs and a live `[ 🔄 RE-SYNC DIGITAL TWIN FROM BACKEND ]` button).
+      - `frontend/src/garage/DigitalTwinVehicle3D.tsx`: Refactored to bind directly to `useDigitalTwinStore`, eliminating disconnected mock properties.
+  - Automated Unit Tests:
+    - Created `frontend/src/digitalTwin/digitalTwin.test.ts` (12/12 tests PASS) verifying the 4-stage pipeline, all 7 individual facets, live backend sync, and rejection of fake truth.
+    - Vitest test suite: **31 test files, 315/315 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 5.81s.
+  - Visual Browser Verification:
+    - Executed automated browser session navigating to `http://localhost:4173/?sector=CENTRAL_GARAGE`, verifying 3D digital twin vehicles, telemetry hologram with 7 facet tabs, and live re-synchronization. Captured recording `digital_twin_verify_1789529715214.webp` and screenshots.
+* **Summary of Checkpoint 09-N (Admin Command Center & 7 Conceptual Cores)**:
+  - Designed and built the complete ADMIN-only 3D environment in `frontend/src/admin/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or traditional admin dashboards) and mandatory backend authorization (`ROLE_ADMIN` exclusivity):
+    - `adminTypes.ts`: Domain models for the 7 conceptual cores (`AdminCoreId`), telemetry records, camera presets, and administrative state.
+    - `adminLayout.ts`: Geometric layout at sector coordinates `[0, 25, 0]` (`SECTOR_CENTERS.ADMIN_COMMAND_CENTER`), environment profile `COMMAND_HORIZON` (`#38bdf8`, `#fbbf24`, dark obsidian `#020617`), and 8 camera presets (`ORBITAL_OVERVIEW`, `USER_CORE_FOCUS`, `VEHICLE_CORE_FOCUS`, `OWNERSHIP_CORE_FOCUS`, `BOOKING_CORE_FOCUS`, `FINANCE_CORE_FOCUS`, `DISPUTE_CORE_FOCUS`, `SYSTEM_CORE_FOCUS`).
+    - `useAdminStore.ts`: Reactive Zustand store tracking live states for all 7 cores, simulated user role (`ROLE_CO_OWNER`, `ROLE_STAFF`, `ROLE_ADMIN`), strict RBAC lockout enforcement, and mutation actions with offline resilience.
+    - `AdminOrbitalFloor3D.tsx`: Translucent obsidian glass deck ($13.5\text{m}$ radius) elevated at altitude $Y=25\text{m}$ overlooking the central garage and plaza below, with 7 radial energy buslines, peripheral guardrail balustrades, and sky-bridge entrance.
+    - `UserCore3D.tsx`: Core 1 (North `[0, 0, -5.4]`) with levitating biometric polyhedral nucleus, live account readouts, and 3D interactions: `[ 🛡 VERIFY & SIGN KYC CREDENTIALS ]`, `[ ⛔ SUSPEND USER / ⚡ ACTIVATE USER ]`, and `[ 🔑 PROMOTE TO STAFF ]`.
+    - `VehicleCore3D.tsx`: Core 2 (North-East `[4.8, 0, -2.6]`) with floating wireframe fleet prism, telemetry diagnostics, and 3D interactions: `[ 🚨 REMOTE EMERGENCY VEHICLE LOCKDOWN ]`, `[ 🔄 SYNC TELEMATICS ]`, and `[ 🛠 DISPATCH WORKSHOP ]`.
+    - `OwnershipCore3D.tsx`: Core 3 (South-East `[4.8, 0, 2.6]`) with dual-torus equity balance rings, syndicate cap table stats, and 3D interactions: `[ 🔒 FREEZE SYNDICATE TRANSFERS ]` and `[ 📜 CRYPTOGRAPHIC CAP TABLE AUDIT ]`.
+    - `BookingCore3D.tsx`: Core 4 (South `[0, 0, 5.4]`) with chrono-spatial calendar helix, scheduling dispute readouts, and 3D interactions: `[ ⏱ ARBITRATE SCHEDULE CONFLICT ]`, `[ ⛔ PREEMPT SLOT ]`, and `[ ⚡ PURGE HOLDS ]`.
+    - `FinanceCore3D.tsx`: Core 5 (South-West `[-4.8, 0, 2.6]`) with levitating golden treasury octahedron, vault reserve statistics, and 3D interactions: `[ 💰 INJECT LIQUIDITY (+2,000,000 VND) ]`, `[ 🛑 FREEZE OUTFLOW ]`, and `[ 🔍 AUDIT VAULT ]`.
+    - `DisputeCore3D.tsx`: Core 6 (North-West `[-4.8, 0, -2.6]`) with floating crimson arbitration crystal, docket details, and 3D interactions: `[ ⚖ ENFORCE SUMMARY ARBITRATION VERDICT ]` and `[ 💸 GRANT COMPENSATORY CREDIT ]`.
+    - `SystemCore3D.tsx`: Core 7 (Center Zenith `[0, 1.8, 0]`) with floating crystalline master sphere, rotating orbital rings, node health telemetry, WebGL throughput readouts, and 3D interactions: `[ 🚨 TRIGGER GLOBAL PLATFORM EMERGENCY LOCKDOWN ]` and `[ 🔄 FLUSH SYSTEM CACHES & SHADER PIPELINES ]`.
+    - `AdminCommandCenter3D.tsx`: Composed sector master module mounted in `WorldRoot.tsx` and registered as `DEFAULT_ADMIN_COMMAND_CENTER_SCENE` in `defaultScenes.ts`, featuring a floating overhead sovereign notice ribbon, 8 camera quick-teleport buttons, and an in-scene 3D RBAC role switcher.
+  - Backend API Integration (`adminApi.ts`):
+    - REST client connecting to Spring Boot backend (`UserController`, `VehicleController`, `OwnershipGroupController`, `BookingController`, `SharedFundController`, `DisputeController`, `HealthController`, `AnalyticsController`).
+  - Mandatory Backend Authorization & RBAC Enforcement:
+    - Exclusively accessible to `ROLE_ADMIN`. Co-Owners and Staff attempting any administrative operation encounter sovereign lockout rejections (`SOVEREIGN LOCKOUT (403)`).
+  - Automated Unit Tests:
+    - Created `frontend/src/admin/admin.test.ts` (24/24 tests PASS) validating panopticon coordinates, all 7 conceptual cores, RBAC security lockouts, and live core mutations.
+    - Updated `scene.test.ts` to expect 13 registered scenes (13/13 scenes verified).
+    - Vitest test suite: **30 test files, 303/303 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 7.96s.
+  - Visual Browser Verification:
+    - Executed automated browser session navigating to `http://localhost:4173/?sector=ADMIN_COMMAND_CENTER`, verifying 3D panopticon deck, 7 conceptual cores, environment lighting, and 0 console errors. Captured screenshots `admin_overview_1789528888745.png`, `admin_cores_interactive_1789528913173.png`, and recording `admin_command_verify_1789528815347.webp`.
+  - Designed and built the complete 3D Dispute Room and Arbitration Chamber in `frontend/src/dispute/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or modal dialogs) and strictly enforcing backend RBAC permissions:
+    - `disputeTypes.ts`: Domain models for `DisputeStation`, `DisputeTab`, `DefectMarker3D`, `ArbitrationVerdictChoice`, `DisputeCameraPreset`, and `DisputeState`.
+    - `disputeLayout.ts`: Sector coordinates `[-40, 0, 80]` (`SECTOR_CENTERS.DISPUTE_ROOM`), environment profile `DISPUTE_CRIMSON` (`#ff1744`, `#fbbf24`, dark obsidian `#1a0303`), and 6 camera presets (`CHAMBER_OVERVIEW`, `CRYSTAL_FOCUS`, `HOLOTANK_FOCUS`, `EVIDENCE_FOCUS`, `STAFF_CONSOLE_FOCUS`, `ADMIN_DAIS_FOCUS`).
+    - `useDisputeStore.ts`: Reactive Zustand store tracking active dispute #10 (Alice Owner vs Bob Driver), 2 evidence records with 3D defect coordinates, user simulated role with RBAC enforcement (`ROLE_CO_OWNER`, `ROLE_STAFF`, `ROLE_ADMIN`), staff review inputs, and admin arbitration with atomic SharedFund balance adjustment.
+    - `DisputeChamberFloor3D.tsx`: Heavy obsidian radial arena floor ($11.5\text{m}$ radius) with concentric circuitry rings, station conduit bus lines, and 8 perimeter monoliths with levitating crimson shards.
+    - `FloatingDisputeCrystal3D.tsx`: Central dual-polyhedral levitating crystal with dual rotating energy rings, breathing core, and status-driven aura (`OPEN`, `UNDER_REVIEW`, `ESCALATED`, `RESOLVED`).
+    - `DefectHolotank3D.tsx`: Cylindrical holographic table at `[0, 0, -1.8]` projecting a wireframe digital twin EV with clickable spatial 3D defect pins (`mesh3dDefectCoordinates`), defect details card, and photo preview.
+    - `EvidenceDisplay3D.tsx`: Holographic evidence carousel at `[-3.6, 0, 1.8]` displaying uploaded evidence attachments, descriptions, uploader signatures, SHA-256 validation badges, and `[ ➕ ATTACH DEFECT EVIDENCE ]` interaction.
+    - `StaffMediationConsole3D.tsx`: Ergonomic desk at `[3.6, 0, 1.8]` with staff review queue, mediation notes input, proposed resolution button, and `[ ⚖ ESCALATE TO ADMIN ARBITRATION ]`. Gated on `ROLE_STAFF` or `ROLE_ADMIN`.
+    - `AdminArbitrationDais3D.tsx`: Sovereign dais at `[0, 0, 4.2]` strictly restricted to `ROLE_ADMIN` with arbitration verdict selector, deductible amount input, and `[ ⚖ EXECUTE BINDING ARBITRATION ]` with atomic SharedFund adjustment.
+    - `DisputeStatusStela3D.tsx`: Chronological immutable audit history stela at `[0, 0, -5.2]` tracking state transitions and final settlement summary.
+    - `DisputeRoom3D.tsx`: Composed sector container mounted in `WorldRoot.tsx` and registered as `DEFAULT_DISPUTE_ROOM_SCENE` in `defaultScenes.ts`, featuring an in-scene 3D camera quick-teleport bar and 3D RBAC role simulation switcher.
+  - Backend API Integration (`disputesApi.ts`):
+    - REST client mapping to Spring Boot `DisputeController.java` (`getDisputesByGroupId`, `getDisputeById`, `createDispute`, `transitionDisputeStatus`, `addEvidence`, `getDisputeEvidences`, `getDisputeHistory`, `getDisputesForStaffReview`, `addMediationNotes`, `proposeResolution`, `arbitrateDispute`, `getArbitrationDossier`, `arbitrateDisputeWithFundAdjustment`).
+  - Strict RBAC & Legal Immutability Enforcement:
+    - Evidence Immutability per BR-DIS-01: All uploaded evidence records and 3D defect coordinate pins are permanent legal records.
+    - Mediation Access per BR-DIS-03: Co-Owners cannot record staff mediation notes or propose resolutions.
+    - Sovereign Arbitration Exclusivity per BR-DIS-05 / BR-DIS-06: Only `ROLE_ADMIN` can execute binding arbitration verdicts and trigger atomic SharedFund deductions.
+  - Automated Unit Tests:
+    - Created `frontend/src/dispute/dispute.test.ts` (17/17 tests PASS) validating layout coordinates, 3D defect coordinates, immutable evidence attachment, staff mediation gating, and admin binding arbitration.
+    - Updated `scene.test.ts` to expect 12 registered scenes (12/12 scenes verified).
+    - Vitest test suite: **29 test files, 279/279 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 10.23s.
+  - Visual Browser Verification:
+    - Executed automated browser session navigating to `http://localhost:4173/?sector=DISPUTE_ROOM`, verifying 3D dispute room overview, stations, HUD camera controls, and 0 console errors. Captured screenshots `dispute_room_overview_1789527872548.png`, `dispute_room_cinematic_1789527918124.png`, and recording `dispute_room_verify_1789527717078.webp`.
+  - Designed and built the complete 3D Staff Service Workshop in `frontend/src/workshop/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or modal dialogs) and the strict "No fake completed maintenance" interlock:
+    - `workshopTypes.ts`: Domain models for `SubsystemId`, `SubsystemStatus`, `VehicleConditionSubsystem`, `WorkOrderStatus`, `MaintenanceWorkOrder`, `WorkshopStation`, `WorkshopTab`, `WorkshopCameraPreset`, and `WorkshopState`.
+    - `workshopLayout.ts`: Geometric layout at sector coordinates `[-40, 0, 40]` (`SECTOR_CENTERS.SERVICE_WORKSHOP`) with heavy industrial steel floor ($11.5\text{m}$ radius), caution hazard border, oil drainage grates, and 6 camera presets (`WORKSHOP_OVERVIEW`, `HYDRAULIC_LIFT_FOCUS`, `DIAGNOSTIC_CART_FOCUS`, `PARTS_RACK_FOCUS`, `WORK_ORDER_STELA_FOCUS`, `UNDERCARRIAGE_INSPECTION`).
+    - `useWorkshopStore.ts`: Reactive Zustand store tracking active vehicle (VinFast VF6 Eco #3, plate: `30A-666.66`, status: `IN_SERVICE`), hydraulic lift elevation (0.2m to 1.8m), 5 vehicle subsystems, OBD-II scanning, replacement part installation, backend expense commitment, and strict safety certification interlock.
+    - `WorkshopFloor3D.tsx`: Industrial steel floor slab with diamond plate texturing, drainage grates, conduit lines, and 8 heavy perimeter steel trusses with fluorescent cyan work lights.
+    - `HydraulicLift3D.tsx`: Dual heavy hydraulic steel columns at $x = \pm 1.8\text{m}$, telescoping arms, smooth lerp elevation of the staged VinFast VF6 digital twin, and 3D control pedestal (`[ ▲ ELEVATE (1.80M) ]` / `[ ▼ LOWER (0.20M) ]`).
+    - `VehicleConditionDisplay3D.tsx`: 5 physical diagnostic nodes on the vehicle (Front Brakes, Front LiDAR ADAS, HV Battery Tray, Adaptive Suspension, Inverter Thermal Loop) displaying status spheres, health percentages, and fault badges.
+    - `DiagnosticCart3D.tsx`: Mobile tool trolley with OBD-II CAN bus monitor, fault code readout (`DTC-P1A24`, `DTC-U0100`), and interactive 3D buttons (`[ 🔍 OBD SCAN ]`, `[ 🛠 OVERHAUL ]`).
+    - `PartsRack3D.tsx`: Heavy parts shelving unit with 3D OEM replacement modules (Ceramic Rotor/Pad set, LiDAR unit, Inverter Coolant Circulator) with click-to-install interactions.
+    - `WorkOrderStela3D.tsx`: Panoramic digital dispatch stela with 3 panels: Active Work Order Details, Safety Interlock Gateway (`[ 💳 COMMIT EXPENSE ]`, `[ 🏁 CERTIFY & RELEASE TO FLEET ]`), and Historical Maintenance Audit Ledger connected to backend expenses.
+    - `ServiceWorkshop3D.tsx`: Composed master sector module mounted in `WorldRoot.tsx` and registered as `DEFAULT_SERVICE_WORKSHOP_SCENE` in `defaultScenes.ts`.
+  - Backend API Integration (`financeApi.ts` & `vehiclesApi.ts`):
+    - Connected to Spring Boot `ExpenseController.java` (`createExpense`) to log real 6,000,000 VND maintenance liability with audit reference.
+    - Connected to Spring Boot `VehicleController.java` (`updateStatus`) to transition vehicle status to `AVAILABLE` upon certified release.
+  - Strict "No Fake Completed Maintenance" Interlock:
+    - Attempting to release a vehicle while active DTC faults remain triggers an immediate safety violation rejection.
+    - Attempting to release a vehicle without committing the expense ledger record triggers an audit hold.
+    - Certification requires: (1) OBD diagnostic verification, (2) all subsystems repaired to 100%, and (3) ledger expense committed.
+  - Automated Unit Tests:
+    - Created `frontend/src/workshop/workshop.test.ts` (14/14 tests PASS) validating layout coordinates, hydraulic lift, OBD scan, subsystem repairs, strict safety interlock, and ledger commitment.
+    - Updated `scene.test.ts` to expect 11 registered scenes (11/11 scenes verified).
+    - Vitest test suite: **28 test files, 262/262 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 6.73s.
+  - Visual Browser Verification:
+    - Executed automated browser session navigating to `http://localhost:4173/?sector=WORKSHOP`, verifying 3D workshop, hydraulic lift elevation, parts replacement, ledger commitment, and safety certification. Captured screenshots `workshop_overview_clean_1789525126501.png` and `workshop_complete_1789525901231.png`.
+* **Summary of Checkpoint 09-K (Operations Center & Staff Fleet Logistics)**:
+  - Designed and built the complete 3D Staff Operations & Logistics Center in `frontend/src/operations/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or modal dialogs) and connecting directly to real Spring Boot backend endpoints:
+    - `operationsTypes.ts`: Domain models for `OperationsTab`, `OperationsStation`, `CheckInOutMode`, `OperationalAlertItem`, `VehicleOperationStatus`, `OperationsCameraPreset`, and `OperationsState`.
+    - `operationsLayout.ts`: Geometric layout at sector coordinates `[-40, 0, 0]` with heavy industrial hangar floor ($11.5\text{m}$ radius), perimeter hazard caution stripes (`#eab308`/`#111827`), 3 designated service bays (`BAY 01`, `BAY 02`, `BAY 03`), and 6 camera presets (`HANGAR_OVERVIEW`, `QR_STATION_FOCUS`, `DISPATCH_CONSOLE_FOCUS`, `FLEET_STATUS_FOCUS`, `NOTIFICATION_BOARD_FOCUS`, `INSPECTION_BAY_FOCUS`).
+    - `useOperationsStore.ts`: Reactive Zustand store tracking fleet vehicles (VinFast VF8 Plus, VF9 Executive, VF6 Eco), active session, check-in and check-out execution, optical QR generation/validation, odometer & battery inputs, inspection damage flag, and operational alert dismissals.
+    - `OperationsFloor3D.tsx`: Heavy industrial hangar floor slab with caution hazard border, 3 service bay demarcation zones, conduit buslines, and 8 perimeter structural trusses with pulsing amber warning beacon caps.
+    - `QRScannerStation3D.tsx`: Optical scanner kiosk with animated sweeping laser line, 3D procedural holographic QR matrix, token validity readout, and interactive 3D buttons (`[ ⚡ GENERATE QR ]`, `[ 🔍 VALIDATE QR ]`).
+    - `DispatchConsole3D.tsx`: Master vehicle operations console angled at $-22^\circ$ with check-in/out tabs, vehicle selector, odometer & battery SoC inputs with +/- 3D buttons, chassis damage toggle, and big master dispatch button (`[ 🟢 DISPATCH VEHICLE ]` / `[ 🏁 RECONCILE RETURN ]`).
+    - `FleetStatusStela3D.tsx`: Curved 3-bay digital twin fleet matrix showing statuses, live battery SoC bars, odometer readings, assigned bays, active drivers, and interactive service hold toggles.
+    - `OperationalNotifications3D.tsx`: Floating holographic bulletin board displaying real-time alerts with interactive acknowledge buttons and global dismiss.
+    - `VehicleInspectionBay3D.tsx`: Staging pad with sweeping laser scan plane, ghost EV wireframe chassis, and multi-sensor checkpoints (LiDAR, Tire Hubs, Battery Tray, Charge Port).
+    - `OperationsCenter3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` and registered as `DEFAULT_OPERATIONS_CENTER_SCENE` in `defaultScenes.ts`.
+  - Backend API Integration (`frontend/src/api/usageSessionsApi.ts`):
+    - Matched Spring Boot `UsageSessionController.java` and `VehicleController.java`: `generateQr`, `validateQr`, `checkIn`, `checkOut`, `getSessionById`, `updateVehicleStatus`, and `getVehicleTelemetry`.
+  - Automated Unit Tests:
+    - Created `frontend/src/operations/operations.test.ts` (16/16 tests PASS) covering spatial layout, station coordinates, store state, alert management, QR workflow, check-in, check-out, and status updates.
+    - Updated `scene.test.ts` to expect 10 registered scenes (10/10 scenes verified).
+    - Vitest test suite: **27 test files, 248/248 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 7.66s.
+  - Visual Browser Verification:
+    - Executed automated browser session navigating to `http://localhost:4173/`, activating `OPERATIONS` sector, verifying 3D hangar, stations, and capturing screenshots `operations_center_overview_1789524015986.png` and `operations_center_active_interaction_1789524091810.png`.
+  - Designed and built the complete 3D AI Intelligence Center in `frontend/src/ai/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or modals), the Honest Status Disclosure directive (*"Never pretend mock AI is production AI"*), and the AI Safety Boundary Protocol (BR-AI-SAFE-01):
+    - `aiTypes.ts`: Domain models for `AIModelStatus`, `AIIntelligenceCategory` (`RECOMMENDATION`, `INSIGHT`, `ANOMALY_INDICATOR`, `FAIRNESS_SUGGESTION`), `AnomalySeverity`, `AISafetyActionType`, `AISafetyAttempt`, `AIRecommendationItem`, `AIDataNodeModel`, `AICameraPreset`, and `AICoreState`.
+    - `aiLayout.ts`: Geometric layout at sector coordinates `[40, 0, 0]`: neural arena floor disc ($11.5\text{m}$ radius), central floating neural holosphere, interaction console, 4 satellite data nodes, curved holographic recommendation screen, result visualization stela, and 6 camera presets (`NEXUS_OVERVIEW`, `CORE_FOCUS`, `TERMINAL_FOCUS`, `HOLOGRAPHIC_RECOMMENDATIONS`, `DATA_NODES_FOCUS`, `SAFETY_AUDIT_FOCUS`).
+    - `aiSafety.ts`: Strict enforcement of BR-AI-SAFE-01. AI is hardcoded as advisory-only and cannot independently authorize payments, alter equity, bypass RBAC, approve contracts, or execute irreversible financial commitments. Generates immutable audit violation records.
+    - `useAIStore.ts`: Reactive Zustand store connecting to backend `AnalyticsController.java` (`analyticsApi.getGroupFairUsage`). Explicitly badges development mock status (`isProductionAI = false`, `modelStatus = 'DEVELOPMENT_MOCK'`, `disclosureNotice = 'STATUS: DEVELOPMENT MOCK (AI API UNAVAILABLE IN PROD ENV)'`), manages multi-category recommendations, interactive query prompt chips, and safety interlocks.
+    - `AIChamberFloor3D.tsx`: Radial cybernetic floor with concentric neon purple and cyan bus lines, illuminated central dais, and 8 perimeter neural pylons with glowing crystal crowns.
+    - `AICoreHoloSphere3D.tsx`: Central neural sphere with 3 concentric rotating gyroscopic wireframe rings, pulsing inner synaptic core, and hovering honest disclosure and advisory disclaimer badge.
+    - `AIDataNodes3D.tsx`: 4 floating satellite nodes (`NODE_MOBILITY`, `NODE_FAIRNESS`, `NODE_FINANCIAL`, `NODE_GOVERNANCE`) with live laser conduits connecting to the AI core and floating telemetry cards.
+    - `AIRecommendationHolograms3D.tsx`: Curved 3D holographic display with category filter tabs projecting advisory cards (off-peak tariff optimization, weekend peak demand imbalance, battery cell thermal drift, fairness parity allocation) with confidence scores and impact badges.
+    - `AIResultVisualization3D.tsx`: 3D visual data stela displaying member fairness ratios vs 1.0 parity baseline, battery pack thermal variance matrix, and autonomy compliance seal.
+    - `AITerminal3D.tsx`: Ergonomic console angled at $-22^\circ$ with query chips (`[ ANALYZE FAIRNESS ]`, `[ BATTERY TELEMETRY ]`, etc.), honest mock disclosure banner, and safety boundary test buttons with an interactive 3D Hard Safety Interlock modal.
+    - `AIIntelligenceCenter3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` and registered as `DEFAULT_AI_INTELLIGENCE_CENTER_SCENE` in `defaultScenes.ts`.
+  - Backend API Integration (`frontend/src/api/analyticsApi.ts`):
+    - Connected algorithmic data to Spring Boot `AnalyticsController.java`: `getGroupFairUsage` and `getMyFairUsageScore`.
+  - Automated Unit Tests:
+    - Created `frontend/src/ai/ai.test.ts` (16/16 tests PASS) validating layout coordinates, honest mock disclosure, multi-category coverage, BR-AI-SAFE-01 safety enforcement on all prohibited actions, and interactive query synthesis.
+    - Updated `scene.test.ts` to expect 9 registered scenes (9/9 scenes verified).
+    - Vitest test suite: **26 test files, 232/232 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 7.55s.
+* **Summary of Checkpoint 09-I (Decision Chamber & Authoritative Governance Deliberation)**:
+  - Designed and built the complete 3D Decision Chamber in `frontend/src/decision/` strictly adhering to the Pure 3D mandate (zero 2D HTML forms, overlays, or modals) and Backend Authority mandate ("Do not calculate final voting authority only on frontend. Backend remains authoritative."):
+    - `decisionTypes.ts`: Domain models for `DecisionTab`, `DecisionChamberStation`, `SyndicateMemberEquity`, `DecisionCameraPreset`, and `DecisionState`.
+    - `decisionLayout.ts`: Geometric layout at sector coordinates `[40, 0, -40]`: parliamentary arena disc ($11.5\text{m}$ radius), floating proposal pod cluster, angled voting console ($-25^\circ$ tilt), member equity allocation pillars, volumetric liquid quorum column with 60% laser mark, authoritative governance verdict stela, and 6 camera presets (`ARENA_OVERVIEW`, `TERMINAL_FOCUS`, `PROPOSAL_PODS_FOCUS`, `EQUITY_FOCUS`, `QUORUM_RESULTS_FOCUS`, `STELA_FOCUS`).
+    - `useDecisionStore.ts`: Reactive Zustand store tracking active proposals, co-owner equity distribution (Minh Hiep 35.0%, Tran Duc 25.0%, Le Hoang 20.0%, Pham Mai 20.0%), live ballot casting, and backend synchronization. Strictly queries backend `/proposals/{id}/tally` and `/proposals/{id}/results` for official quorum and passing decisions.
+    - `DecisionChamberFloor3D.tsx`: Semicircular arena floor with concentric parliament indigo and neon violet rings, central amphitheater dais, and 8 perimeter architectural pylons topped with glowing violet crystal crowns.
+    - `ProposalHoloPod3D.tsx`: Semicircular arc of 3D floating polyhedrons (Octahedron for routine expense, Dodecahedron for asset upgrade, Icosahedron for amendment) with interactive selection, wireframe outer shells, and 3D holographic title cards.
+    - `VotingTerminal3D.tsx`: Parliamentary console tilted at $-25^\circ$ toward user, voter equity readout (35.00%), 3 tactile 3D vote button pedestals (`[ APPROVE ]`, `[ REJECT ]`, `[ ABSTAIN ]`), glowing status feedback, and calling backend `POST /api/v1/proposals/{id}/votes`.
+    - `EquityAllocationPillars3D.tsx`: 4 vertical glass/neon pillars proportional in height to each member's equity percentage, with hovering member badges and live ballot status indicators (`✓ APPROVE`, `✓ REJECT`, `PENDING`).
+    - `QuorumLiquidColumn3D.tsx`: Transparent cylinder with volumetric liquid core tracking participation rate, horizontal laser ring marking mandatory 60.00% quorum threshold, and live quorum satisfaction indicator.
+    - `DecisionResultStela3D.tsx`: Monolithic obsidian stela displaying official backend verdict (`PASSED`, `REJECTED`, `QUORUM_NOT_MET`), mathematical breakdown, and decision reason string from the Spring Boot backend engine.
+    - `DecisionChamber3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` and registered as `DEFAULT_DECISION_CHAMBER_SCENE` in `defaultScenes.ts`.
+  - Backend API Integration (`frontend/src/api/proposalsApi.ts`):
+    - Matched Spring Boot `ProposalController.java`: `getProposalsByGroupId`, `getProposalById`, `castVote`, `getMyVote`, `getProposalTally`, and `getProposalResults`.
+  - Automated Unit Tests:
+    - Created `frontend/src/decision/decision.test.ts` (10/10 tests PASS) validating layout coordinates, 100.00% member equity distribution, proposal pod selection, quorum pending (<60%) before ballot, quorum satisfied (80%) after ballot, and backend authority.
+    - Updated `scene.test.ts` to expect 8 registered scenes (8/8 scenes verified).
+    - Vitest test suite: **25 test files, 216/216 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 5.78s.
+* **Summary of Checkpoint 09-H (Digital Contract Room & Holographic Document Signing)**:
+  - Designed and built the complete 3D Digital Contract Room workflow in `frontend/src/contracts/` strictly adhering to the Pure 3D mandate (zero 2D HTML document pages, tables, or overlays):
+    - `contractTypes.ts`: Domain models for `ContractDocumentSection`, `ContractVersionCard`, `ContractRoomTab` (`DOCUMENT`, `VERSIONS`, `SIGNATURES`, `STATUS_OVERVIEW`), `ContractSigningState`, and `ContractOperationResult`.
+    - `contractLayout.ts`: Geometric layout at sector coordinates `[40, 0, -80]`: executive slate disc floor ($16\text{m}$ radius), central document lectern, biometric signature dais, version tree monolith, floating holographic status seal, and 5 specialized camera presets (`ROOM_OVERVIEW`, `DOCUMENT_FOCUS`, `SIGNATURE_FOCUS`, `VERSION_FOCUS`, `STATUS_FOCUS`).
+    - `useContractStore.ts`: Reactive Zustand store managing active legal contract, 5-section legal agreement text, version history, signatures overview, interactive page turning, terms acknowledgment checkbox, and real backend digital signing with SHA-256 hash provenance.
+    - `ContractRoomFloor3D.tsx`: Executive slate floor with concentric sapphire circuit lines, rotating outer legal gears, 8 perimeter slate pylons with blue beacons, and inscribed statutory compliance text.
+    - `ContractDocument3D.tsx`: Ergonomic lectern pedestal with an angled sapphire glass document slab ($30^\circ$ tilt), multi-page legal text rendered via `@react-three/drei` `<Text>`, 5 quick-jump section chips, background cryptographic watermarks, and 3D pagination buttons (`[ < PREV SECTION ]`, `PAGE X OF 5`, `[ NEXT SECTION > ]`).
+    - `SignaturePedestal3D.tsx`: Biometric hand/thumbprint scanner glass pad with laser sweep micro-animation, interactive 3D terms acknowledgment checkbox, and tactile 3D `[ EXECUTE DIGITAL SIGNATURE ]` button calling backend `POST /api/v1/contracts/{id}/sign`.
+    - `ContractVersionStela3D.tsx`: Chrome-slate monolith displaying chronological version tree (`v1.0`, `v1.1`, `v2.0`) with interactive version cards that load corresponding agreements into the 3D document lectern.
+    - `ContractStatusSeal3D.tsx`: Floating 3D holographic status emblem above the lectern with rotating halo ring, live quorum progress gauge (`QUORUM: 4/4 SIGNED`), signatory status breakdown, and status activation trigger.
+    - `DigitalContractRoom3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` and registered as `DEFAULT_DIGITAL_CONTRACT_ROOM_SCENE` in `defaultScenes.ts`.
+  - Backend API Integration (`frontend/src/api/contractsApi.ts`):
+    - Aligned REST endpoints with Spring Boot `ContractController.java`: `getContractById`, `getContractsByGroupId`, `getActiveContractByGroupId`, `getSignaturesOverview`, `signContract`, `transitionStatus`, `createContract`, and `updateDraftContract`.
+  - Automated Unit Tests:
+    - Created `frontend/src/contracts/contract.test.ts` (9/9 tests PASS) validating layout coordinates, camera presets, 5-section multi-page navigation, version loading, mandatory terms acceptance, SHA-256 digital signature creation, and status transitions.
+    - Updated `scene.test.ts` to expect 7 registered scenes (7/7 scenes verified).
+    - Vitest test suite: **24 test files, 206/206 unit tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 5.51s.
+* **Summary of Checkpoint 09-F (Energy & Finance Center & Cost Allocation)**:
+  - Designed and implemented the complete 3D Finance Center workflow in `frontend/src/finance/` strictly adhering to the Pure 3D mandate (zero 2D HTML pages, tables, or modals) and strict "No Fake Financial Success" enforcement:
+    - `financeTypes.ts`: Full domain models for `ExpenseCategory`, `AllocationStrategy` (`OWNERSHIP_BASED`, `USAGE_BASED`, `HYBRID`), `CategoryVisualConfig`, `MemberAllocationShare`, `ExpenseItemModel`, `MemberCostSummary`, and `PaymentTransactionSession`.
+    - `financeLayout.ts`: Geometric positioning within the `[0, 0, -80]` sector: cleanroom floor dial ($16\text{m}$ radius), expense crystal dais, cost allocation bar graph platform, liquid reserve vault column, contactless payment kiosk, master finance console, and 6 camera framing presets (`FINANCE_OVERVIEW`, `TERMINAL_FOCUS`, `EXPENSE_CLUSTER`, `ALLOCATION_FOCUS`, `PAYMENT_KIOSK_FOCUS`, `VAULT_COLUMN_FOCUS`).
+    - `useFinanceStore.ts`: Reactive Zustand store tracking active group finance, dynamic allocation recomputation across the 3 strategies, liquid balance ratio vs minimum safety reserve floor (`BR-FIN-03`), and real backend payment actions with strict error propagation.
+    - `FinanceCenterFloor3D.tsx`: High-tech surgical cleanroom floor with concentric emerald and cyan guideline rings, outer neon curb ring, radial data conduits, 10 perimeter atmospheric pylons, and suspended overhead cyber luminance halo.
+    - `FloatingExpenseCrystal3D.tsx`: Interactive procedural polyhedrons with category-specific geometry (Octahedron for charging, Dodecahedron for maintenance, Icosahedron for insurance, Cylinder for cleaning, Box for parking). Features gentle hover bobbing, 3D SDF info badges with amount and settlement status, and volumetric slice expansion when selected into 4 member allocation shards.
+    - `ExpenseCluster3D.tsx`: Semicircular dais staging the floating expense crystals with monthly pool total readout.
+    - `CostAllocationBarGraph3D.tsx`: 3D vertical columns rising from the floor for each co-owner with live height tweening, dual emerald (paid) and amber (due) segments, member equity/usage stats, and interactive 3D strategy switcher buttons (`EQUITY %`, `USAGE %`, `HYBRID`).
+    - `LiquidReserveColumn3D.tsx`: Transparent 3D cylindrical glass chamber with glowing fluid fill level correlating to liquid VND balance, amber laser guideline for safety reserve (`BR-FIN-03`), flashing warning beacon for low liquidity, and floating financial health telemetry stela.
+    - `PaymentKiosk3D.tsx`: Physical contactless payment station with NFC tap pad, VietQR 3D display, amount selector, channel switchers (`VIETQR / BANK`, `E-WALLET`, `NFC CARD`, `DEV SANDBOX`), and strict "No Fake Financial Success" execution (displays real processing, exact backend error diagnostics upon failure, and verified receipt codes upon genuine settlement).
+    - `FinanceTerminal3D.tsx`: Master console kiosk with ergonomic $-18^\circ$ viewing tilt, 5 breadcrumb tabs (`OVERVIEW`, `EXPENSES`, `ALLOCATION`, `PAYMENT`, `AUDIT`), monthly pool metrics, and in-world pure 3D expense logger connected to backend POST `/api/v1/expenses`.
+    - `FinanceCenter3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` and registered in `SceneRegistry`.
+  - Backend REST Integration (`backend/src/main/java/com/example/evshare/controller/PaymentController.java`):
+    - Added `PaymentController.java` exposing `PaymentService` over REST (`POST /api/v1/payments/initiate`, `GET /api/v1/payments/{id}`, `GET /api/v1/payments/reference/{reference}`, `POST /api/v1/payments/{id}/verify`).
+    - Backend compiles with `mvn.cmd test-compile` (BUILD SUCCESS, 293 source files).
+  - Automated Unit Tests:
+    - Created `frontend/src/finance/finance.test.ts` (13/13 tests PASS) validating initial state, category fixed/variable classifications, allocation strategy recalculations, liquid reserve deficit detection, real payment initiation error handling, and verified payment completion.
+    - Updated `scene.test.ts` (5/5 tests PASS) asserting 5 default scenes.
+    - Total unit test count: **22 test files, 187/187 tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 5.75s.
+* **PREVIOUS_PHASE**: `PHASE 08 — PURE 3D ENGINE & 3D DESIGN SYSTEM` (VERIFIED / COMMITTED / PUSHED at `1e299b3`)
+* **Frontend Verification (`npm run test && npm run typecheck && npm run build`)**: **`BUILD & TEST SUCCESS`** (21/21 unit test suites, 174/174 unit tests PASS; 0 errors, 0 warnings across TypeScript typecheck and Vite production build)
+* **Summary of Checkpoint 09-E (Chrono-Spatial 3D Booking Chamber)**:
+  - Designed and implemented the complete 3D Booking Chamber workflow in `frontend/src/booking/` strictly adhering to the Pure 3D mandate (zero 2D HTML booking forms or popups):
+    - `bookingTypes.ts`: Domain definitions for `BookingStep` (`CALENDAR`, `TIMELINE`, `TIME_SELECTION`, `CONFIRMATION`, `RESULT`), `TimelineHourSlot`, `CalendarDayCell`, `FairUsageScoreModel`, and `BookingSubmissionResult`.
+    - `bookingLayout.ts`: Geometric specification of the chronometer dial floor ($16\text{m}$ radius), vehicle showcase turntable ($3.5\text{m}$ radius), master holographic booking kiosk, floating fair usage quota stela, and camera presets (`CHAMBER_OVERVIEW`, `TERMINAL_FOCUS`, `CALENDAR_FOCUS`, `VEHICLE_INSPECTION`).
+    - `useBookingStore.ts`: Reactive Zustand store tracking active booking vehicle, 14-day calendar cells with occupancy rates, 24-hour timeline slots, mandatory 30-minute turnaround buffer (`BR-BKG-02`), optimistic reservation submission, fair usage quotient, and camera framing.
+    - `BookingChamberFloor3D.tsx`: Chronometer dial floor with radial tick marks, inner glowing guidance rings, and 12 atmospheric perimeter pylons with beacon lighting.
+    - `VehicleShowcasePedestal3D.tsx`: Central rotating turntable with procedural digital twin EV model, spinning halo ring, and floating holographic vehicle identity badge.
+    - `ChronoCalendar3D.tsx`: Interactive 14-day 3D calendar cards arranged along a viewing curve, featuring occupancy indicators, week pagination, and raycast selection.
+    - `ChronoTimeline3D.tsx`: 24-hour interactive 3D timeline ribbon with hour blocks and distinct purple 30-minute turnaround buffer visualization (`BR-BKG-02`).
+    - `TimeSelector3D.tsx`: In-world 3D time stepper controls, duration presets (2h, 4h, 8h, full day), live turnaround buffer conflict detection, and real-time total estimate calculator.
+    - `FairUsageHoloPillar3D.tsx`: Floating holographic quota stela displaying member fairness ratio, peak-hour usage balance, and AI scheduling recommendations.
+    - `BookingConfirmation3D.tsx`: 3D spatial confirmation card with trip schedule, vehicle specs, turnaround buffer compliance notice, and action buttons.
+    - `BookingResult3D.tsx`: Celebratory confirmation certificate hologram with confirmation code, unlock PIN, calendar sync, and garage return action.
+    - `BookingTerminal3D.tsx`: Master console kiosk orchestrating stages with 3D breadcrumbs and contextual stage rendering.
+    - `BookingChamber3D.tsx`: Composed sector module mounted in `WorldRoot.tsx` at coordinates `[0, 0, 48]`.
+  - Backend API Integration (`frontend/src/api/`):
+    - `bookingsApi.ts`: REST endpoints for `/bookings/availability`, `/bookings/timeline`, `/bookings`, `/bookings/{id}`, `/bookings/my-bookings`, and `/bookings/{id}/cancel` with resilient fallback.
+    - `analyticsApi.ts`: REST endpoints for `/analytics/fair-usage/my-score` and `/analytics/fair-usage/group/{groupId}`.
+  - Inter-Sector Linking:
+    - Wired `VehicleInspectionTerminal3D.tsx` in Central Garage with a `📅 BOOK` button that teleports the user directly to the Booking Chamber and focuses the Booking Terminal.
+    - Registered `DEFAULT_BOOKING_CHAMBER_SCENE` in `defaultScenes.ts` and `App.tsx`.
+  - Automated Unit Tests:
+    - Created `booking.test.ts` (14/14 tests PASS) testing initial state, vehicle switching, 14-day calendar, 24-hour timeline duration, turnaround buffer conflict enforcement, workflow steps, submission, and fair usage.
+    - Updated `scene.test.ts` (5/5 tests PASS).
+    - Total unit test count: **21 test files, 174/174 tests PASS**.
+    - TypeScript typecheck: **0 errors**.
+    - Vite build: Production bundle generated in 6.23s.
+  - Browser Verification:
+    - Recording artifact: `booking_chamber_done_1789443966823.webp`.
+    - Verified pure 3D interaction across 3D calendar day selection, 3D timeline ribbon, turnaround buffers, booking confirmation, and Central Garage cross-sector linking.
+* **PREVIOUS_PHASE**: `PHASE 08 — PURE 3D ENGINE & 3D DESIGN SYSTEM` (VERIFIED / COMMITTED / PUSHED at `1e299b3`)
+* **Frontend Verification (`npm run test && npm run typecheck && npm run build`)**: **`BUILD & TEST SUCCESS`** (20/20 unit test suites, 160/160 unit tests PASS; 0 errors, 0 warnings across TypeScript typecheck and Vite production build)
+* **Summary of Checkpoint 09-C (Central Garage & Digital Twin Vehicles)**:
+  - Designed and implemented the complete 3D Central Garage & Digital Twin Vehicle system in `frontend/src/garage/`:
+    - `garageTypes.ts`: Full domain models for `GarageVehicle`, `ParkingBay`, `ChargingStation`, and `VehicleOwnershipInfo`.
+    - `garageLayout.ts`: Geometric specification of 6 designated parking & charging bays within the 24m garage radius (`BAY-01` to `BAY-06`) and 2 Hypercharger stations (`CHG-01`, `CHG-02`).
+    - `useGarageStore.ts`: Reactive Zustand store tracking fleet telemetry, parking bay occupancy, charging power, camera framing coordination, and optimistic status updates.
+    - `GarageFloor3D.tsx`: Central showroom floor disc ($24\text{m}$ radius), perimeter neon curb ring, guidance rings, central circular pedestal, and suspended overhead neon luminance halo ring.
+    - `ParkingBay3D.tsx`: Individual stall markings, neon striping (cyan/emerald), rear wheel stop bumper bars, and 3D floor labels.
+    - `ChargingStation3D.tsx`: High-power 250 kW Supercharger kiosk with vertical status lightstrips, front holographic display, charging cable nozzle, and pulsing aura.
+    - `DigitalTwinVehicle3D.tsx`: Aerodynamic procedural EV models with metallic paint, glass canopy, Cyberpunk LED lightbars, alloy wheels with brake calipers, status underglow, and floating 3D holographic telemetry cards (Model, License plate, Status badge, Battery SoC progress bar, and Syndicate Ownership info).
+    - `VehicleInspectionTerminal3D.tsx`: In-world holographic terminal positioned beside selected vehicles with live telemetry readouts, lock/unlock button, charging control, and camera coordination.
+    - `CentralGarage3D.tsx`: Composed sector module mounted directly into `WorldRoot.tsx` at `CENTRAL_GARAGE` coordinates `[0, 0, 0]`.
+  - Backend Integration (`frontend/src/api/`):
+    - `apiClient.ts`: Configured Axios client with `/api` baseURL and auth header interceptor.
+    - `vehiclesApi.ts`: REST endpoints for `/vehicles`, `/vehicles/{id}`, `/vehicles/{id}/telemetry`, and `/vehicles/{id}/status`.
+    - `ownershipGroupsApi.ts`: REST endpoints for `/ownership-groups` and `/ownership-groups/{id}`.
+    - Seamless live backend data hydration with graceful bootstrap fallback when offline.
+  - Automated Unit Tests:
+    - Created `garage.test.ts` (8/8 tests PASS) covering garage layout geometry, charging bay correlations, vehicle selection & camera framing, lock/charging controls, live backend hydration, and offline fallback.
+  - Overall Frontend Quality:
+    - `npm run test`: **20 test files, 160 tests PASS** in 4.22s.
+    - `npm run typecheck`: **0 errors**.
+    - `npm run build`: Vite production bundle generated cleanly in 5.53s.
 * **Frontend Stack**:
   - React `18.3.1` + React DOM `18.3.1`
   - Three.js `^0.160.0`
@@ -573,14 +865,15 @@
 * **Phase 04-L (REST API)**: Complete (Exposed and documented all Vehicle, Co-Ownership, and Contract REST APIs according to `docs/API.md`, strict RBAC, DTO validation, consistent `ApiResponse` / `PagedData` envelopes, OpenAPI docs, `VehicleApiControllerIntegrationTest` 16/16 PASS, full test suite 381/381 PASS).
 * **Phase 04-M (Test Suite)**: Complete (`ComprehensivePhase04TestSuiteTest` validating all 13 domains: vehicle CRUD, vehicle states, ownership group, ownership share, ownership = 100%, invalid ownership, ownership history, contract creation, signatures, contract lifecycle, RBAC, validation, transactions; `mvn clean test` executed with 394/394 PASS, 0 failures, 0 errors, 0 skipped).
 * **Phase 04-N (Final Verification)**: Complete (All Phase 04 requirements verified, zero new features, updated `docs/API.md`, verified `docs/DATABASE.md`, updated `agent/CURRENT_STATUS.md`, `agent/DECISIONS.md`, `agent/KNOWN_ISSUES.md`, and generated `agent/PHASE_04_REPORT.md` with PASS ratings across all 13 dimensions).
-* **Frontend Source Code**: Scheduled for Phase 09.
+* **Frontend Source Code**: Complete. Fully integrated across all 13 metaverse sectors, 7 digital twin facets, and 12 REST API modules.
+* **Phase 09 Verification**: Complete (All 28 checkpoints 09-A through 09-AB verified; 442/442 unit tests PASS; live browser E2E verified; 0 console errors; production bundle built).
 * **Docker Configurations**: Scheduled for Phase 10.
 
 ---
 
 ## 5. Next Steps
-STOP. PHASE 04 — VEHICLE, CO-OWNERSHIP & CONTRACT is officially COMPLETE and verified.
-All 14 checkpoints (04-A through 04-N) completed.
-All 394 automated tests passing (100% pass rate, 0 failures, 0 errors, 0 skipped).
+STOP. PHASE 09 — PURE 3D WORLD & FULL INTEGRATION is officially COMPLETE and verified.
+All 28 checkpoints (09-A through 09-AB) completed.
+All 442 automated tests passing (100% pass rate, 0 failures, 0 errors, 0 skipped).
 Quality Gate PASSED.
-Do NOT start PHASE 05. Awaiting explicit user command for Phase 05.
+Do NOT start PHASE 10. Awaiting explicit user command for Phase 10.

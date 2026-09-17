@@ -1,10 +1,8 @@
 package com.example.evshare.controller;
 
 import com.example.evshare.dto.request.CreateExpenseRequest;
-import com.example.evshare.dto.response.ApiResponse;
-import com.example.evshare.dto.response.ExpenseAuditLogResponse;
-import com.example.evshare.dto.response.ExpenseResponse;
-import com.example.evshare.dto.response.PagedData;
+import com.example.evshare.dto.response.*;
+import com.example.evshare.entity.enums.AllocationStrategy;
 import com.example.evshare.entity.enums.ExpenseCategory;
 import com.example.evshare.security.UserPrincipal;
 import com.example.evshare.service.ExpenseService;
@@ -96,5 +94,44 @@ public class ExpenseController {
         Long currentUserId = principal != null ? principal.getId() : null;
         List<ExpenseAuditLogResponse> response = expenseService.getExpenseHistory(id, currentUserId);
         return ResponseEntity.ok(ApiResponse.ok("Expense audit trail retrieved successfully", response));
+    }
+
+    @GetMapping("/group/{groupId}/allocation-summary")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN') or (hasRole('CO_OWNER') and @ownershipSecurity.isGroupMember(#groupId, principal.id))")
+    @Operation(summary = "Authoritative syndicate cost allocation summary",
+            description = "Computes group-wide member cost liabilities using authoritative backend allocation strategies")
+    public ResponseEntity<ApiResponse<GroupAllocationSummaryResponse>> getGroupAllocationSummary(
+            @PathVariable Long groupId,
+            @RequestParam(required = false, defaultValue = "HYBRID") AllocationStrategy strategy,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        Long currentUserId = principal != null ? principal.getId() : null;
+        GroupAllocationSummaryResponse response = expenseService.getGroupAllocationSummary(groupId, strategy, currentUserId);
+        return ResponseEntity.ok(ApiResponse.ok("Authoritative group allocation summary retrieved", response));
+    }
+
+    @GetMapping("/{id}/allocations")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN') or (hasRole('CO_OWNER') and @ownershipSecurity.isExpenseGroupMember(#id, principal.id))")
+    @Operation(summary = "Retrieve itemized cost allocations for an expense",
+            description = "Fetches persisted member liability breakdown and settlement state")
+    public ResponseEntity<ApiResponse<List<ExpenseAllocationResponse>>> getExpenseAllocations(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        Long currentUserId = principal != null ? principal.getId() : null;
+        List<ExpenseAllocationResponse> response = expenseService.getExpenseAllocations(id, currentUserId);
+        return ResponseEntity.ok(ApiResponse.ok("Expense allocations retrieved successfully", response));
+    }
+
+    @PostMapping("/{id}/allocate")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN') or (hasRole('CO_OWNER') and @ownershipSecurity.isExpenseGroupMember(#id, principal.id))")
+    @Operation(summary = "Authoritatively calculate and persist cost allocations for an expense")
+    public ResponseEntity<ApiResponse<ExpenseResponse>> allocateExpense(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        Long currentUserId = principal != null ? principal.getId() : null;
+        ExpenseResponse response = expenseService.allocateExpense(id, currentUserId);
+        return ResponseEntity.ok(ApiResponse.ok("Expense allocated and persisted successfully", response));
     }
 }
