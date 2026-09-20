@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useDecisionStore } from './useDecisionStore';
 import { DECISION_LAYOUT } from './decisionLayout';
+import { formatPercentageVN } from '@/i18n';
 
 interface EquityAllocationPillars3DProps {
   position?: [number, number, number];
@@ -24,7 +25,7 @@ export const EquityAllocationPillars3D: React.FC<EquityAllocationPillars3DProps>
           anchorY="middle"
           letterSpacing={0.06}
         >
-          MEMBER EQUITY ALLOCATION
+          CƠ CẤU CỔ PHẦN THÀNH VIÊN
         </Text>
         <Text
           position={[0, -0.28, 0]}
@@ -33,7 +34,7 @@ export const EquityAllocationPillars3D: React.FC<EquityAllocationPillars3DProps>
           anchorX="center"
           anchorY="middle"
         >
-          WEIGHTED VOTING SHARES (TOTAL: 100.00%)
+          TỶ LỆ BIỂU QUYẾT THEO TRỌNG SỐ (TỔNG: 100,00%)
         </Text>
       </group>
 
@@ -118,7 +119,7 @@ export const EquityAllocationPillars3D: React.FC<EquityAllocationPillars3DProps>
                 anchorY="middle"
                 letterSpacing={0.04}
               >
-                {`${member.equityPercentage.toFixed(1)}%`}
+                {formatPercentageVN(member.equityPercentage)}
               </Text>
 
               {/* Ballot Badge */}
@@ -133,12 +134,14 @@ export const EquityAllocationPillars3D: React.FC<EquityAllocationPillars3DProps>
                 </lineSegments>
                 <Text
                   position={[0, 0, 0.02]}
-                  fontSize={0.09}
+                  fontSize={0.085}
                   color={voteColor}
                   anchorX="center"
                   anchorY="middle"
                 >
-                  {member.hasVoted ? `✓ ${member.voteChoice}` : 'PENDING'}
+                  {member.hasVoted
+                    ? `✓ ${member.voteChoice === 'APPROVE' ? 'TÁN THÀNH' : member.voteChoice === 'REJECT' ? 'KHÔNG TÁN THÀNH' : 'KHÔNG BIỂU QUYẾT'}`
+                    : 'CHỜ BỎ PHIẾU'}
                 </Text>
               </group>
             </group>

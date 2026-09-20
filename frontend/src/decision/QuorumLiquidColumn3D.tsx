@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useDecisionStore } from './useDecisionStore';
 import { DECISION_LAYOUT } from './decisionLayout';
+import { formatPercentageVN } from '@/i18n';
 
 interface QuorumLiquidColumn3DProps {
   position?: [number, number, number];
@@ -37,7 +38,7 @@ export const QuorumLiquidColumn3D: React.FC<QuorumLiquidColumn3DProps> = ({
           anchorY="middle"
           letterSpacing={0.06}
         >
-          GOVERNANCE QUORUM MONITOR
+          GIÁM SÁT HẠN NGẠCH BIỂU QUYẾT
         </Text>
         <Text
           position={[0, -0.28, 0]}
@@ -46,7 +47,7 @@ export const QuorumLiquidColumn3D: React.FC<QuorumLiquidColumn3DProps> = ({
           anchorX="center"
           anchorY="middle"
         >
-          MANDATORY 60.00% MINIMUM PARTICIPATION
+          QUY ĐỊNH THAM GIA TỐI THIỂU 60,00%
         </Text>
       </group>
 
@@ -108,7 +109,7 @@ export const QuorumLiquidColumn3D: React.FC<QuorumLiquidColumn3DProps> = ({
             anchorX="center"
             anchorY="middle"
           >
-            {`THRESHOLD: ${quorumThreshold.toFixed(2)}%`}
+            {`HẠN MỨC: ${formatPercentageVN(quorumThreshold)}`}
           </Text>
         </group>
       </group>
@@ -127,24 +128,24 @@ export const QuorumLiquidColumn3D: React.FC<QuorumLiquidColumn3DProps> = ({
         {/* Rate Text */}
         <Text
           position={[0, 0.28, 0.02]}
-          fontSize={0.16}
+          fontSize={0.15}
           color={quorumReached ? '#34d399' : '#fbbf24'}
           anchorX="center"
           anchorY="middle"
         >
-          {`${participationRate.toFixed(1)}% PARTICIPATION`}
+          {`${formatPercentageVN(participationRate)} THAM GIA`}
         </Text>
 
         {/* Quorum status badge */}
         <Text
           position={[0, 0.04, 0.02]}
-          fontSize={0.12}
+          fontSize={0.11}
           color={quorumReached ? '#10b981' : '#f59e0b'}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.04}
         >
-          {quorumReached ? '✓ QUORUM SATISFIED' : '⚠ QUORUM PENDING (<60%)'}
+          {quorumReached ? '✓ ĐÃ ĐẠT ĐỦ ĐIỀU KIỆN' : '⚠ CHƯA ĐỦ ĐIỀU KIỆN (<60%)'}
         </Text>
 
         {/* Breakdown of participating votes */}
@@ -156,8 +157,8 @@ export const QuorumLiquidColumn3D: React.FC<QuorumLiquidColumn3DProps> = ({
           anchorY="middle"
         >
           {tally
-            ? `Approve: ${tally.approveEquity.toFixed(1)}% • Reject: ${tally.rejectEquity.toFixed(1)}%`
-            : 'Approve: 45.0% • Reject: 0.0%'}
+            ? `Tán thành: ${formatPercentageVN(tally.approveEquity)} • Bác bỏ: ${formatPercentageVN(tally.rejectEquity)}`
+            : `Tán thành: ${formatPercentageVN(45.0)} • Bác bỏ: ${formatPercentageVN(0.0)}`}
         </Text>
       </group>
     </group>

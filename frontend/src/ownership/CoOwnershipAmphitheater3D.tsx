@@ -278,15 +278,15 @@ export const CoOwnershipAmphitheater3D: React.FC = () => {
         </mesh>
 
         <Text position={[-2.8, 0, 0]} fontSize={0.062} color={THEME.TEXT_GOLD_BRIGHT} anchorX="left" anchorY="middle">
-          PERSPECTIVE:
+          GÓC NHÌN:
         </Text>
 
         {[
-          { id: 'HALL_OVERVIEW' as const, label: 'AMPHITHEATER' },
-          { id: 'EQUITY_CORE' as const, label: 'EQUITY CORE' },
-          { id: 'CONTRACT_TERMINAL' as const, label: 'CONTRACT CONSOLE' },
-          { id: 'RULES_STELA' as const, label: 'RULES STELA' },
-          { id: 'HISTORY_STELA' as const, label: 'AUDIT LEDGER' },
+          { id: 'HALL_OVERVIEW' as const, label: 'TOÀN CẢNH' },
+          { id: 'EQUITY_CORE' as const, label: 'LÕI CỔ PHẦN' },
+          { id: 'CONTRACT_TERMINAL' as const, label: 'BÀN HỢP ĐỒNG' },
+          { id: 'RULES_STELA' as const, label: 'BIA QUY TẮC' },
+          { id: 'HISTORY_STELA' as const, label: 'SỔ CÁI' },
         ].map((view, vIdx) => {
           const isSelected = cameraPreset === view.id;
           const xPos = -1.75 + vIdx * 0.95;

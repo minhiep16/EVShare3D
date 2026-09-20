@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useDecisionStore } from './useDecisionStore';
 import { DECISION_LAYOUT } from './decisionLayout';
 import type { ProposalDTO } from '../api/proposalsApi';
+import { formatStatusVN } from '@/i18n';
 
 interface ProposalHoloPod3DProps {
   position?: [number, number, number];
@@ -28,7 +29,7 @@ export const ProposalHoloPod3D: React.FC<ProposalHoloPod3DProps> = ({
           anchorY="middle"
           letterSpacing={0.08}
         >
-          ACTIVE GOVERNANCE PROPOSALS
+          CÁC ĐỀ XUẤT NGHỊ QUYẾT ĐANG HOẠT ĐỘNG
         </Text>
         <Text
           position={[0, -0.32, 0]}
@@ -37,7 +38,7 @@ export const ProposalHoloPod3D: React.FC<ProposalHoloPod3DProps> = ({
           anchorX="center"
           anchorY="middle"
         >
-          SELECT PROPOSAL POD TO DELIBERATE & CAST BALLOT
+          CHỌN TRỤ ĐỀ XUẤT ĐỂ THẢO LUẬN & BIỂU QUYẾT
         </Text>
       </group>
 
@@ -90,25 +91,25 @@ const SingleProposalPod: React.FC<SingleProposalPodProps> = ({
         return {
           primary: '#10b981',
           accent: '#34d399',
-          label: 'ROUTINE EXPENSE',
+          label: 'CHI PHÍ ĐỊNH KỲ',
         };
       case 'ASSET_UPGRADE':
         return {
           primary: '#38bdf8',
           accent: '#7dd3fc',
-          label: 'ASSET UPGRADE',
+          label: 'NÂNG CẤP TÀI SẢN',
         };
       case 'AMENDMENT':
         return {
           primary: '#a855f7',
           accent: '#c084fc',
-          label: 'CHARTER AMENDMENT',
+          label: 'TU CHÍNH ĐIỀU LỆ',
         };
       default:
         return {
           primary: '#f59e0b',
           accent: '#fbbf24',
-          label: 'GENERAL GOVERNANCE',
+          label: 'QUẢN TRỊ CHUNG',
         };
     }
   };
@@ -254,7 +255,7 @@ const SingleProposalPod: React.FC<SingleProposalPodProps> = ({
           anchorX="center"
           anchorY="middle"
         >
-          {`ID: #${proposal.id} • ${proposal.status} • By: ${proposal.proposerFullName || 'Syndicate'}`}
+          {`Mã #${proposal.id} • ${formatStatusVN(proposal.status)} • Đề xuất: ${proposal.proposerFullName || 'Nhóm sở hữu'}`}
         </Text>
       </group>
     </group>

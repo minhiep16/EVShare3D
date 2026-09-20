@@ -120,7 +120,7 @@ class FinancialTransactionSafetyIntegrationTest {
 
         testVehicle = new Vehicle();
         testVehicle.setVin("VIN" + uid.toUpperCase() + "SAFE0000");
-        testVehicle.setLicensePlate("51K-SAFE" + uid.substring(0, 4).toUpperCase());
+        testVehicle.setLicensePlate("51K-" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase());
         testVehicle.setModelName("VinFast VF9");
         testVehicle.setManufacturer("VinFast");
         testVehicle.setModel3dAssetPath("models/vehicles/vf9.glb");

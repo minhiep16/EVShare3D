@@ -91,7 +91,7 @@ export const ParkingBay3D: React.FC<ParkingBay3DProps> = ({ bay }) => {
           anchorX="center"
           anchorY="middle"
         >
-          {isCharging ? '⚡ FAST CHARGING DOCK' : '🅿 EV CO-OWNERSHIP STALL'}
+          {isCharging ? '⚡ TRẠM SẠC SIÊU TỐC' : '🅿 VỊ TRÍ ĐỖ XE ĐỒNG SỞ HỮU'}
         </Text>
       </group>
 

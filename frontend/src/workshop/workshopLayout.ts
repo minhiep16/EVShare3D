@@ -12,26 +12,26 @@ export const WORKSHOP_STATIONS: Record<
   }
 > = {
   HYDRAULIC_LIFT: {
-    name: 'Dual-Column Hydraulic Lift',
-    description: 'Telescoping 4-ton vehicle lift for undercarriage and powertrain maintenance',
+    name: 'Cầu Nâng Thủy Lực Hai Cột',
+    description: 'Cầu nâng xe 4 tấn phục vụ bảo dưỡng gầm và hệ thống truyền động',
     relativePosition: [0, 0, 0],
     worldPosition: [-40, 0, 40],
   },
   DIAGNOSTIC_CART: {
-    name: 'OBD-II Diagnostic Bench Cart',
-    description: 'Mobile telematics scanner trolley for fault code extraction & calibration',
+    name: 'Xe Đẩy Chẩn Đoán OBD-II',
+    description: 'Xe đẩy quét dữ liệu đo xa di động để trích xuất mã lỗi & hiệu chuẩn',
     relativePosition: [-3.6, 0, 2.4],
     worldPosition: [-43.6, 0, 42.4],
   },
   PARTS_RACK: {
-    name: 'Modular Parts Replacement Rack',
-    description: 'Heavy inventory shelving with ceramic rotors, LiDAR modules, and battery cells',
+    name: 'Giá Phụ Tùng Thay Thế Mô-đun',
+    description: 'Kệ lưu trữ đĩa phanh gốm, mô-đun LiDAR và cell pin',
     relativePosition: [3.8, 0, 2.4],
     worldPosition: [-36.2, 0, 42.4],
   },
   WORK_ORDER_STELA: {
-    name: 'Service Status & Work Order Stela',
-    description: 'Curved digital dispatch stela connected to backend ledger and vehicle release pipeline',
+    name: 'Bia Lệnh Sửa Chữa & Trạng Thái',
+    description: 'Bia điều phối điện tử kết nối với sổ cái backend và quy trình bàn giao xe',
     relativePosition: [0, 0, -4.8],
     worldPosition: [-40, 0, 35.2],
   },
@@ -39,32 +39,32 @@ export const WORKSHOP_STATIONS: Record<
 
 export const WORKSHOP_CAMERA_PRESETS: Record<string, WorkshopCameraPreset> = {
   WORKSHOP_OVERVIEW: {
-    name: 'Workshop Overview',
+    name: 'Toàn Cảnh Xưởng Dịch Vụ',
     position: [-40, 8.5, 52],
     target: [-40, 1.2, 40],
   },
   HYDRAULIC_LIFT_FOCUS: {
-    name: 'Hydraulic Lift',
+    name: 'Cầu Nâng Thủy Lực',
     position: [-40, 2.8, 45.2],
     target: [-40, 1.4, 40],
   },
   DIAGNOSTIC_CART_FOCUS: {
-    name: 'Diagnostic Cart',
+    name: 'Xe Chẩn Đoán',
     position: [-43.6, 2.2, 43.8],
     target: [-43.6, 1.3, 42.4],
   },
   PARTS_RACK_FOCUS: {
-    name: 'Parts Rack',
+    name: 'Giá Phụ Tùng',
     position: [-36.2, 2.2, 43.8],
     target: [-36.2, 1.4, 42.4],
   },
   WORK_ORDER_STELA_FOCUS: {
-    name: 'Work Order Stela',
+    name: 'Bia Lệnh Công Việc',
     position: [-40, 3.2, 38.8],
     target: [-40, 1.8, 35.2],
   },
   UNDERCARRIAGE_INSPECTION: {
-    name: 'Undercarriage Inspection',
+    name: 'Kiểm Tra Gầm Xe',
     position: [-40, 0.9, 41.8],
     target: [-40, 1.2, 40],
   },

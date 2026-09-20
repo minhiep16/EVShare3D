@@ -1,89 +1,180 @@
-# PHASE 08 – AI RECOMMENDATIONS, ANALYTICS & AUDIT LOGGING
+# PHASE 08 – PURE 3D ENGINE & 3D DESIGN SYSTEM
 
 Implement only PHASE 08.
 
-Read:
-
-```text
-docs/REQUIREMENTS.md
-docs/BUSINESS_RULES.md
-docs/ARCHITECTURE.md
-docs/DATABASE.md
-docs/API.md
-docs/AI_SPECIFICATION.md
-```
-
 ## OBJECTIVE
 
-Build the AI analytics engine, predictive models, recommendation service, and system audit logging.
+Build the reusable 3D application engine.
+
+Technology:
+
+React
+
+TypeScript
+
+Three.js
+
+React Three Fiber
+
+Drei
+
+Zustand
 
 ---
 
-# AI INTELLIGENCE SERVICES
+# REQUIRED SYSTEMS
 
 Implement:
 
-* `AIRecommendationService`
-* Predictive algorithms:
-  * Fair usage equilibrium advisor (`FairUsageOptimizer`)
-  * Battery health & degradation forecaster (`BatteryHealthPredictor`)
-  * Predictive maintenance schedule planner (`MaintenancePredictor`)
-  * Energy budget & operating cost forecaster (`EnergyCostForecaster`)
+SceneManager
 
-Critical boundary rule:
+CameraManager
 
-The AI is strictly advisory. It must never silently mutate bookings, contracts, finances, or ownership shares.
+InteractionManager
+
+RaycastManager
+
+FocusManager
+
+AnimationManager
+
+AudioManager
+
+InputManager
+
+UI3DManager
 
 ---
 
-# AUDIT LOGGING SUBSYSTEM
+# MOVEMENT
+
+Support:
+
+* WASD
+* mouse
+* pointer
+* touch
+* smooth movement
+* teleport
+
+---
+
+# CAMERA
 
 Implement:
 
-* `AuditService`
-* JPA Entity listener / interceptor capturing mutations to:
-  * Users, Roles
-  * Vehicles, Ownership shares
-  * Bookings, Sessions
-  * Expenses, Funds, Payments
-  * Votes, Disputes
-* Old state JSON and new state JSON storage
+* first person
+* third person where useful
+* orbit where useful
+* cinematic transition
+* focus object
+* smooth interpolation
 
 ---
 
-# API
+# 3D UI
 
 Implement:
 
-```text
-GET  /api/v1/analytics/fair-usage/{groupId}
-GET  /api/v1/ai/recommendations/{groupId}
-POST /api/v1/ai/recommendations/{id}/ack
-GET  /api/v1/admin/audit-logs
-```
+ThreeDButton
+
+ThreeDPanel
+
+ThreeDTerminal
+
+ThreeDInput
+
+ThreeDKeyboard
+
+ThreeDSlider
+
+ThreeDDropdown
+
+ThreeDCalendar
+
+ThreeDChart
+
+ThreeDProgress
+
+ThreeDIndicator
+
+ThreeDPortal
+
+ThreeDNotification
+
+ThreeDModal
+
+All primary UI must exist inside the WebGL scene.
+
+Do not use HTML overlays as primary UI.
 
 ---
 
-# TESTS
+# VISUAL STATES
 
-Test:
+Implement:
 
-* Fair usage optimization recommendations
-* Battery health threshold warning triggers
-* Advisory acknowledgment API
-* Audit log creation upon entity mutation
-* RBAC enforcement on analytics endpoints
+IDLE
 
-Run:
+HOVER
 
-```text
-mvn clean test
-```
+ACTIVE
 
-Update:
+SELECTED
 
-```text
-agent/CURRENT_STATUS.md
-```
+DISABLED
+
+LOADING
+
+SUCCESS
+
+ERROR
+
+---
+
+# PERFORMANCE
+
+Implement:
+
+* adaptive quality
+* DPR control
+* lazy loading
+* asset caching
+* LOD foundation
+* instancing foundation
+* optimized shadows
+
+Quality levels:
+
+HIGH
+
+MEDIUM
+
+LOW
+
+---
+
+# WEBGL
+
+Implement:
+
+* WebGL detection
+* WebGL failure state
+* error recovery
+
+---
+
+# TEST
+
+Verify:
+
+* scene renders
+* camera works
+* movement works
+* raycasting works
+* buttons work
+* 3D inputs work
+* scene transitions work
+* no major console errors
 
 Then STOP.

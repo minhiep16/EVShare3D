@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useVaultStore } from './useVaultStore';
 import { VAULT_LAYOUT } from './vaultLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND, formatTimeVN } from '@/i18n';
 
 export const VaultAuditStela3D: React.FC = () => {
   const reconciliationReport = useVaultStore((state) => state.reconciliationReport);
@@ -66,47 +67,47 @@ export const VaultAuditStela3D: React.FC = () => {
         {/* Title */}
         <Text
           position={[0, 1.15, 0]}
-          fontSize={0.13}
+          fontSize={0.12}
           color={VAULT_LAYOUT.theme.goldPrimary}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          CRYPTOGRAPHIC AUDIT PROOF
+          BẰNG CHỨNG KIỂM TOÁN MẬT MÃ
         </Text>
 
         <Text
           position={[0, 0.98, 0]}
-          fontSize={0.09}
+          fontSize={0.085}
           color={VAULT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          MATHEMATICAL LEDGER RECONCILIATION
+          ĐỐI SOÁT SỔ CÁI TOÁN HỌC
         </Text>
 
         {/* Total Credits */}
         <group position={[0, 0.7, 0]}>
           <Text
             position={[-0.8, 0, 0]}
-            fontSize={0.09}
+            fontSize={0.08}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            TOTAL CREDITS ({r.creditCount} txs):
+            TỔNG TIỀN NẠP ({r.creditCount} GD):
           </Text>
           <Text
             position={[0.8, 0, 0]}
-            fontSize={0.1}
+            fontSize={0.09}
             color={VAULT_LAYOUT.theme.solvencyGreen}
             anchorX="right"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            +{r.totalCreditsVnd.toLocaleString('vi-VN')} VND
+            +{formatCurrencyVND(r.totalCreditsVnd)}
           </Text>
         </group>
 
@@ -114,23 +115,23 @@ export const VaultAuditStela3D: React.FC = () => {
         <group position={[0, 0.48, 0]}>
           <Text
             position={[-0.8, 0, 0]}
-            fontSize={0.09}
+            fontSize={0.08}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            TOTAL DEBITS ({r.debitCount} txs):
+            TỔNG TIỀN CHI ({r.debitCount} GD):
           </Text>
           <Text
             position={[0.8, 0, 0]}
-            fontSize={0.1}
+            fontSize={0.09}
             color={VAULT_LAYOUT.theme.dangerRed}
             anchorX="right"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            -{r.totalDebitsVnd.toLocaleString('vi-VN')} VND
+            -{formatCurrencyVND(r.totalDebitsVnd)}
           </Text>
         </group>
 
@@ -138,23 +139,23 @@ export const VaultAuditStela3D: React.FC = () => {
         <group position={[0, 0.22, 0]}>
           <Text
             position={[-0.8, 0, 0]}
-            fontSize={0.09}
+            fontSize={0.08}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            CALCULATED BALANCE:
+            SỐ DƯ TÍNH TOÁN:
           </Text>
           <Text
             position={[0.8, 0, 0]}
-            fontSize={0.11}
+            fontSize={0.095}
             color={VAULT_LAYOUT.theme.goldPrimary}
             anchorX="right"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {r.calculatedLedgerBalanceVnd.toLocaleString('vi-VN')} VND
+            {formatCurrencyVND(r.calculatedLedgerBalanceVnd)}
           </Text>
         </group>
 
@@ -162,23 +163,23 @@ export const VaultAuditStela3D: React.FC = () => {
         <group position={[0, 0.0, 0]}>
           <Text
             position={[-0.8, 0, 0]}
-            fontSize={0.09}
+            fontSize={0.08}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            PHYSICAL RESERVE:
+            DỰ PHÒNG THỰC TẾ:
           </Text>
           <Text
             position={[0.8, 0, 0]}
-            fontSize={0.11}
+            fontSize={0.095}
             color="#ffffff"
             anchorX="right"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {r.currentBalanceVnd.toLocaleString('vi-VN')} VND
+            {formatCurrencyVND(r.currentBalanceVnd)}
           </Text>
         </group>
 
@@ -191,13 +192,13 @@ export const VaultAuditStela3D: React.FC = () => {
             />
           </mesh>
           <Text
-            fontSize={0.1}
+            fontSize={0.09}
             color={r.isReconciled ? VAULT_LAYOUT.theme.solvencyGreen : '#ff5252'}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {r.isReconciled ? '✓ RECONCILED: 0 VND DELTA' : `⚠️ DISCREPANCY: ${r.reconciliationDeltaVnd} VND`}
+            {r.isReconciled ? '✓ ĐÃ ĐỐI SOÁT: CHÊNH LỆCH 0 ₫' : `⚠️ SAI LỆCH: ${formatCurrencyVND(r.reconciliationDeltaVnd)}`}
           </Text>
         </group>
 
@@ -221,25 +222,25 @@ export const VaultAuditStela3D: React.FC = () => {
             />
           </mesh>
           <Text
-            fontSize={0.11}
+            fontSize={0.1}
             color={hoveredButton === 'RECONCILE' ? '#000000' : '#ffffff'}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            EXECUTE RECONCILIATION
+            THỰC HIỆN ĐỐI SOÁT NGAY
           </Text>
         </group>
 
         <Text
           position={[0, -1.05, 0]}
-          fontSize={0.08}
+          fontSize={0.075}
           color={VAULT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          LAST VERIFIED: {new Date(r.reconciledAt).toLocaleTimeString('vi-VN')}
+          XÁC MINH LẦN CUỐI: {formatTimeVN(r.reconciledAt)}
         </Text>
       </group>
     </group>

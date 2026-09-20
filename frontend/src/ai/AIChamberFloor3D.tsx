@@ -90,17 +90,17 @@ export const AIChamberFloor3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.12}
         >
-          AI MOBILITY INTELLIGENCE CENTER
+          TRUNG TÂM TRÍ TUỆ NHÂN TẠO AI
         </Text>
         <Text
           position={[0, -0.45, 0]}
-          fontSize={0.18}
+          fontSize={0.17}
           color={AI_LAYOUT.colors.neuralViolet}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          NEURAL PREDICTIVE MOBILITY NEXUS • STRICTLY ADVISORY (BR-AI-SAFE-01)
+          MẠNG DỰ BÁO DI CHUYỂN THÔNG MINH • CHỈ MANG TÍNH TƯ VẤN (BR-AI-SAFE-01)
         </Text>
       </group>
     </group>

@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useWorkshopStore } from './useWorkshopStore';
 import { WORKSHOP_STATIONS, WORKSHOP_THEME } from './workshopLayout';
 import type { SubsystemId } from './workshopTypes';
+import { formatCurrencyVND } from '@/i18n';
 
 export const PartsRack3D: React.FC = () => {
   const { repairSubsystem, subsystems } = useWorkshopStore();
@@ -12,25 +13,25 @@ export const PartsRack3D: React.FC = () => {
   const parts = [
     {
       id: 'BRAKE_SYSTEM' as SubsystemId,
-      name: 'CERAMIC ROTOR & PAD SET',
-      category: 'CHASSIS',
-      price: '4,200,000 VND',
+      name: 'BỘ ĐĨA PHANH GỐM & MÁ PHANH',
+      category: 'KHUNG GẦM',
+      price: formatCurrencyVND(4200000),
       shelfY: 1.6,
       stock: 4,
     },
     {
       id: 'LIDAR_ADAS' as SubsystemId,
-      name: 'LIDAR ADAS SENSOR UNIT',
-      category: 'AVIONICS',
-      price: '1,800,000 VND',
+      name: 'CỤM CẢM BIẾN LIDAR ADAS',
+      category: 'ĐIỆN TỬ',
+      price: formatCurrencyVND(1800000),
       shelfY: 1.05,
       stock: 2,
     },
     {
       id: 'THERMAL_COOLANT' as SubsystemId,
-      name: 'INVERTER COOLANT CIRCULATOR',
-      category: 'THERMAL',
-      price: '2,100,000 VND',
+      name: 'BƠM DUNG DỊCH LÀM MÁT INVERTER',
+      category: 'HỆ NHIỆT',
+      price: formatCurrencyVND(2100000),
       shelfY: 0.5,
       stock: 3,
     },
@@ -72,22 +73,22 @@ export const PartsRack3D: React.FC = () => {
         </lineSegments>
         <Text
           position={[0, 0.05, 0.01]}
-          fontSize={0.075}
+          fontSize={0.068}
           color={WORKSHOP_THEME.secondary}
           anchorX="center"
           anchorY="middle"
-          letterSpacing={0.08}
+          letterSpacing={0.06}
         >
-          OEM SPARE PARTS INVENTORY
+          KHO PHỤ TÙNG CHÍNH HÃNG OEM
         </Text>
         <Text
           position={[0, -0.08, 0.01]}
-          fontSize={0.05}
+          fontSize={0.046}
           color="#94a3b8"
           anchorX="center"
           anchorY="middle"
         >
-          VINFAST CERTIFIED COMPONENTS • ISO-9001
+          PHỤ TÙNG VINFAST ĐẠT CHUẨN • ISO-9001
         </Text>
       </group>
 
@@ -130,7 +131,7 @@ export const PartsRack3D: React.FC = () => {
             {/* Label Plaque on Box Front */}
             <Text
               position={[0, 0.06, 0.23]}
-              fontSize={0.058}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
@@ -139,14 +140,14 @@ export const PartsRack3D: React.FC = () => {
             </Text>
             <Text
               position={[0, -0.06, 0.23]}
-              fontSize={0.048}
+              fontSize={0.044}
               color={isNeeded ? '#f87171' : '#38bdf8'}
               anchorX="center"
               anchorY="middle"
             >
               {isNeeded
-                ? `⚠ REQUIRED FOR REPAIR • ${p.price}`
-                : `IN STOCK: ${p.stock} UNITS • ${p.price}`}
+                ? `⚠ YÊU CẦU ĐỂ SỬA CHỮA • ${p.price}`
+                : `TỒN KHO: ${p.stock} BỘ • ${p.price}`}
             </Text>
           </group>
         );

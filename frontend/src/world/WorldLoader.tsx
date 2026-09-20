@@ -107,13 +107,13 @@ export const WorldLoader: React.FC = () => {
       {/* 3D SDF Status Text */}
       <Text
         position={[0, -2.0, 0]}
-        fontSize={0.32}
+        fontSize={0.28}
         color="#00e5ff"
         anchorX="center"
         anchorY="middle"
         font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
       >
-        {`STREAMING ${sectorMeta?.name.toUpperCase() || 'SECTOR'} [${Math.round(progress)}%]`}
+        {`ĐANG TẢI KHÔNG GIAN 3D: ${sectorMeta?.name.toUpperCase() || 'KHU VỰC'} [${Math.round(progress)}%]`}
       </Text>
     </group>
   );

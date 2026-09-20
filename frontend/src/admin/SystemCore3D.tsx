@@ -43,16 +43,16 @@ export const SystemCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        OMNI-COMMAND ZENITH SYSTEM CORE
+        LÕI HỆ THỐNG ĐIỀU HÀNH TỐI CAO
       </Text>
       <Text
         position={[0, 3.88, 0]}
-        fontSize={0.12}
+        fontSize={0.115}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Central Metaverse Nexus • WebGL Shader Throughput • Emergency Platform Lockdown
+        Trục kết nối Metaverse trung tâm • Lưu lượng Shader WebGL • Khóa khẩn cấp nền tảng
       </Text>
 
       {/* Floating Zenith Master Crystalline Sphere */}
@@ -118,12 +118,12 @@ export const SystemCore3D: React.FC = () => {
         <group position={[-1.5, 0.65, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.08}
+            fontSize={0.075}
             color={COMMAND_THEME.primary}
             anchorX="left"
             anchorY="middle"
           >
-            METAVERSE ZENITH NODE: {systemHealth.nodeHealth}
+            NÚT METAVERSE TỐI CAO: {systemHealth.nodeHealth === 'NOMINAL' ? 'HOẠT ĐỘNG TỐT' : 'BÁO ĐỘNG ĐỎ'}
           </Text>
           <Text
             position={[0, -0.16, 0]}
@@ -132,8 +132,8 @@ export const SystemCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            WebGL Throughput: {systemHealth.metaverseFps} FPS •{' '}
-            {systemHealth.shaderThroughput}
+            Lưu lượng WebGL: {systemHealth.metaverseFps} FPS •{' '}
+            {systemHealth.shaderThroughput === 'OPTIMAL' ? 'TỐI ƯU' : systemHealth.shaderThroughput}
           </Text>
           <Text
             position={[0, -0.32, 0]}
@@ -142,17 +142,17 @@ export const SystemCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Active Sessions: {systemHealth.activeSessions} • Heartbeat: Online
+            Phiên hoạt động: {systemHealth.activeSessions} • Nhịp tim hệ thống: Trực tuyến
           </Text>
           <Text
             position={[0, -0.48, 0]}
-            fontSize={0.07}
+            fontSize={0.068}
             color={isLockdown ? COMMAND_THEME.alertRed : '#34d399'}
             anchorX="left"
             anchorY="middle"
           >
-            Emergency Lockdown:{' '}
-            {isLockdown ? '🚨 ACTIVE (PLATFORM FROZEN)' : '✓ DEACTIVATED'}
+            Khóa khẩn cấp:{' '}
+            {isLockdown ? '🚨 KÍCH HOẠT (ĐÓNG BĂNG NỀN TẢNG)' : '✓ ĐÃ TẮT (BÌNH THƯỜNG)'}
           </Text>
         </group>
 
@@ -192,14 +192,14 @@ export const SystemCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.075}
+              fontSize={0.065}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
               {isLockdown
-                ? '[ 🔓 DEACTIVATE GLOBAL PLATFORM LOCKDOWN ]'
-                : '[ 🚨 TRIGGER GLOBAL PLATFORM EMERGENCY LOCKDOWN ]'}
+                ? '[ 🔓 HỦY LỆNH KHÓA KHẨN CẤP NỀN TẢNG ]'
+                : '[ 🚨 KÍCH HOẠT KHÓA KHẨN CẤP NỀN TẢNG ]'}
             </Text>
           </group>
 
@@ -229,12 +229,12 @@ export const SystemCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.07}
+              fontSize={0.062}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🔄 FLUSH SYSTEM CACHES & SHADER PIPELINES ]
+              [ 🔄 XÓA CACHE & ĐỒNG BỘ SHADER PIPELINE ]
             </Text>
           </group>
         </group>

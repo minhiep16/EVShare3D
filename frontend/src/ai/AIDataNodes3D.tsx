@@ -33,6 +33,63 @@ interface SingleDataNodeProps {
   onSelect: () => void;
 }
 
+const METRIC_LABEL_MAP: Record<string, string> = {
+  'State of Health (SOH)': 'Tình trạng pin (SOH)',
+  'Avg Energy Efficiency': 'Hiệu suất năng lượng TB',
+  'Odometer Telemetry': 'Quãng đường đã đi',
+  'Tire Pressure (PSI)': 'Áp suất lốp (PSI)',
+  'Syndicate Fairness Index': 'Chỉ số công bằng nhóm',
+  'Evaluation Window': 'Chu kỳ đánh giá',
+  'Peak Hour Multiplier': 'Hệ số giờ cao điểm',
+  'Priority Co-Owner': 'Thành viên ưu tiên',
+  'Monthly Reserve Pool': 'Quỹ dự phòng hàng tháng',
+  'Reserve Floor Ratio': 'Tỷ lệ sàn dự phòng',
+  'Settlement Latency': 'Thời gian quyết toán',
+  'Forecasted Expense': 'Chi phí dự báo',
+  'Active Syndicate Proposals': 'Đề xuất đang hiệu lực',
+  'Average Quorum Turnout': 'Tỷ lệ túc số TB',
+  'Digital Contract Hash': 'Mã băm hợp đồng số',
+  'Advisory Boundary': 'Ranh giới cố vấn AI',
+  'Total Group Usage': 'Tổng thời gian sử dụng',
+  'Fairness Imbalance': 'Mức mất cân bằng',
+  'Gini Coefficient': 'Hệ số bất bình đẳng Gini',
+  'Equitable Distribution': 'Mức độ công bằng',
+};
+
+const METRIC_VALUE_MAP: Record<string, string> = {
+  'Nominal (-0.2%/mo)': 'Bình thường (-0.2%/tháng)',
+  '+4% Regenerative': '+4% Tái sinh',
+  'Active Fleet': 'Đang hoạt động',
+  'Balanced': 'Cân bằng',
+  'Standard': 'Tiêu chuẩn',
+  'Active': 'Đang áp dụng',
+  'Eligible': 'Đủ điều kiện',
+  'Healthy': 'Ổn định',
+  'Compliant': 'Tuân thủ',
+  'Instant VietQR': 'Tức thì qua VietQR',
+  'Battery Service': 'Bảo dưỡng pin',
+  'In Session': 'Đang họp bàn',
+  'Quorum Met': 'Đạt túc số',
+  '4/4 Signed': '4/4 Đã ký',
+  'Advisory Only': 'Chỉ cố vấn',
+  '3 Active Deliberations': '3 Đề xuất đang thảo luận',
+  'SHA-256 Verifiable': 'Xác thực SHA-256',
+  'STRICTLY ENFORCED': 'BẮT BUỘC TUÂN THỦ',
+};
+
+function formatMetricLabel(label: string): string {
+  return METRIC_LABEL_MAP[label] || label;
+}
+
+function formatMetricValue(value: string): string {
+  if (METRIC_VALUE_MAP[value]) return METRIC_VALUE_MAP[value];
+  return value
+    .replace(/\bHours\b/g, 'Giờ')
+    .replace(/\bDays\b/g, 'Ngày')
+    .replace(/\bFront\b/g, 'Trước')
+    .replace(/\bRear\b/g, 'Sau');
+}
+
 const SingleDataNode: React.FC<SingleDataNodeProps> = ({
   node,
   isSelected,
@@ -119,7 +176,15 @@ const SingleDataNode: React.FC<SingleDataNodeProps> = ({
             anchorY="middle"
             letterSpacing={0.05}
           >
-            {node.name.toUpperCase()}
+            {node.id === 'NODE_MOBILITY'
+              ? 'DỮ LIỆU DI CHUYỂN'
+              : node.id === 'NODE_FAIRNESS'
+              ? 'CHỈ SỐ CÔNG BẰNG'
+              : node.id === 'NODE_DIAGNOSTICS'
+              ? 'CHẨN ĐOÁN PIN XE'
+              : node.id === 'NODE_GOVERNANCE'
+              ? 'DỮ LIỆU QUẢN TRỊ'
+              : node.name.toUpperCase()}
           </Text>
 
           {/* Metrics List */}
@@ -134,7 +199,7 @@ const SingleDataNode: React.FC<SingleDataNodeProps> = ({
                   anchorX="left"
                   anchorY="middle"
                 >
-                  {m.label}
+                  {formatMetricLabel(m.label)}
                 </Text>
                 <Text
                   position={[0.95, 0, 0]}
@@ -143,7 +208,7 @@ const SingleDataNode: React.FC<SingleDataNodeProps> = ({
                   anchorX="right"
                   anchorY="middle"
                 >
-                  {m.value}
+                  {formatMetricValue(m.value)}
                 </Text>
               </group>
             );

@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import type { VehicleDigitalTwin, DigitalTwinFacetTab } from './digitalTwinTypes';
 import { useDigitalTwinStore } from './useDigitalTwinStore';
+import { formatCurrencyVND, formatNumberVN, formatPercentageVN, formatStatusVN } from '@/i18n';
 
 interface DigitalTwinVehicle3DProps {
   vehicle: VehicleDigitalTwin;
@@ -65,13 +66,13 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
   });
 
   const FACET_TABS: Array<{ id: DigitalTwinFacetTab; label: string }> = [
-    { id: 'BATTERY', label: '🔋 BATT' },
-    { id: 'STATUS', label: '🏷 STATUS' },
-    { id: 'OWNERSHIP', label: '👥 OWN' },
-    { id: 'BOOKING', label: '📅 BOOK' },
-    { id: 'USAGE', label: '🚗 USE' },
-    { id: 'MAINTENANCE', label: '🛠 MAINT' },
-    { id: 'FINANCE', label: '💳 FIN' },
+    { id: 'BATTERY', label: '🔋 PIN' },
+    { id: 'STATUS', label: '🏷 TRẠNG THÁI' },
+    { id: 'OWNERSHIP', label: '👥 SỞ HỮU' },
+    { id: 'BOOKING', label: '📅 ĐẶT LỊCH' },
+    { id: 'USAGE', label: '🚗 VẬN HÀNH' },
+    { id: 'MAINTENANCE', label: '🛠 BẢO TRÌ' },
+    { id: 'FINANCE', label: '💳 TÀI CHÍNH' },
   ];
 
   return (
@@ -308,7 +309,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'BATTERY' && (
             <group>
               <Text fontSize={0.08} color="#00e5ff" anchorX="left" anchorY="middle">
-                BATTERY STATE OF CHARGE: {vehicle.battery.level}%
+                MỨC SẠC PIN (SoC): {vehicle.battery.level}%
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -317,7 +318,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Estimated Range: {vehicle.battery.estimatedRangeKm} km • Health:{' '}
+                Tầm hoạt động ước tính: {vehicle.battery.estimatedRangeKm} km • Tuổi thọ pin:{' '}
                 {vehicle.battery.healthPercentage}%
               </Text>
               <Text
@@ -327,11 +328,11 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Status:{' '}
+                Trạng thái:{' '}
                 {vehicle.battery.isCharging
-                  ? `⚡ CHARGING (${vehicle.battery.chargingPowerKw} kW)`
-                  : 'DISCONNECTED'}{' '}
-                • Core Temp: {vehicle.battery.temperatureCelsius}°C
+                  ? `⚡ ĐANG SẠC (${vehicle.battery.chargingPowerKw} kW)`
+                  : 'ĐÃ NGẮT SẠC'}{' '}
+                • Nhiệt độ lõi: {vehicle.battery.temperatureCelsius}°C
               </Text>
             </group>
           )}
@@ -340,7 +341,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'STATUS' && (
             <group>
               <Text fontSize={0.08} color={statusColor} anchorX="left" anchorY="middle">
-                LIFECYCLE STATUS: {vehicle.status.status}
+                TRẠNG THÁI VÒNG ĐỜI: {formatStatusVN(vehicle.status.status)}
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -349,8 +350,8 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Physical Location: {vehicle.status.stallLocationCode} • Lock:{' '}
-                {vehicle.status.isLocked ? '🔒 SECURELY LOCKED' : '🔓 UNLOCKED'}
+                Vị trí đỗ: {vehicle.status.stallLocationCode} • Khóa xe:{' '}
+                {vehicle.status.isLocked ? '🔒 ĐÃ KHÓA AN TOÀN' : '🔓 ĐANG MỞ KHÓA'}
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -360,7 +361,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorY="middle"
                 maxWidth={2.8}
               >
-                Audit Log: "{vehicle.status.lastStatusChangeReason}"
+                Nhật ký kiểm toán: "{vehicle.status.lastStatusChangeReason}"
               </Text>
             </group>
           )}
@@ -369,7 +370,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'OWNERSHIP' && (
             <group>
               <Text fontSize={0.08} color="#a855f7" anchorX="left" anchorY="middle">
-                SYNDICATE: {vehicle.ownership.groupName}
+                NHÓM ĐỒNG SỞ HỮU: {vehicle.ownership.groupName}
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -378,8 +379,8 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Equity Share: {vehicle.ownership.userSharePercentage}% (Voting Power:{' '}
-                {vehicle.ownership.userVotingPower}%)
+                Cổ phần sở hữu: {formatPercentageVN(vehicle.ownership.userSharePercentage)} (Quyền biểu quyết:{' '}
+                {formatPercentageVN(vehicle.ownership.userVotingPower)})
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -388,7 +389,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Members: {vehicle.ownership.memberCount} • Cap Table Hash:{' '}
+                Thành viên: {vehicle.ownership.memberCount} • Mã băm Cap Table:{' '}
                 {vehicle.ownership.capTableHash}
               </Text>
             </group>
@@ -398,7 +399,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'BOOKING' && (
             <group>
               <Text fontSize={0.08} color="#f59e0b" anchorX="left" anchorY="middle">
-                RESERVATION: {vehicle.booking.activeBookingId ? `#${vehicle.booking.activeBookingId}` : 'NONE SCHEDULED'}
+                LỊCH SỬ DỤNG: {vehicle.booking.activeBookingId ? `#${vehicle.booking.activeBookingId}` : 'CHƯA CÓ LỊCH TRÌNH'}
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -407,9 +408,9 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Reserved by: {vehicle.booking.reservedByUserName || 'N/A'} (Slot:{' '}
-                {vehicle.booking.startTime ? vehicle.booking.startTime.slice(11, 16) : 'N/A'} -{' '}
-                {vehicle.booking.endTime ? vehicle.booking.endTime.slice(11, 16) : 'N/A'})
+                Người đặt: {vehicle.booking.reservedByUserName || 'Không có'} (Khung giờ:{' '}
+                {vehicle.booking.startTime ? vehicle.booking.startTime.slice(11, 16) : '--:--'} -{' '}
+                {vehicle.booking.endTime ? vehicle.booking.endTime.slice(11, 16) : '--:--'})
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -418,8 +419,8 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Purpose: "{vehicle.booking.purpose}" • Conflict:{' '}
-                {vehicle.booking.conflictStatus}
+                Mục đích: "{vehicle.booking.purpose}" • Trùng lịch:{' '}
+                {vehicle.booking.conflictStatus === 'NONE' ? 'Không' : vehicle.booking.conflictStatus}
               </Text>
             </group>
           )}
@@ -428,7 +429,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'USAGE' && (
             <group>
               <Text fontSize={0.08} color="#38bdf8" anchorX="left" anchorY="middle">
-                USAGE TELEMETRY: ODOMETER {vehicle.usage.odometerKm.toLocaleString()} KM
+                THÔNG SỐ VẬN HÀNH: ĐÃ ĐI {formatNumberVN(vehicle.usage.odometerKm)} KM
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -437,10 +438,10 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Active Session:{' '}
+                Phiên xe:{' '}
                 {vehicle.usage.activeSessionId
-                  ? `Session #${vehicle.usage.activeSessionId} (Driver: ${vehicle.usage.driverUserName})`
-                  : 'Vehicle in Parking Bay (Idle)'}
+                  ? `Phiên #${vehicle.usage.activeSessionId} (Tài xế: ${vehicle.usage.driverUserName})`
+                  : 'Xe đang đỗ tại trạm (Nghỉ)'}
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -449,8 +450,8 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Speed: {vehicle.usage.currentSpeedKmh} km/h • Damage Reported:{' '}
-                {vehicle.usage.checkOutDamageReported ? 'YES' : 'NO'}
+                Tốc độ: {vehicle.usage.currentSpeedKmh} km/h • Báo cáo hư hại:{' '}
+                {vehicle.usage.checkOutDamageReported ? 'CÓ' : 'KHÔNG'}
               </Text>
             </group>
           )}
@@ -459,7 +460,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'MAINTENANCE' && (
             <group>
               <Text fontSize={0.08} color="#10b981" anchorX="left" anchorY="middle">
-                MAINTENANCE CONDITION: {vehicle.maintenance.serviceStatus} ({vehicle.maintenance.overallHealthScore}%)
+                TÌNH TRẠNG BẢO TRÌ: {formatStatusVN(vehicle.maintenance.serviceStatus)} (Chỉ số: {vehicle.maintenance.overallHealthScore}%)
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -468,7 +469,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Subsystems: 5/5 Nominal (Brakes, ADAS, Battery, Suspension, Inverter)
+                Phân hệ: 5/5 Đạt chuẩn (Phanh gốm, Trợ lái ADAS, Pin cao áp, Giảm chấn, Biến tần)
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -477,9 +478,9 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Active DTC Faults:{' '}
+                Mã lỗi chẩn đoán DTC:{' '}
                 {vehicle.maintenance.activeDtcCodes.length === 0
-                  ? 'None (0 faults)'
+                  ? 'Không phát hiện lỗi (0 lỗi)'
                   : vehicle.maintenance.activeDtcCodes.join(', ')}
               </Text>
             </group>
@@ -489,7 +490,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
           {activeFacetTab === 'FINANCE' && (
             <group>
               <Text fontSize={0.08} color="#fbbf24" anchorX="left" anchorY="middle">
-                FINANCIAL STATUS: {vehicle.finance.vaultBalanceVnd.toLocaleString()} VND VAULT
+                TÌNH TRẠNG TÀI CHÍNH: QUỸ {formatCurrencyVND(vehicle.finance.vaultBalanceVnd)}
               </Text>
               <Text
                 position={[0, -0.15, 0]}
@@ -498,9 +499,9 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Accrued Expense Liability:{' '}
-                {vehicle.finance.accruedExpenseLiabilityVnd.toLocaleString()} VND • Cost/km:{' '}
-                {vehicle.finance.costPerKm} VND
+                Nợ chi phí lũy kế:{' '}
+                {formatCurrencyVND(vehicle.finance.accruedExpenseLiabilityVnd)} • Chi phí/km:{' '}
+                {formatCurrencyVND(vehicle.finance.costPerKm)}
               </Text>
               <Text
                 position={[0, -0.3, 0]}
@@ -509,7 +510,7 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
                 anchorX="left"
                 anchorY="middle"
               >
-                Deposit: {vehicle.finance.userDepositVnd.toLocaleString()} VND ({vehicle.finance.depositStatus}) • Ref:{' '}
+                Tiền cọc: {formatCurrencyVND(vehicle.finance.userDepositVnd)} ({vehicle.finance.depositStatus === 'HELD' ? 'Đang tạm giữ' : vehicle.finance.depositStatus}) • Mã ref:{' '}
                 {vehicle.finance.lastFundDeductionRef}
               </Text>
             </group>
@@ -540,8 +541,8 @@ export const DigitalTwinVehicle3D: React.FC<DigitalTwinVehicle3DProps> = ({
             anchorY="middle"
           >
             {isSyncing
-              ? '⏳ SYNCHRONIZING WITH BACKEND...'
-              : '[ 🔄 RE-SYNC DIGITAL TWIN FROM BACKEND ]'}
+              ? '⏳ ĐANG ĐỒNG BỘ TỪ MÁY CHỦ...'
+              : '[ 🔄 ĐỒNG BỘ LẠI BẢN SAO SỐ TỪ MÁY CHỦ ]'}
           </Text>
         </group>
       </group>

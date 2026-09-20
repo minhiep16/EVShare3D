@@ -148,15 +148,14 @@ export const AdminOrbitalFloor3D: React.FC = () => {
         <Text
           position={[0, 0.22, 0]}
           rotation={[-Math.PI / 2, 0, 0]}
-          fontSize={0.28}
+          fontSize={0.2}
           color={isLockedOut ? COMMAND_THEME.alertRed : COMMAND_THEME.primary}
           anchorX="center"
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
           {isLockedOut
-            ? 'RESTRICTED SOVEREIGN AIRSPACE'
-            : 'APEX ORBITAL COMMAND DECK'}
+            ? 'VÙNG HẠN CHẾ — CẤM TRUY CẬP'
+            : 'SÀN CHỈ HUY TỐI CAO APEX'}
         </Text>
       </group>
     </group>

@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useOperationsStore } from './useOperationsStore';
 import { OPERATIONS_STATIONS, OPERATIONS_THEME } from './operationsLayout';
 import type { VehicleOperationStatus } from './operationsTypes';
+import { formatNumberVN, formatStatusVN } from '@/i18n';
 
 export const FleetStatusStela3D: React.FC = () => {
   const {
@@ -60,13 +61,13 @@ export const FleetStatusStela3D: React.FC = () => {
       <group position={[0, 3.45, 0.08]}>
         <Text
           position={[0, 0, 0]}
-          fontSize={0.16}
+          fontSize={0.15}
           color={OPERATIONS_THEME.primary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.1}
         >
-          CURVED FLEET TELEMATICS & SERVICE BAY MATRIX
+          MA TRẬN ĐỘI XE &amp; DỮ LIỆU ĐIỀU PHỐI TỪ XA
         </Text>
         <Text
           position={[0, -0.22, 0]}
@@ -75,7 +76,7 @@ export const FleetStatusStela3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          LIVE TELEMETRY POLLING • FLEET HEALTH: 100% • IOT TELEMATICS BUS
+          KẾT NỐI TỪ XA THỜI GIAN THỰC • SỨC KHỎE ĐỘI XE: 100% • BUS IOT
         </Text>
       </group>
 
@@ -159,7 +160,7 @@ export const FleetStatusStela3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              PLATE: {vehicle.licensePlate}
+              BIỂN SỐ: {vehicle.licensePlate}
             </Text>
 
             {/* Status Badge */}
@@ -173,12 +174,12 @@ export const FleetStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0.35, 0.02]}
-              fontSize={0.075}
+              fontSize={0.07}
               color="#000000"
               anchorX="center"
               anchorY="middle"
             >
-              {vehicle.status}
+              {formatStatusVN(vehicle.status)}
             </Text>
 
             {/* Battery SoC Gauge */}
@@ -190,7 +191,7 @@ export const FleetStatusStela3D: React.FC = () => {
                 anchorX="left"
                 anchorY="middle"
               >
-                SoC: {vehicle.batterySoc}%
+                Pin: {vehicle.batterySoc}%
               </Text>
               {/* SoC Bar Background */}
               <mesh position={[0.2, 0, 0]}>
@@ -218,7 +219,7 @@ export const FleetStatusStela3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              ODOMETER: {vehicle.odometerKm.toLocaleString()} KM
+              CÔNG TƠ MÉT: {formatNumberVN(vehicle.odometerKm)} KM
             </Text>
 
             {/* Active Driver / User */}
@@ -230,8 +231,8 @@ export const FleetStatusStela3D: React.FC = () => {
               anchorY="middle"
             >
               {vehicle.activeUser
-                ? `ACTIVE DRIVER: ${vehicle.activeUser}`
-                : 'NO ACTIVE DRIVER (STATIONARY)'}
+                ? `TÀI XẾ: ${vehicle.activeUser}`
+                : 'KHÔNG CÓ TÀI XẾ (ĐANG ĐỖ)'}
             </Text>
 
             {/* Interactive 3D Button: Focus in Dispatch */}
@@ -255,7 +256,7 @@ export const FleetStatusStela3D: React.FC = () => {
                 anchorX="center"
                 anchorY="middle"
               >
-                {isSelected ? '✓ SELECTED' : 'SELECT'}
+                {isSelected ? '✓ ĐÃ CHỌN' : 'CHỌN XE'}
               </Text>
             </group>
 
@@ -277,12 +278,12 @@ export const FleetStatusStela3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.055}
+                fontSize={0.052}
                 color="#ffffff"
                 anchorX="center"
                 anchorY="middle"
               >
-                {vehicle.status === 'MAINTENANCE' ? 'RELEASE' : 'SERVICE HOLD'}
+                {vehicle.status === 'MAINTENANCE' ? 'MỞ LẠI' : 'BẢO DƯỠNG'}
               </Text>
             </group>
           </group>

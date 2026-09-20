@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text } from '@react-three/drei';
 import { useOwnershipStore } from './useOwnershipStore';
 import { CO_OWNERSHIP_HALL_LAYOUT } from './ownershipLayout';
+import { formatDateVN, formatStatusVN } from '@/i18n';
 
 export const ContractConsole3D: React.FC = () => {
   const [hoveredTab, setHoveredTab] = useState<number | null>(null);
@@ -25,18 +26,18 @@ export const ContractConsole3D: React.FC = () => {
     id: 10,
     groupId: activeGroup?.id ?? 1,
     groupName: activeGroup?.name ?? 'Apex Syndicate',
-    title: `${activeGroup?.name ?? 'Apex Syndicate'} Master Co-Ownership Agreement`,
+    title: `Hợp Đồng Đồng Sở Hữu Xe Điện ${activeGroup?.name ?? 'Apex Syndicate'}`,
     version: 1,
     status: 'ACTIVE' as const,
     effectiveDate: activeGroup?.formationDate ?? '2026-01-15',
     articles: [
       {
         id: 1,
-        articleNumber: 'ARTICLE 01',
-        title: 'Equity Allocation & Share Invariants',
-        summary: 'Strict distribution of fractional equity summing to precisely 100.00%.',
+        articleNumber: 'ĐIỀU KHOẢN 01',
+        title: 'Phân Bổ Cổ Phần & Tính Bất Biến Sở Hữu',
+        summary: 'Quy định nghiêm ngặt tổng tỷ lệ cổ phần sở hữu luôn đạt chính xác 100.00%.',
         fullText:
-          'The Co-Owners mutually agree to hold undivided fractional interests in the Electric Vehicle as recorded in the Syndicate Registry.',
+          'Các đồng sở hữu đồng thuận nắm giữ phần quyền lợi phân đoạn không chia tách đối với Xe Điện như được ghi nhận trong Sổ bộ Nhóm.',
       },
     ],
     signatures: (activeGroup?.members || []).map((m, idx) => ({
@@ -56,10 +57,10 @@ export const ContractConsole3D: React.FC = () => {
     articles[inspectedArticleIndex] ||
     articles[0] || {
       id: 1,
-      articleNumber: 'ARTICLE 01',
-      title: 'General Agreement',
-      summary: 'Master Syndicate Agreement Overview',
-      fullText: 'Standard terms of fractional electric vehicle co-ownership apply.',
+      articleNumber: 'ĐIỀU KHOẢN 01',
+      title: 'Thỏa Thuận Chung',
+      summary: 'Tổng quan Hợp đồng Đồng sở hữu',
+      fullText: 'Các điều khoản tiêu chuẩn về đồng sở hữu xe điện phân đoạn được áp dụng.',
     };
 
   const { CONTRACT_CONSOLE_POS, CONTRACT_CONSOLE_ROT, THEME } = CO_OWNERSHIP_HALL_LAYOUT;
@@ -156,7 +157,7 @@ export const ContractConsole3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          {`VERSION ${contract.version} • STATUS: ${contract.status} • EFFECTIVE: ${contract.effectiveDate}`}
+          {`PHIÊN BẢN ${contract.version} • TRẠNG THÁI: ${formatStatusVN(contract.status)} • HIỆU LỰC: ${formatDateVN(contract.effectiveDate)}`}
         </Text>
 
         {/* Top Divider */}
@@ -208,12 +209,12 @@ export const ContractConsole3D: React.FC = () => {
                 {/* Tab Text */}
                 <Text
                   position={[0, 0, 0.02]}
-                  fontSize={0.055}
+                  fontSize={0.052}
                   color={isTabActive ? '#ffffff' : isTabHovered ? THEME.TEXT_GOLD_BRIGHT : THEME.TEXT_MUTED}
                   anchorX="center"
                   anchorY="middle"
                 >
-                  {`ART ${art.articleNumber || `0${idx + 1}`}: ${(art.title || '').split(' ')[0]}`}
+                  {`ĐIỀU 0${idx + 1}`}
                 </Text>
               </group>
             );
@@ -230,7 +231,7 @@ export const ContractConsole3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            {`${currentArticle.articleNumber || 'ARTICLE'}: ${currentArticle.title}`}
+            {`${currentArticle.articleNumber || 'ĐIỀU KHOẢN'}: ${currentArticle.title}`}
           </Text>
 
           {/* Article Summary */}
@@ -274,7 +275,7 @@ export const ContractConsole3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            CO-OWNER SIGNATURE MATRIX:
+            DANH SÁCH CHỮ KÝ ĐỒNG SỞ HỮU:
           </Text>
 
           {signatures.map((signer, sIdx) => {
@@ -299,7 +300,7 @@ export const ContractConsole3D: React.FC = () => {
                   anchorX="left"
                   anchorY="middle"
                 >
-                  {(signer.userName || 'Member').split(' ').slice(-2).join(' ')}
+                  {(signer.userName || 'Thành viên').split(' ').slice(-2).join(' ')}
                 </Text>
 
                 <Text
@@ -309,7 +310,7 @@ export const ContractConsole3D: React.FC = () => {
                   anchorX="right"
                   anchorY="middle"
                 >
-                  {signer.isSigned ? '✓ SIGNED' : 'PENDING'}
+                  {signer.isSigned ? '✓ ĐÃ KÝ' : 'CHỜ KÝ'}
                 </Text>
               </group>
             );
@@ -343,16 +344,16 @@ export const ContractConsole3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.03]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
               {isSigning
-                ? '⏳ TRANSMITTING SIGNATURE...'
+                ? '⏳ ĐANG TRUYỀN CHỮ KÝ SỐ...'
                 : hasUserSigned
-                ? '✓ DIGITALLY SIGNED'
-                : '✍ SIGN CONTRACT (SHA-256)'}
+                ? '✓ ĐÃ KÝ ĐIỆN TỬ'
+                : '✍ KÝ HỢP ĐỒNG (SHA-256)'}
             </Text>
           </group>
 
@@ -381,12 +382,12 @@ export const ContractConsole3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.03]}
-              fontSize={0.055}
+              fontSize={0.052}
               color={exitProtocolActive ? '#fecaca' : '#e2e8f0'}
               anchorX="center"
               anchorY="middle"
             >
-              {exitProtocolActive ? 'HIDE EXIT PROTOCOL' : '⚙ DISPUTE & EXIT ACTIONS'}
+              {exitProtocolActive ? 'ẨN ĐIỀU KHOẢN RÚT VỐN' : '⚙ TRANH CHẤP & RÚT VỐN'}
             </Text>
           </group>
 
@@ -424,7 +425,7 @@ export const ContractConsole3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              DISPUTE ARBITRATION & CO-OWNER EXIT PROTOCOL
+              TRỌNG TÀI TRANH CHẤP & QUY TRÌNH RÚT VỐN ĐỒNG SỞ HỮU
             </Text>
             <Text
               position={[0, 0.12, 0]}
@@ -434,7 +435,7 @@ export const ContractConsole3D: React.FC = () => {
               anchorY="middle"
               maxWidth={2.6}
             >
-              Members wishing to exit must offer shares to existing co-owners under right of first refusal. In case of operational deadlock, binding platform arbitration is invoked automatically.
+              Thành viên muốn rút vốn phải chào bán cổ phần cho các đồng sở hữu hiện hữu theo quyền ưu tiên mua trước. Trường hợp bất đồng vận hành, quy trình trọng tài ràng buộc của nền tảng sẽ tự động kích hoạt.
             </Text>
 
             {/* Sub Action Buttons */}
@@ -444,7 +445,7 @@ export const ContractConsole3D: React.FC = () => {
                 <meshStandardMaterial color="#450a0a" emissive="#dc2626" emissiveIntensity={0.3} />
               </mesh>
               <Text position={[0, 0, 0.02]} fontSize={0.045} color="#fca5a5" anchorX="center" anchorY="middle">
-                FILE DISPUTE NOTICE
+                GỬI THÔNG BÁO TRANH CHẤP
               </Text>
             </group>
 
@@ -454,7 +455,7 @@ export const ContractConsole3D: React.FC = () => {
                 <meshStandardMaterial color="#1e1b4b" emissive="#6366f1" emissiveIntensity={0.3} />
               </mesh>
               <Text position={[0, 0, 0.02]} fontSize={0.045} color="#c7d2fe" anchorX="center" anchorY="middle">
-                PETITION SHARE BUYOUT
+                YÊU CẦU MUA LẠI CỔ PHẦN
               </Text>
             </group>
           </group>

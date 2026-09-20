@@ -9,6 +9,14 @@ frontend/dist/
 frontend/.env
 frontend/.env.local
 frontend/.env.*.local
+.env
+.env.local
+.env.*.local
+
+# Temporary / Scratch
+scratch/
+temp/
+*.log
 
 # IDE / OS
 .idea/

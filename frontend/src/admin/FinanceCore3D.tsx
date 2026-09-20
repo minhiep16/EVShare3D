@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useAdminStore } from './useAdminStore';
 import { ADMIN_CORES_CONFIG, COMMAND_THEME } from './adminLayout';
+import { formatCurrencyVND } from '@/i18n';
 
 export const FinanceCore3D: React.FC = () => {
   const {
@@ -40,16 +41,16 @@ export const FinanceCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        SHAREDFUND TREASURY & LIQUIDITY CORE
+        LÕI THANH KHOẢN & KÉT QUỸ CHUNG
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Vault Liquidity Injection • Emergency Outflow Freeze • Ledger Verification
+        Bổ sung thanh khoản két quỹ • Đóng băng chi quỹ khẩn cấp • Kiểm toán sổ cái
       </Text>
 
       {/* Levitating Golden Treasury Octahedron */}
@@ -88,12 +89,12 @@ export const FinanceCore3D: React.FC = () => {
         <group position={[-1.25, 0.55, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={config.primaryColor}
             anchorX="left"
             anchorY="middle"
           >
-            VAULT BALANCE: {treasury.vaultBalance.toLocaleString()} VND
+            SỐ DƯ KÉT QUỸ: {formatCurrencyVND(treasury.vaultBalance)}
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -102,8 +103,7 @@ export const FinanceCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Reserve Liquidity: {treasury.reserveLiquidity.toLocaleString()} VND •
-            Claims: {treasury.pendingExpenseClaims}
+            Dự phòng thanh khoản: {formatCurrencyVND(treasury.reserveLiquidity)} • Yêu cầu chi: {treasury.pendingExpenseClaims}
           </Text>
           <Text
             position={[0, -0.28, 0]}
@@ -112,8 +112,8 @@ export const FinanceCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Disbursements:{' '}
-            {treasury.disbursementsFrozen ? '🔒 FROZEN BY ADMIN' : '✓ UNRESTRICTED'} • Hash: {treasury.ledgerHash.slice(0, 14)}...
+            Chi quỹ:{' '}
+            {treasury.disbursementsFrozen ? '🔒 QUẢN TRỊ ĐÓNG BĂNG' : '✓ BÌNH THƯỜNG'} • Mã băm: {treasury.ledgerHash.slice(0, 14)}...
           </Text>
         </group>
 
@@ -145,12 +145,12 @@ export const FinanceCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.065}
+              fontSize={0.056}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 💰 INJECT LIQUIDITY (+2,000,000 VND) ]
+              [ 💰 BỔ SUNG THANH KHOẢN (+2.000.000 đ) ]
             </Text>
           </group>
 
@@ -186,8 +186,8 @@ export const FinanceCore3D: React.FC = () => {
               anchorY="middle"
             >
               {treasury.disbursementsFrozen
-                ? '[ 🔓 UNFREEZE ]'
-                : '[ 🛑 FREEZE OUTFLOW ]'}
+                ? '[ 🔓 MỞ CHI QUỸ ]'
+                : '[ 🛑 ĐÓNG BĂNG CHI QUỸ ]'}
             </Text>
           </group>
 
@@ -217,12 +217,12 @@ export const FinanceCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🔍 AUDIT VAULT ]
+              [ 🔍 KIỂM TOÁN KÉT QUỸ ]
             </Text>
           </group>
         </group>

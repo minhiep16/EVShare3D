@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useContractStore } from './useContractStore';
 import { CONTRACT_LAYOUT } from './contractLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatDateVN, formatStatusVN } from '@/i18n';
 
 export const ContractVersionStela3D: React.FC = () => {
   const contractVersions = useContractStore((state) => state.contractVersions);
@@ -75,7 +76,7 @@ export const ContractVersionStela3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          CONTRACT VERSION TREE
+          CÂY PHIÊN BẢN HỢP ĐỒNG
         </Text>
 
         <Text
@@ -86,7 +87,7 @@ export const ContractVersionStela3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          HISTORICAL VERSIONS & AMENDMENTS
+          LỊCH SỬ PHIÊN BẢN & TU CHÍNH ÁN
         </Text>
 
         {/* Version Nodes List */}
@@ -144,13 +145,13 @@ export const ContractVersionStela3D: React.FC = () => {
                 {/* Version Title */}
                 <Text
                   position={[-0.85, 0.1, 0.02]}
-                  fontSize={0.1}
+                  fontSize={0.095}
                   color={isSelected ? '#ffffff' : '#e2e8f0'}
                   anchorX="left"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  VERSION {v.version}.0 {isSelected ? '• [LOADED]' : ''}
+                  PHIÊN BẢN {v.version}.0 {isSelected ? '• [ĐANG CHỌN]' : ''}
                 </Text>
 
                 {/* Status Pill */}
@@ -162,7 +163,7 @@ export const ContractVersionStela3D: React.FC = () => {
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  [{v.status}]
+                  [{formatStatusVN(v.status)}]
                 </Text>
 
                 {/* Effective Date & Details */}
@@ -175,7 +176,7 @@ export const ContractVersionStela3D: React.FC = () => {
                   maxWidth={1.7}
                   font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
                 >
-                  Effective: {v.effectiveDate} • {v.contractTitle.slice(0, 30)}
+                  Hiệu lực: {formatDateVN(v.effectiveDate)} • {v.contractTitle.slice(0, 30)}
                 </Text>
               </group>
             );
@@ -208,7 +209,7 @@ export const ContractVersionStela3D: React.FC = () => {
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            + DRAFT NEW AMENDMENT (SPRING BOOT)
+            + TẠO BẢN DỰ THẢO MỚI (SPRING BOOT)
           </Text>
         </group>
 
@@ -221,7 +222,7 @@ export const ContractVersionStela3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          [ SELECT VERSION TO LOAD ONTO 3D LECTERN ]
+          [ CHỌN PHIÊN BẢN ĐỂ TẢI LÊN BÀN ĐỌC 3D ]
         </Text>
       </group>
     </group>

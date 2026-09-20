@@ -27,12 +27,12 @@ export const DecisionChamber3D: React.FC<DecisionChamber3DProps> = ({
   }, [fetchProposals]);
 
   const cameraButtons = [
-    { key: 'ARENA_OVERVIEW', label: 'OVERVIEW', preset: DECISION_LAYOUT.cameraPresets.ARENA_OVERVIEW },
-    { key: 'TERMINAL_FOCUS', label: 'VOTING CONSOLE', preset: DECISION_LAYOUT.cameraPresets.TERMINAL_FOCUS },
-    { key: 'PROPOSAL_PODS_FOCUS', label: 'PROPOSALS', preset: DECISION_LAYOUT.cameraPresets.PROPOSAL_PODS_FOCUS },
-    { key: 'EQUITY_FOCUS', label: 'EQUITY PILLARS', preset: DECISION_LAYOUT.cameraPresets.EQUITY_FOCUS },
-    { key: 'QUORUM_RESULTS_FOCUS', label: 'QUORUM COLUMN', preset: DECISION_LAYOUT.cameraPresets.QUORUM_RESULTS_FOCUS },
-    { key: 'STELA_FOCUS', label: 'VERDICT STELA', preset: DECISION_LAYOUT.cameraPresets.STELA_FOCUS },
+    { key: 'ARENA_OVERVIEW', label: 'TỔNG QUAN', preset: DECISION_LAYOUT.cameraPresets.ARENA_OVERVIEW },
+    { key: 'TERMINAL_FOCUS', label: 'BÀN BIỂU QUYẾT', preset: DECISION_LAYOUT.cameraPresets.TERMINAL_FOCUS },
+    { key: 'PROPOSAL_PODS_FOCUS', label: 'ĐỀ XUẤT', preset: DECISION_LAYOUT.cameraPresets.PROPOSAL_PODS_FOCUS },
+    { key: 'EQUITY_FOCUS', label: 'CỘT BIỂU QUYẾT', preset: DECISION_LAYOUT.cameraPresets.EQUITY_FOCUS },
+    { key: 'QUORUM_RESULTS_FOCUS', label: 'CỘT ĐẠT CHUẨN', preset: DECISION_LAYOUT.cameraPresets.QUORUM_RESULTS_FOCUS },
+    { key: 'STELA_FOCUS', label: 'BIA KẾT QUẢ', preset: DECISION_LAYOUT.cameraPresets.STELA_FOCUS },
   ];
 
   const handleCameraChange = (preset: typeof DECISION_LAYOUT.cameraPresets.ARENA_OVERVIEW) => {

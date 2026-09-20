@@ -180,7 +180,7 @@ const INITIAL_TREASURY: AdminTreasuryAuditRecord = {
 const INITIAL_DISPUTES: AdminDisputeDocketRecord[] = [
   {
     id: 10,
-    title: 'Unreported Front Bumper Scrape & Sensor Fault after Session #105',
+    title: 'Vết Trầy Cản Trước Không Báo Cáo & Lỗi Cảm Biến Sau Phiên #105',
     complainant: 'Alice Owner',
     respondent: 'Bob Driver',
     status: 'ESCALATED',

@@ -81,7 +81,7 @@ export const ChargingStation3D: React.FC<ChargingStation3DProps> = ({ station })
           anchorX="center"
           anchorY="middle"
         >
-          HYPERCHARGE V4
+          TRẠM SẠC NHANH V4
         </Text>
         <Text
           position={[0, 0.12, 0]}
@@ -90,7 +90,7 @@ export const ChargingStation3D: React.FC<ChargingStation3DProps> = ({ station })
           anchorX="center"
           anchorY="middle"
         >
-          {station.maxPowerKw} kW DC ULTRA-FAST
+          {station.maxPowerKw} kW DC SIÊU NHANH
         </Text>
         <Text
           position={[0, -0.04, 0]}
@@ -99,7 +99,7 @@ export const ChargingStation3D: React.FC<ChargingStation3DProps> = ({ station })
           anchorX="center"
           anchorY="middle"
         >
-          {isCharging ? `${station.currentPowerKw} kW` : 'READY'}
+          {isCharging ? `${station.currentPowerKw} kW` : 'SẴN SÀNG'}
         </Text>
         <Text
           position={[0, -0.16, 0]}
@@ -108,7 +108,7 @@ export const ChargingStation3D: React.FC<ChargingStation3DProps> = ({ station })
           anchorX="center"
           anchorY="middle"
         >
-          {isCharging ? '⚡ ACTIVE CHARGING' : 'DOCK VEHICLE TO START'}
+          {isCharging ? '⚡ ĐANG SẠC NHANH' : 'KẾT NỐI XE ĐỂ BẮT ĐẦU'}
         </Text>
       </group>
 

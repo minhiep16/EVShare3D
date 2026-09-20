@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useContractStore, getActiveContractSections } from './useContractStore';
 import { CONTRACT_LAYOUT } from './contractLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatStatusVN } from '@/i18n';
 
 export const ContractDocument3D: React.FC = () => {
   const activeContract = useContractStore((state) => state.activeContract);
@@ -89,7 +90,7 @@ export const ContractDocument3D: React.FC = () => {
         {/* Cryptographic Watermark in Background */}
         <Text
           position={[0, 0, 0.02]}
-          fontSize={0.26}
+          fontSize={0.24}
           color={
             status === 'DRAFT'
               ? 'rgba(56, 189, 248, 0.15)'
@@ -105,12 +106,12 @@ export const ContractDocument3D: React.FC = () => {
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
           {status === 'DRAFT'
-            ? 'DRAFT AMENDMENT • UNRATIFIED'
+            ? 'BẢN DỰ THẢO • CHƯA PHÊ CHUẨN'
             : status === 'PENDING_SIGNATURE'
-              ? 'PENDING SIGNATURE • MULTI-SIG'
+              ? 'CHỜ KÝ SỐ • ĐA BÊN MULTI-SIG'
               : status === 'TERMINATED'
-                ? 'TERMINATED • SUPERSEDED'
-                : 'SHA-256 VERIFIED • ACTIVE TRUST'}
+                ? 'ĐÃ CHẤM DỨT • ĐÃ BỊ THAY THẾ'
+                : 'XÁC THỰC SHA-256 • ĐANG CÓ HIỆU LỰC'}
         </Text>
 
         {/* 3. Document Header Bar */}
@@ -118,7 +119,7 @@ export const ContractDocument3D: React.FC = () => {
           {/* Main Title */}
           <Text
             position={[-1.9, 0, 0]}
-            fontSize={0.14}
+            fontSize={0.13}
             color={CONTRACT_LAYOUT.theme.platinumLegal}
             anchorX="left"
             anchorY="middle"
@@ -134,13 +135,13 @@ export const ContractDocument3D: React.FC = () => {
               <meshBasicMaterial color="#0c1a30" />
             </mesh>
             <Text
-              fontSize={0.095}
+              fontSize={0.09}
               color={statusColor}
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              [{versionText} • {status}]
+              [{versionText} • {formatStatusVN(status).toUpperCase()}]
             </Text>
           </group>
         </group>
@@ -164,13 +165,13 @@ export const ContractDocument3D: React.FC = () => {
               <meshBasicMaterial color={hoveredButton === 'SUBMIT_DRAFT_BTN' ? '#0284c7' : '#0369a1'} />
             </mesh>
             <Text
-              fontSize={0.08}
+              fontSize={0.075}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              ⚡ SUBMIT DRAFT FOR CO-OWNER SIGNATURES ▶
+              ⚡ GỬI DỰ THẢO ĐỂ CÁC THÀNH VIÊN KÝ ▶
             </Text>
           </group>
         )}
@@ -193,13 +194,13 @@ export const ContractDocument3D: React.FC = () => {
               <meshBasicMaterial color={hoveredButton === 'ACTIVATE_CONTRACT_BTN' ? '#16a34a' : '#15803d'} />
             </mesh>
             <Text
-              fontSize={0.08}
+              fontSize={0.075}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              🔒 RATIFY & ACTIVATE CONTRACT ON LEDGER ▶
+              🔒 PHÊ CHUẨN & KÍCH HOẠT HỢP ĐỒNG LÊN SỔ CÁI ▶
             </Text>
           </group>
         )}
@@ -239,13 +240,13 @@ export const ContractDocument3D: React.FC = () => {
                   />
                 </mesh>
                 <Text
-                  fontSize={0.1}
+                  fontSize={0.095}
                   color={isCurrent ? '#ffffff' : '#94a3b8'}
                   anchorX="center"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  {sec.sectionNumber}
+                  {sec.sectionNumber.replace('SECTION', 'PHẦN')}
                 </Text>
               </group>
             );
@@ -257,13 +258,13 @@ export const ContractDocument3D: React.FC = () => {
           {/* Section Heading */}
           <Text
             position={[-1.9, 0.62, 0]}
-            fontSize={0.16}
+            fontSize={0.15}
             color={CONTRACT_LAYOUT.theme.ceruleanNeon}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {section.sectionNumber}: {section.title}
+            {section.sectionNumber.replace('SECTION', 'PHẦN')}: {section.title}
           </Text>
 
           {/* Subtitle */}
@@ -339,26 +340,26 @@ export const ContractDocument3D: React.FC = () => {
               />
             </mesh>
             <Text
-              fontSize={0.11}
+              fontSize={0.1}
               color={currentSectionIndex === 0 ? '#475569' : '#ffffff'}
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              ◀ PREV SECTION
+              ◀ PHẦN TRƯỚC
             </Text>
           </group>
 
           {/* Current Page Counter */}
           <Text
             position={[0, 0, 0]}
-            fontSize={0.13}
+            fontSize={0.12}
             color={CONTRACT_LAYOUT.theme.ceruleanNeon}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            SECTION {currentSectionIndex + 1} OF {totalSections}
+            PHẦN {currentSectionIndex + 1} / {totalSections}
           </Text>
 
           {/* Next Page Button */}
@@ -387,13 +388,13 @@ export const ContractDocument3D: React.FC = () => {
               />
             </mesh>
             <Text
-              fontSize={0.11}
+              fontSize={0.1}
               color={currentSectionIndex === totalSections - 1 ? '#475569' : '#ffffff'}
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              NEXT SECTION ▶
+              PHẦN TIẾP THEO ▶
             </Text>
           </group>
         </group>

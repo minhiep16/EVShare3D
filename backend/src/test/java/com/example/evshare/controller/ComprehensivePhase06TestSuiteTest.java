@@ -148,7 +148,7 @@ public class ComprehensivePhase06TestSuiteTest {
 
         testVehicle = new Vehicle();
         testVehicle.setVin("VIN06M" + uid.toUpperCase() + "000000");
-        testVehicle.setLicensePlate("51K-06M" + uid.substring(0, 3).toUpperCase());
+        testVehicle.setLicensePlate("51K-" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase());
         testVehicle.setModelName("VinFast VF8");
         testVehicle.setManufacturer("VinFast");
         testVehicle.setModel3dAssetPath("models/vehicles/vf8.glb");

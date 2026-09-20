@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useFinanceStore } from './useFinanceStore';
 import { FINANCE_LAYOUT } from './financeLayout';
+import { formatCurrencyVND } from '@/i18n';
 
 export const LiquidReserveColumn3D: React.FC = () => {
   const sharedFund = useFinanceStore((state) => state.sharedFund);
@@ -99,13 +100,13 @@ export const LiquidReserveColumn3D: React.FC = () => {
         </mesh>
         <Text
           position={[radius + 0.35, 0, 0]}
-          fontSize={0.09}
+          fontSize={0.08}
           color="#ffab00"
           anchorX="left"
           anchorY="middle"
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
-          {`◄ RESERVE FLOOR (${(sharedFund.minimumReserve / 1000000).toFixed(0)}M VND - BR-FIN-03)`}
+          {`◄ HẠN MỨC DỰ PHÒNG TỐI THIỂU (${(sharedFund.minimumReserve / 1000000).toFixed(0)}Tr - BR-FIN-03)`}
         </Text>
       </group>
 
@@ -147,34 +148,34 @@ export const LiquidReserveColumn3D: React.FC = () => {
 
         <Text
           position={[0, 0.52, 0]}
-          fontSize={0.11}
+          fontSize={0.105}
           color="#00e5ff"
           anchorX="center"
           anchorY="middle"
           font="/fonts/Orbitron-Bold.ttf"
         >
-          SHARED FUND VAULT
+          KHO QUỸ DỰ PHÒNG CHUNG
         </Text>
 
         <Text
           position={[0, 0.28, 0]}
-          fontSize={0.16}
+          fontSize={0.14}
           color={isLow ? '#ff1744' : '#00e676'}
           anchorX="center"
           anchorY="middle"
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
-          {`${(sharedFund.currentBalance / 1000000).toFixed(1)}M VND`}
+          {formatCurrencyVND(sharedFund.currentBalance)}
         </Text>
 
         <Text
           position={[0, 0.08, 0]}
-          fontSize={0.085}
+          fontSize={0.08}
           color="#8a94a6"
           anchorX="center"
           anchorY="middle"
         >
-          Liquid Reserve Ratio:
+          Tỷ lệ thanh khoản dự phòng:
         </Text>
 
         <Text
@@ -190,24 +191,24 @@ export const LiquidReserveColumn3D: React.FC = () => {
 
         <Text
           position={[0, -0.32, 0]}
-          fontSize={0.08}
+          fontSize={0.075}
           color={isLow ? '#ff1744' : '#00e676'}
           anchorX="center"
           anchorY="middle"
           font="/fonts/Orbitron-Bold.ttf"
         >
-          {isLow ? '⚠️ LOW LIQUIDITY ALERT' : '✓ SOLVENT & PROTECTED'}
+          {isLow ? '⚠️ CẢNH BÁO THÂM HỤT QUỸ' : '✓ THANH KHOẢN AN TOÀN'}
         </Text>
 
         {isLow && (
           <Text
             position={[0, -0.5, 0]}
-            fontSize={0.07}
+            fontSize={0.065}
             color="#ff1744"
             anchorX="center"
             anchorY="middle"
           >
-            {`Deficit: ${(sharedFund.safetyDeficitAmount / 1000000).toFixed(1)}M VND`}
+            {`Thâm hụt: ${formatCurrencyVND(sharedFund.safetyDeficitAmount)}`}
           </Text>
         )}
       </group>

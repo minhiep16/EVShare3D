@@ -22,22 +22,22 @@ export const ChronoCalendar3D: React.FC = () => {
       <group position={[0, 1.25, 0]}>
         <Text
           position={[0, 0, 0]}
-          fontSize={0.14}
+          fontSize={0.13}
           color={CHRONO_CYAN}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          3D CHRONO-SPATIAL CALENDAR
+          LỊCH ĐẶT XE KHÔNG GIAN 3D
         </Text>
         <Text
           position={[0, -0.16, 0]}
-          fontSize={0.085}
+          fontSize={0.075}
           color="#94a3b8"
           anchorX="center"
           anchorY="middle"
         >
-          Select reservation date to inspect 24-hour vehicle occupancy timeline
+          Chọn ngày đặt xe để kiểm tra tiến trình 24 giờ và khung giờ trống
         </Text>
       </group>
 
@@ -64,24 +64,24 @@ export const ChronoCalendar3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.075}
+            fontSize={0.07}
             color={weekOffset > 0 ? '#ffffff' : '#64748b'}
             anchorX="center"
             anchorY="middle"
           >
-            {'◄ PREV WEEK'}
+            {'◄ TUẦN TRƯỚC'}
           </Text>
         </group>
 
         {/* Current Window Indicator */}
         <Text
           position={[0, 0, 0.02]}
-          fontSize={0.08}
+          fontSize={0.075}
           color="#e2e8f0"
           anchorX="center"
           anchorY="middle"
         >
-          {`SHOWING DAYS 1–14 (OFFSET: +${weekOffset * 7}d)`}
+          {`HIỂN THỊ 14 NGÀY (LỆCH: +${weekOffset * 7} NGÀY)`}
         </Text>
 
         {/* Next Week Button */}
@@ -105,12 +105,12 @@ export const ChronoCalendar3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.075}
+            fontSize={0.07}
             color={weekOffset < 3 ? '#ffffff' : '#64748b'}
             anchorX="center"
             anchorY="middle"
           >
-            {'NEXT WEEK ►'}
+            {'TUẦN TIẾP ►'}
           </Text>
         </group>
       </group>
@@ -179,7 +179,7 @@ export const ChronoCalendar3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                {day.dayOfWeek}
+                {day.dayOfWeek === 'MON' ? 'T2' : day.dayOfWeek === 'TUE' ? 'T3' : day.dayOfWeek === 'WED' ? 'T4' : day.dayOfWeek === 'THU' ? 'T5' : day.dayOfWeek === 'FRI' ? 'T6' : day.dayOfWeek === 'SAT' ? 'T7' : 'CN'}
               </Text>
 
               {/* Day Number */}
@@ -197,12 +197,12 @@ export const ChronoCalendar3D: React.FC = () => {
               {/* Month */}
               <Text
                 position={[0, -0.14, 0.02]}
-                fontSize={0.06}
+                fontSize={0.055}
                 color="#64748b"
                 anchorX="center"
                 anchorY="middle"
               >
-                {day.monthName}
+                {`Tháng ${new Date(day.dateStr).getMonth() + 1}`}
               </Text>
 
               {/* Occupancy Indicator Dot */}
@@ -236,13 +236,13 @@ export const ChronoCalendar3D: React.FC = () => {
         </mesh>
         <Text
           position={[0, 0, 0.03]}
-          fontSize={0.095}
+          fontSize={0.08}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          {`OPEN TIMELINE FOR ${selectedDate} ►`}
+          {`XEM TIẾN TRÌNH NGÀY ${selectedDate} ►`}
         </Text>
       </group>
     </group>

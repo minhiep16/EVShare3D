@@ -85,23 +85,23 @@ export const DisputeChamberFloor3D: React.FC = () => {
       {/* 5. Overhead Chamber Sign */}
       <group position={[0, 5.2, -4.8]}>
         <Text
-          fontSize={0.38}
+          fontSize={0.32}
           color={DISPUTE_THEME.primary}
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.12}
-        >
-          DISPUTE RESOLUTION & ARBITRATION CHAMBER // SECTOR 10
-        </Text>
-        <Text
-          position={[0, -0.42, 0]}
-          fontSize={0.16}
-          color={DISPUTE_THEME.secondary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          3D DEFECT HOLOTANK • IMMUTABLE EVIDENCE • STAFF MEDIATION • ADMIN ARBITRATION
+          PHÒNG GIẢI QUYẾT TRANH CHẤP & TRỌNG TÀI // PHÂN VÙNG 12
+        </Text>
+        <Text
+          position={[0, -0.42, 0]}
+          fontSize={0.14}
+          color={DISPUTE_THEME.secondary}
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.05}
+        >
+          BỂ ẢNH 3D ĐIỂM HỎNG • CHỨNG CỨ BẤT BIẾN • HÒA GIẢI SÀN • TRỌNG TÀI QUẢN TRỊ
         </Text>
       </group>
 

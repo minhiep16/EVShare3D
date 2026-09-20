@@ -39,16 +39,16 @@ export const OwnershipCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        SYNDICATE EQUITY & GOVERNANCE CORE
+        LÕI QUẢN TRỊ & CỔ PHẦN TỔ HỢP
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Cap Table Cryptography • Transfer Lockdowns • Equity Pool Tuning
+        Mật mã bảng cổ đông • Khóa chuyển nhượng • Quản trị quỹ cổ phần
       </Text>
 
       {/* Floating Dual-Torus Equity Balance Rings */}
@@ -100,7 +100,7 @@ export const OwnershipCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            SYNDICATE #{targetSyndicate.id}: {targetSyndicate.name.slice(0, 28)}
+            TỔ HỢP #{targetSyndicate.id}: {targetSyndicate.name.slice(0, 28)}
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -109,7 +109,7 @@ export const OwnershipCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Shares Allocated: {targetSyndicate.allocatedShares}/
+            Cổ phần đã cấp: {targetSyndicate.allocatedShares}/
             {targetSyndicate.totalShares} (100%)
           </Text>
           <Text
@@ -119,7 +119,7 @@ export const OwnershipCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Transfers: {targetSyndicate.transferFrozen ? '🔒 FROZEN BY ADMIN' : '✓ UNRESTRICTED'} • Compliance: {targetSyndicate.complianceScore}%
+            Chuyển nhượng: {targetSyndicate.transferFrozen ? '🔒 QUẢN TRỊ ĐÓNG BĂNG' : '✓ KHÔNG GIỚI HẠN'} • Tuân thủ: {targetSyndicate.complianceScore}%
           </Text>
         </group>
 
@@ -152,14 +152,14 @@ export const OwnershipCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.065}
+              fontSize={0.058}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
               {targetSyndicate.transferFrozen
-                ? '[ 🔓 UNFREEZE SYNDICATE TRANSFERS ]'
-                : '[ 🔒 FREEZE SYNDICATE TRANSFERS ]'}
+                ? '[ 🔓 MỞ KHÓA CHUYỂN NHƯỢNG ]'
+                : '[ 🔒 ĐÓNG BĂNG CHUYỂN NHƯỢNG ]'}
             </Text>
           </group>
 
@@ -190,12 +190,12 @@ export const OwnershipCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.065}
+              fontSize={0.054}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 📜 CRYPTOGRAPHIC CAP TABLE AUDIT ]
+              [ 📜 KIỂM TOÁN MẬT MÃ DANH SÁCH CỔ ĐÔNG ]
             </Text>
           </group>
         </group>

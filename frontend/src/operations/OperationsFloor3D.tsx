@@ -73,23 +73,23 @@ export const OperationsFloor3D: React.FC = () => {
       {/* 5. Overhead Hangar Header Sign */}
       <group position={[0, 4.8, -4.8]}>
         <Text
-          fontSize={0.38}
+          fontSize={0.34}
           color={OPERATIONS_THEME.primary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.12}
         >
-          OPERATIONS & LOGISTICS HANGAR // SECTOR 08
+          TRUNG TÂM VẬN HÀNH &amp; ĐIỀU PHỐI // PHÂN VÙNG 10
         </Text>
         <Text
           position={[0, -0.4, 0]}
-          fontSize={0.16}
+          fontSize={0.15}
           color={OPERATIONS_THEME.secondary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          VEHICLE TELEMATICS • OPTICAL QR DISPATCH • RETURN RECONCILIATION
+          DỮ LIỆU TỪ XA • XUẤT XE BẰNG MÃ QR • QUYẾT TOÁN TRẢ XE
         </Text>
       </group>
 

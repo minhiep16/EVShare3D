@@ -39,16 +39,16 @@ export const VehicleCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        FLEET TELEMATICS & LOCKDOWN CORE
+        LÕI VIỄN THÔNG & AN NINH ĐỘI XE
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        CAN-Bus Synchronization • Remote Anti-Theft Lock • Workshop Dispatch
+        Đồng bộ CAN-Bus • Khóa chống trộm từ xa • Điều phối xưởng dịch vụ
       </Text>
 
       {/* Floating Wireframe Fleet Prism */}
@@ -86,12 +86,12 @@ export const VehicleCore3D: React.FC = () => {
         <group position={[-1.25, 0.55, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={config.primaryColor}
             anchorX="left"
             anchorY="middle"
           >
-            FLAGSHIP: {targetVehicle.model} ({targetVehicle.licensePlate})
+            XE CHỦ LỰC: {targetVehicle.model} ({targetVehicle.licensePlate})
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -100,7 +100,7 @@ export const VehicleCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Battery SoC: {targetVehicle.batterySoc}% • Health:{' '}
+            Mức pin SoC: {targetVehicle.batterySoc}% • Độ bền sức khỏe:{' '}
             {targetVehicle.diagnosticHealth}%
           </Text>
           <Text
@@ -114,11 +114,11 @@ export const VehicleCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Lockdown:{' '}
+            Khóa an ninh:{' '}
             {targetVehicle.lockdownState === 'LOCKED_SECURE'
-              ? '🚨 LOCKED & SECURED'
-              : '✓ NOMINAL (UNLOCKED)'}{' '}
-            • Sector: {targetVehicle.assignedSector}
+              ? '🚨 ĐÃ KHÓA BẢO VỆ'
+              : '✓ BÌNH THƯỜNG (MỞ)'}{' '}
+            • Khu vực: {targetVehicle.assignedSector === 'WORKSHOP' ? 'XƯỞNG DỊCH VỤ' : targetVehicle.assignedSector}
           </Text>
         </group>
 
@@ -151,14 +151,14 @@ export const VehicleCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.065}
+              fontSize={0.058}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
               {targetVehicle.lockdownState === 'LOCKED_SECURE'
-                ? '[ 🔓 RELEASE VEHICLE LOCKDOWN ]'
-                : '[ 🚨 REMOTE EMERGENCY VEHICLE LOCKDOWN ]'}
+                ? '[ 🔓 MỞ KHÓA BẢO VỆ XE ]'
+                : '[ 🚨 KHÓA CHỐNG TRỘM KHẨN CẤP ]'}
             </Text>
           </group>
 
@@ -188,12 +188,12 @@ export const VehicleCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🔄 SYNC TELEMATICS ]
+              [ 🔄 ĐỒNG BỘ VIỄN THÔNG ]
             </Text>
           </group>
 
@@ -224,12 +224,12 @@ export const VehicleCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🛠 DISPATCH WORKSHOP ]
+              [ 🛠 ĐIỀU PHỐI VÀO XƯỞNG ]
             </Text>
           </group>
         </group>

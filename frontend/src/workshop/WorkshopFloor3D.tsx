@@ -84,23 +84,23 @@ export const WorkshopFloor3D: React.FC = () => {
       {/* 6. Overhead Workshop Sign */}
       <group position={[0, 5.2, -4.8]}>
         <Text
-          fontSize={0.38}
+          fontSize={0.34}
           color={WORKSHOP_THEME.primary}
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.12}
-        >
-          SERVICE WORKSHOP // SECTOR 09
-        </Text>
-        <Text
-          position={[0, -0.42, 0]}
-          fontSize={0.16}
-          color={WORKSHOP_THEME.secondary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          HYDRAULIC LIFT • MULTI-SYSTEM DIAGNOSTICS • REAL EXPENSE LEDGER AUDIT
+          XƯỞNG DỊCH VỤ BẢO DƯỠNG // PHÂN VÙNG 11
+        </Text>
+        <Text
+          position={[0, -0.42, 0]}
+          fontSize={0.14}
+          color={WORKSHOP_THEME.secondary}
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.05}
+        >
+          CẦU NÂNG THỦY LỰC • CHẨN ĐOÁN ĐA HỆ THỐNG • KIỂM TOÁN SỔ CÁI CHI PHÍ THẬT
         </Text>
       </group>
 

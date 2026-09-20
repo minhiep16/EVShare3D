@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useFinanceStore } from './useFinanceStore';
 import { FINANCE_LAYOUT } from './financeLayout';
 import type { AllocationStrategy } from './financeTypes';
+import { formatCurrencyVND } from '@/i18n';
 
 export const CostAllocationBarGraph3D: React.FC = () => {
   const memberSummaries = useFinanceStore((state) => state.memberSummaries);
@@ -18,9 +19,9 @@ export const CostAllocationBarGraph3D: React.FC = () => {
   const maxBarHeight = 2.4;
 
   const strategies: { id: AllocationStrategy; label: string; desc: string }[] = [
-    { id: 'OWNERSHIP_BASED', label: 'EQUITY %', desc: 'Strictly proportional to fractional ownership' },
-    { id: 'USAGE_BASED', label: 'USAGE %', desc: 'Pro-rata by logged kilometers & hours' },
-    { id: 'HYBRID', label: 'HYBRID', desc: 'Fixed costs by equity %, variable by usage %' },
+    { id: 'OWNERSHIP_BASED', label: 'CỔ PHẦN %', desc: 'Hoàn toàn theo tỷ lệ sở hữu cổ phần' },
+    { id: 'USAGE_BASED', label: 'SỬ DỤNG %', desc: 'Theo số km và số giờ sử dụng thực tế' },
+    { id: 'HYBRID', label: 'KẾT HỢP', desc: 'Chi phí cố định theo cổ phần %, biến đổi theo sử dụng %' },
   ];
 
   return (
@@ -55,7 +56,7 @@ export const CostAllocationBarGraph3D: React.FC = () => {
           anchorY="middle"
           font="/fonts/Orbitron-Bold.ttf"
         >
-          COST ALLOCATION ENGINE
+          CƠ CHẾ PHÂN BỔ CHI PHÍ
         </Text>
 
         <Text
@@ -67,18 +68,18 @@ export const CostAllocationBarGraph3D: React.FC = () => {
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
           {isCalculatingAllocation
-            ? '⚡ RECALCULATING VIA SPRING BOOT (BR-FIN-02)...'
-            : '✓ AUTHORITATIVE BACKEND RECONCILED (BR-FIN-02)'}
+            ? '⚡ ĐANG TÍNH TOÁN LẠI QUA SPRING BOOT (BR-FIN-02)...'
+            : '✓ ĐÃ ĐỐI SOÁT VỚI HỆ THỐNG BACKEND (BR-FIN-02)'}
         </Text>
 
         <Text
           position={[0, 0.08, 0]}
-          fontSize={0.075}
+          fontSize={0.07}
           color="#8a94a6"
           anchorX="center"
           anchorY="middle"
         >
-          Select allocation rule to dynamically recalculate member liability:
+          Chọn quy tắc phân bổ để tự động tính toán nghĩa vụ của từng thành viên:
         </Text>
 
         {/* 3D Strategy Buttons */}
@@ -115,7 +116,7 @@ export const CostAllocationBarGraph3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.02]}
-                  fontSize={0.08}
+                  fontSize={0.075}
                   color={isSelected ? '#040b17' : '#f0f4fc'}
                   anchorX="center"
                   anchorY="middle"
@@ -227,38 +228,38 @@ export const CostAllocationBarGraph3D: React.FC = () => {
                 {/* Equity & Usage ratio */}
                 <Text
                   position={[0, -0.14, 0]}
-                  fontSize={0.075}
+                  fontSize={0.07}
                   color="#8a94a6"
                   anchorX="center"
                   anchorY="middle"
                 >
-                  {`EQ: ${m.equityPercentage}% | USE: ${m.usagePercentage}%`}
+                  {`CP: ${m.equityPercentage}% | SD: ${m.usagePercentage}%`}
                 </Text>
 
                 {/* Total Allocated */}
                 <Text
                   position={[0, -0.27, 0]}
-                  fontSize={0.095}
+                  fontSize={0.085}
                   color="#00e5ff"
                   anchorX="center"
                   anchorY="middle"
                   font="/fonts/JetBrainsMono-Bold.ttf"
                 >
-                  {`${(m.allocatedTotalVnd / 1000000).toFixed(2)}M VND`}
+                  {formatCurrencyVND(m.allocatedTotalVnd)}
                 </Text>
 
                 {/* Settlement badge */}
                 <Text
                   position={[0, -0.4, 0]}
-                  fontSize={0.075}
+                  fontSize={0.07}
                   color={m.outstandingDueVnd === 0 ? '#00e676' : '#ff1744'}
                   anchorX="center"
                   anchorY="middle"
                   font="/fonts/JetBrainsMono-Bold.ttf"
                 >
                   {m.outstandingDueVnd === 0
-                    ? '● FULLY SETTLED'
-                    : `● DUE: ${(m.outstandingDueVnd / 1000000).toFixed(2)}M`}
+                    ? '● ĐÃ THANH TOÁN ĐỦ'
+                    : `● CÒN NỢ: ${formatCurrencyVND(m.outstandingDueVnd)}`}
                 </Text>
               </group>
             </group>

@@ -6,6 +6,7 @@ import { useVaultStore } from './useVaultStore';
 import { VAULT_LAYOUT } from './vaultLayout';
 import type { VaultTransactionNode } from './vaultTypes';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND, formatDateVN } from '@/i18n';
 
 export const TransactionRibbon3D: React.FC = () => {
   const transactions = useVaultStore((state) => state.transactions);
@@ -53,23 +54,23 @@ export const TransactionRibbon3D: React.FC = () => {
       <group position={[0, 1.6, -1.0]}>
         <Text
           position={[0, 0.25, 0]}
-          fontSize={0.28}
+          fontSize={0.25}
           color={VAULT_LAYOUT.theme.goldPrimary}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          IMMUTABLE TRANSACTION CHRONO-RIBBON
+          DẢI GIAO DỊCH BẤT BIẾN
         </Text>
         <Text
           position={[0, -0.05, 0]}
-          fontSize={0.14}
+          fontSize={0.13}
           color={VAULT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          INTERACTIVE LEDGER NODES • CLICK TO EXPAND CRYPTOGRAPHIC RECEIPT
+          CÁC NÚT SỔ CÁI TƯƠNG TÁC • NHẤP ĐỂ XEM BIÊN LAI MẬT MÃ
         </Text>
       </group>
 
@@ -133,23 +134,23 @@ export const TransactionRibbon3D: React.FC = () => {
             <group position={[0, -0.42, 0]}>
               <Text
                 position={[0, 0.06, 0]}
-                fontSize={0.13}
+                fontSize={0.12}
                 color="#ffffff"
                 anchorX="center"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                {isDeposit ? '+' : '-'}{(tx.amountVnd / 1000000).toFixed(1)}M
+                {isDeposit ? '+' : '-'}{(tx.amountVnd / 1000000).toFixed(1)} Tr ₫
               </Text>
               <Text
                 position={[0, -0.1, 0]}
-                fontSize={0.1}
+                fontSize={0.095}
                 color={nodeColor}
                 anchorX="center"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                {tx.type}
+                {isDeposit ? 'NẠP VỐN' : isWithdrawal ? 'CHI QUỸ' : tx.type}
               </Text>
             </group>
           </group>
@@ -210,31 +211,31 @@ export const TransactionRibbon3D: React.FC = () => {
           {/* Receipt Header */}
           <Text
             position={[-1.65, 0.85, 0.02]}
-            fontSize={0.16}
+            fontSize={0.15}
             color={VAULT_LAYOUT.theme.goldPrimary}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            RECEIPT: {selectedTransaction.receiptCode}
+            BIÊN LAI: {selectedTransaction.receiptCode}
           </Text>
 
           {/* Reference & Type */}
           <Text
             position={[-1.65, 0.55, 0.02]}
-            fontSize={0.13}
+            fontSize={0.12}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            REF: {selectedTransaction.reference} • TYPE: {selectedTransaction.type}
+            MÃ THAM CHIẾU: {selectedTransaction.reference} • LOẠI: {selectedTransaction.type === 'DEPOSIT' ? 'NẠP TIỀN' : selectedTransaction.type === 'WITHDRAWAL' ? 'RÚT TIỀN' : selectedTransaction.type}
           </Text>
 
           {/* Amount Badge */}
           <Text
             position={[-1.65, 0.2, 0.02]}
-            fontSize={0.28}
+            fontSize={0.24}
             color={
               selectedTransaction.type === 'DEPOSIT'
                 ? VAULT_LAYOUT.theme.solvencyGreen
@@ -247,44 +248,44 @@ export const TransactionRibbon3D: React.FC = () => {
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
             {selectedTransaction.type === 'DEPOSIT' ? '+' : '-'}
-            {selectedTransaction.amountVnd.toLocaleString('vi-VN')} VND
+            {formatCurrencyVND(selectedTransaction.amountVnd)}
           </Text>
 
           {/* Initiator / Actor */}
           <Text
             position={[-1.65, -0.15, 0.02]}
-            fontSize={0.14}
+            fontSize={0.13}
             color="#ffffff"
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            INITIATOR: {selectedTransaction.actorName}
+            NGƯỜI KHỞI TẠO: {selectedTransaction.actorName}
           </Text>
 
           {/* Description */}
           <Text
             position={[-1.65, -0.4, 0.02]}
-            fontSize={0.12}
+            fontSize={0.11}
             color={VAULT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             maxWidth={3.3}
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            DESC: {selectedTransaction.description}
+            NỘI DUNG: {selectedTransaction.description}
           </Text>
 
           {/* Balance After */}
           <Text
             position={[-1.65, -0.72, 0.02]}
-            fontSize={0.13}
+            fontSize={0.12}
             color={VAULT_LAYOUT.theme.goldPrimary}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            VAULT BALANCE AFTER: {selectedTransaction.balanceAfterVnd.toLocaleString('vi-VN')} VND
+            SỐ DƯ QUỸ SAU GIAO DỊCH: {formatCurrencyVND(selectedTransaction.balanceAfterVnd)}
           </Text>
 
           {/* Timestamp */}
@@ -296,7 +297,7 @@ export const TransactionRibbon3D: React.FC = () => {
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            {new Date(selectedTransaction.timestamp).toLocaleDateString('vi-VN')}
+            {formatDateVN(selectedTransaction.timestamp)}
           </Text>
         </group>
       )}

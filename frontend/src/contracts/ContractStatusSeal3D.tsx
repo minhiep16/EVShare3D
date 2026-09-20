@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useContractStore } from './useContractStore';
 import { CONTRACT_LAYOUT } from './contractLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatStatusVN } from '@/i18n';
 
 export const ContractStatusSeal3D: React.FC = () => {
   const activeContract = useContractStore((state) => state.activeContract);
@@ -83,19 +84,19 @@ export const ContractStatusSeal3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          LEGAL RATIFICATION STATUS
+          TRẠNG THÁI PHÊ CHUẨN PHÁP LÝ
         </Text>
 
         {/* Large Status Badge */}
         <Text
           position={[0, 0.44, 0]}
-          fontSize={0.24}
+          fontSize={0.2}
           color={sealColor}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          {status}
+          {formatStatusVN(status)}
         </Text>
 
         {/* Quorum Progress Bar Indicator */}
@@ -116,13 +117,13 @@ export const ContractStatusSeal3D: React.FC = () => {
         {/* Quorum Metric Text */}
         <Text
           position={[0, -0.1, 0]}
-          fontSize={0.11}
+          fontSize={0.095}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          QUORUM: {totalSubmitted}/{totalRequired} SIGNED ({quorumPercent}%)
+          ĐIỀU KIỆN: {totalSubmitted}/{totalRequired} ĐÃ KÝ ({quorumPercent}%)
         </Text>
 
         {/* Dynamic Signatures & Pending Signers List */}
@@ -138,7 +139,7 @@ export const ContractStatusSeal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                {`✓ ${sig.userFullName} • Ratified (${sig.signatureHash.slice(0, 8)}...)`}
+                {`✓ ${sig.userFullName} • Đã phê chuẩn (${sig.signatureHash.slice(0, 8)}...)`}
               </Text>
             ))
           ) : (
@@ -150,7 +151,7 @@ export const ContractStatusSeal3D: React.FC = () => {
               anchorY="middle"
               font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
             >
-              No co-owner signatures recorded yet.
+              Chưa có chữ ký đồng sở hữu nào được ghi nhận.
             </Text>
           )}
 
@@ -165,7 +166,7 @@ export const ContractStatusSeal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                {`⏳ ${p.userFullName} (${p.sharePercentage || 20}%) • Pending Signature`}
+                {`⏳ ${p.userFullName} (${p.sharePercentage || 20}%) • Đang chờ ký`}
               </Text>
             ))
           ) : (
@@ -178,7 +179,7 @@ export const ContractStatusSeal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                ✓ All active co-owners have signed.
+                ✓ Toàn bộ đồng sở hữu hiện tại đã ký số.
               </Text>
             )
           )}
@@ -205,13 +206,13 @@ export const ContractStatusSeal3D: React.FC = () => {
               />
             </mesh>
             <Text
-              fontSize={0.085}
+              fontSize={0.075}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              ⚡ SUBMIT DRAFT FOR SIGNING
+              ⚡ GỬI DỰ THẢO ĐỂ BẮT ĐẦU KÝ SỐ
             </Text>
           </group>
         )}
@@ -237,13 +238,13 @@ export const ContractStatusSeal3D: React.FC = () => {
               />
             </mesh>
             <Text
-              fontSize={0.095}
+              fontSize={0.08}
               color={hoveredButton === 'ACTIVATE_BTN' ? '#000000' : '#ffffff'}
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
             >
-              🔒 RATIFY & ACTIVATE CONTRACT
+              🔒 PHÊ CHUẨN & KÍCH HOẠT HỢP ĐỒNG
             </Text>
           </group>
         )}

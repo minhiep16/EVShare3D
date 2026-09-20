@@ -6,6 +6,8 @@ import { useDisputeStore } from './useDisputeStore';
 import { DISPUTE_THEME, DISPUTE_STATIONS } from './disputeLayout';
 import type { ArbitrationVerdictChoice } from './disputeTypes';
 
+import { formatCurrencyVND } from '@/i18n';
+
 export const AdminArbitrationDais3D: React.FC = () => {
   const {
     activeDispute,
@@ -40,18 +42,18 @@ export const AdminArbitrationDais3D: React.FC = () => {
   }> = [
     {
       id: 'RESOLVED_COMPLAINANT_FAVORED',
-      title: 'FAVOR COMPLAINANT',
-      description: 'Fault attributed to respondent; deductible assessed.',
+      title: 'CHẤP THUẬN NGUYÊN ĐƠN',
+      description: 'Lỗi do bị đơn; khấu trừ tiền bồi thường.',
     },
     {
       id: 'RESOLVED_RESPONDENT_FAVORED',
-      title: 'FAVOR RESPONDENT',
-      description: 'Accidental wear & tear / no respondent liability.',
+      title: 'CHẤP THUẬN BỊ ĐƠN',
+      description: 'Hao mòn tự nhiên / không trách nhiệm bị đơn.',
     },
     {
       id: 'DISMISSED',
-      title: 'DISMISS CLAIM',
-      description: 'Insufficient evidence; claims dismissed with prejudice.',
+      title: 'BÁC ĐƠN KHIẾU NẠI',
+      description: 'Không đủ chứng cứ; bác bỏ toàn bộ yêu cầu.',
     },
   ];
 
@@ -60,13 +62,12 @@ export const AdminArbitrationDais3D: React.FC = () => {
       {/* Dais Title */}
       <Text
         position={[0, 3.4, 0]}
-        fontSize={0.24}
+        fontSize={0.21}
         color={DISPUTE_THEME.secondary}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        ADMIN ARBITRATION DAIS OF FINALITY
+        BỤC PHÁN QUYẾT TRỌNG TÀI CHUNG THẨM
       </Text>
       <Text
         position={[0, 3.12, 0]}
@@ -75,7 +76,7 @@ export const AdminArbitrationDais3D: React.FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        BR-DIS-05 / BR-DIS-06 Authoritative Decision • Atomic SharedFund Settlement
+        Phán quyết thẩm quyền BR-DIS-05 / BR-DIS-06 • Quyết toán quỹ nguyên tử
       </Text>
 
       {/* Tiered Hexagonal Obsidian Base Platform */}
@@ -186,8 +187,8 @@ export const AdminArbitrationDais3D: React.FC = () => {
             anchorY="middle"
           >
             {isAdmin
-              ? '👑 SUPREME ARBITRATOR PRIVILEGE ACTIVE (ROLE_ADMIN)'
-              : `🔒 RBAC RESTRICTION: ROLE_ADMIN Required to Arbitrate (Current: ${userRole})`}
+              ? '👑 ĐẶC QUYỀN TRỌNG TÀI TỐI CAO ĐANG HOẠT ĐỘNG (ROLE_ADMIN)'
+              : `🔒 HẠN CHẾ RBAC: Yêu cầu ROLE_ADMIN để phán quyết (Hiện tại: ${userRole})`}
           </Text>
         </group>
 
@@ -195,12 +196,12 @@ export const AdminArbitrationDais3D: React.FC = () => {
         <group position={[0, 0.45, 0.02]}>
           <Text
             position={[-1.4, 0.15, 0]}
-            fontSize={0.075}
+            fontSize={0.07}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            SELECT FINAL BINDING VERDICT:
+            LỰA CHỌN PHÁN QUYẾT RÀNG BUỘC CHUNG THẨM:
           </Text>
 
           {VERDICT_OPTIONS.map((opt, idx) => {
@@ -248,7 +249,7 @@ export const AdminArbitrationDais3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0.06, 0.02]}
-                  fontSize={0.056}
+                  fontSize={0.052}
                   color={isSelected ? DISPUTE_THEME.secondary : '#ffffff'}
                   anchorX="center"
                   anchorY="middle"
@@ -257,7 +258,7 @@ export const AdminArbitrationDais3D: React.FC = () => {
                 </Text>
                 <Text
                   position={[0, -0.06, 0.02]}
-                  fontSize={0.042}
+                  fontSize={0.04}
                   color={DISPUTE_THEME.textMuted}
                   anchorX="center"
                   anchorY="middle"
@@ -275,22 +276,22 @@ export const AdminArbitrationDais3D: React.FC = () => {
         <group position={[-1.4, -0.12, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.07}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            SHAREDFUND DEDUCTIBLE ADJUSTMENT:
+            ĐIỀU CHỈNH KHẤU TRỪ QUỸ CHUNG (SHAREDFUND):
           </Text>
 
           <Text
             position={[0, -0.15, 0]}
-            fontSize={0.062}
+            fontSize={0.06}
             color="#f8fafc"
             anchorX="left"
             anchorY="middle"
           >
-            {`Assessed Deductible Amount: ${adminDeductibleInput.toLocaleString()} VND`}
+            {`Mức khấu trừ xác định: ${formatCurrencyVND(adminDeductibleInput)}`}
           </Text>
 
           {/* Quick preset buttons */}
@@ -321,12 +322,12 @@ export const AdminArbitrationDais3D: React.FC = () => {
                   </mesh>
                   <Text
                     position={[0, 0, 0.01]}
-                    fontSize={0.052}
+                    fontSize={0.048}
                     color="#ffffff"
                     anchorX="center"
                     anchorY="middle"
                   >
-                    {(amt / 1000).toFixed(0)}k VND
+                    {formatCurrencyVND(amt)}
                   </Text>
                 </group>
               ))}
@@ -372,12 +373,12 @@ export const AdminArbitrationDais3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.076}
+              fontSize={0.068}
               color={isAdmin ? '#000000' : '#9ca3af'}
               anchorX="center"
               anchorY="middle"
             >
-              [ ⚖ EXECUTE BINDING ARBITRATION & ADJUST FUND ]
+              [ ⚖ THI HÀNH PHÁN QUYẾT CHUNG THẨM & ĐIỀU CHỈNH QUỸ ]
             </Text>
           </group>
         </group>

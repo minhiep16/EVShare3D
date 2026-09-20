@@ -172,7 +172,7 @@ export const QRScannerStation3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.08}
         >
-          OPTICAL QR CHECK-IN STELA
+          TRẠM QUÉT MÃ QR NHẬN XE
         </Text>
         <Text
           position={[0, -0.16, 0]}
@@ -181,7 +181,7 @@ export const QRScannerStation3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          TOKEN: {qrToken || 'NONE ISSUED'}
+          MÃ MẬT MÃ: {qrToken || 'CHƯA PHÁT HÀNH'}
         </Text>
         <Text
           position={[0, -0.3, 0]}
@@ -191,8 +191,8 @@ export const QRScannerStation3D: React.FC = () => {
           anchorY="middle"
         >
           {qrValidationResult
-            ? `VALIDATED: ${qrValidationResult.userName || 'Authorized User'}`
-            : 'STATUS: READY FOR SCAN'}
+            ? `ĐÃ XÁC THỰC: ${qrValidationResult.userName || 'Người dùng hợp lệ'}`
+            : 'TRẠNG THÁI: SẴN SÀNG QUÉT'}
         </Text>
       </group>
 
@@ -225,12 +225,12 @@ export const QRScannerStation3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.035]}
-            fontSize={0.065}
+            fontSize={0.062}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            ⚡ GENERATE QR
+            ⚡ TẠO MÃ QR
           </Text>
         </group>
 
@@ -261,12 +261,12 @@ export const QRScannerStation3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.035]}
-            fontSize={0.065}
+            fontSize={0.06}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            {isScanningQr ? 'SCANNING...' : '🔍 VALIDATE QR'}
+            {isScanningQr ? 'ĐANG QUÉT...' : '🔍 XÁC THỰC QR'}
           </Text>
         </group>
       </group>

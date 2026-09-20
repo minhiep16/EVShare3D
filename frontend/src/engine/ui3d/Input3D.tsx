@@ -13,7 +13,7 @@ export const Input3D: React.FC<Input3DProps> = ({
   value,
   onChange,
   onSubmit,
-  placeholder = 'TYPE HERE...',
+  placeholder = 'NHẬP TẠI ĐÂY...',
   label,
   width = 1.6,
   height = 0.28,

@@ -39,7 +39,7 @@ export const AIResultVisualization3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.08}
         >
-          AI MOBILITY ANALYTICS &amp; ANOMALY MATRIX
+          PHÂN TÍCH DI CHUYỂN &amp; MA TRẬN BẤT THƯỜNG AI
         </Text>
         <Text
           position={[0, -0.24, 0]}
@@ -49,7 +49,7 @@ export const AIResultVisualization3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.04}
         >
-          REAL-TIME TELEMETRY SYNTHESIS • ADVISORY ONLY
+          TỔNG HỢP DỮ LIỆU TỪ XA THỜI GIAN THỰC • CHỈ MANG TÍNH TƯ VẤN
         </Text>
       </group>
 
@@ -63,7 +63,7 @@ export const AIResultVisualization3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.05}
         >
-          MEMBER FAIR USAGE RATIO
+          TỶ LỆ SỬ DỤNG CÔNG BẰNG
         </Text>
 
         {/* Parity baseline line (1.00) */}
@@ -79,7 +79,7 @@ export const AIResultVisualization3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            1.0 PARITY
+            1,0 CHUẨN ĐỐI ỨNG
           </Text>
         </group>
 
@@ -135,7 +135,7 @@ export const AIResultVisualization3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.05}
         >
-          BATTERY PACK THERMAL MATRIX
+          MA TRẬN NHIỆT ĐỘ KHỐI PIN
         </Text>
 
         {/* 4 Cell Cards */}
@@ -162,7 +162,7 @@ export const AIResultVisualization3D: React.FC = () => {
                 anchorX="center"
                 anchorY="middle"
               >
-                {cell.id}
+                {cell.id.replace('CELL #', 'CELL PIN #')}
               </Text>
               <Text
                 position={[0, 0.02, 0.02]}
@@ -181,7 +181,7 @@ export const AIResultVisualization3D: React.FC = () => {
                 anchorY="middle"
                 letterSpacing={0.04}
               >
-                {cell.status}
+                {cell.status === 'NOMINAL' ? 'BÌNH THƯỜNG' : 'LỆCH NHIỆT ĐỘ'}
               </Text>
             </group>
           );
@@ -191,13 +191,13 @@ export const AIResultVisualization3D: React.FC = () => {
       {/* 4. Footer Safety Certification Seal */}
       <group position={[0, 0.5, 0.12]}>
         <Text
-          fontSize={0.095}
+          fontSize={0.09}
           color={AI_LAYOUT.colors.textMuted}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.06}
         >
-          AI AUTONOMY: 0.0% (STRICTLY ADVISORY) • HUMAN RBAC CONSENSUS MANDATORY (BR-AI-SAFE-01)
+          QUYỀN TỰ QUYẾT AI: 0,0% (CHỈ TƯ VẤN) • BẮT BUỘC ĐỒNG THUẬN TỪ CON NGƯỜI (BR-AI-SAFE-01)
         </Text>
       </group>
     </group>

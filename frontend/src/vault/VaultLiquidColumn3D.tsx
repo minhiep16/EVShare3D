@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useVaultStore } from './useVaultStore';
 import { VAULT_LAYOUT } from './vaultLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND } from '@/i18n';
 
 export const VaultLiquidColumn3D: React.FC = () => {
   const sharedFund = useVaultStore((state) => state.sharedFund);
@@ -170,13 +171,13 @@ export const VaultLiquidColumn3D: React.FC = () => {
         {/* Laser Line Inscribed Label */}
         <Text
           position={[0, 0.12, radius + 0.18]}
-          fontSize={0.15}
+          fontSize={0.14}
           color="#ff5252"
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          BR-FIN-03 MIN RESERVE: {minimumReserve.toLocaleString('vi-VN')} VND
+          HẠN MỨC DỰ PHÒNG BR-FIN-03: {formatCurrencyVND(minimumReserve)}
         </Text>
       </group>
 
@@ -244,50 +245,50 @@ export const VaultLiquidColumn3D: React.FC = () => {
         {/* Syndicate Vault Label */}
         <Text
           position={[0, 0.44, 0.02]}
-          fontSize={0.18}
+          fontSize={0.16}
           color={VAULT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          SYNDICATE LIQUID TREASURY
+          QUỸ DỰ PHÒNG THANH KHOẢN NHÓM
         </Text>
 
         {/* Big Balance Text */}
         <Text
           position={[0, 0.12, 0.02]}
-          fontSize={0.34}
+          fontSize={0.28}
           color={fluidColor}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          {currentBalance.toLocaleString('vi-VN')} VND
+          {formatCurrencyVND(currentBalance)}
         </Text>
 
         {/* Solvency & Reserve Status Pill */}
         <Text
           position={[0, -0.22, 0.02]}
-          fontSize={0.16}
+          fontSize={0.14}
           color={isBelowReserve ? '#ff5252' : VAULT_LAYOUT.theme.solvencyGreen}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
           {isBelowReserve
-            ? '⚠️ CRITICAL DEFICIT • REPLENISH VAULT'
-            : `HEALTHY • ${reserveCoveragePercent}% OF RESERVE THRESHOLD`}
+            ? '⚠️ THÂM HỤT NGUY CẤP • CẦN BỔ SUNG QUỸ'
+            : `AN TOÀN • ĐẠT ${reserveCoveragePercent}% HẠN MỨC DỰ PHÒNG`}
         </Text>
 
         <Text
           position={[0, -0.48, 0.02]}
-          fontSize={0.12}
+          fontSize={0.11}
           color={VAULT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          [ CLICK TO FOCUS INSPECTION CAMERA ]
+          [ BẤM ĐỂ DI CHUYỂN CAMERA QUAN SÁT ]
         </Text>
       </group>
     </group>

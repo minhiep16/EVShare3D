@@ -25,56 +25,56 @@ interface AIActions {
 const INITIAL_RECOMMENDATIONS: AIRecommendationItem[] = [
   {
     id: 'REC_OFF_PEAK_CHARGING',
-    title: 'Off-Peak Energy Tariff Optimization',
+    title: 'Tối ưu Hóa Biểu Giá Điện Giờ Thấp Điểm',
     category: 'RECOMMENDATION',
     severity: 'INFO',
     confidenceScore: 96.4,
     description:
-      'Predictive tariff modeling identifies that shifting primary charging sessions from 18:30 to 23:00 reduces syndicate electricity tariffs by 35%.',
-    impactMetric: '-1,850,000 VND / month shared cost savings',
-    suggestedAction: 'Schedule Level 2 automated overnight charging in Energy & Finance Center.',
+      'Mô hình hóa biểu giá dự đoán xác định rằng chuyển phiên sạc chính từ 18:30 sang 23:00 giúp giảm 35% chi phí điện sạc của nhóm.',
+    impactMetric: '-1.850.000 VNĐ / tháng tiết kiệm chi phí chung',
+    suggestedAction: 'Lên lịch sạc chậm qua đêm tự động tại Trung tâm Tài chính & Năng lượng.',
     isAdvisoryOnly: true,
     isMock: true,
     timestamp: '2026-09-16T04:30:00Z',
   },
   {
     id: 'INS_WEEKEND_IMBALANCE',
-    title: 'Weekend Peak Slot Demand Concentration',
+    title: 'Nhu Cầu Khung Giờ Cao Điểm Cuối Tuần',
     category: 'INSIGHT',
     severity: 'WARNING',
     confidenceScore: 91.2,
     description:
-      'Friday 16:00 to Sunday 22:00 peak hours represent 74% of total group mileage over the last 30 days. Minh Hiep (35%) and Tran Duc (25%) utilize 82% of peak slots.',
-    impactMetric: 'Peak ratio: 1.68x baseline threshold',
-    suggestedAction: 'Deliberate flexible peak credit rotation in Decision Chamber.',
+      'Khung giờ cao điểm từ 16:00 Thứ Sáu đến 22:00 Chủ Nhật chiếm 74% tổng quãng đường di chuyển của nhóm trong 30 ngày qua. Minh Hiệp (35%) và Trần Đức (25%) sử dụng 82% các khung giờ cao điểm.',
+    impactMetric: 'Tỷ lệ giờ cao điểm: 1.68x ngưỡng cơ sở',
+    suggestedAction: 'Thảo luận luân chuyển điểm ưu tiên giờ cao điểm linh hoạt tại Phòng Biểu Quyết.',
     isAdvisoryOnly: true,
     isMock: true,
     timestamp: '2026-09-15T18:00:00Z',
   },
   {
     id: 'ANOM_BATTERY_THERMAL',
-    title: 'Traction Battery Pack Cell #4 Thermal Drift',
+    title: 'Độ Lệch Nhiệt Cụm Pin Kéo Cell #4',
     category: 'ANOMALY_INDICATOR',
     severity: 'CRITICAL',
     confidenceScore: 94.8,
     description:
-      'Telemetry detected cell cluster #4 operating at +4.8°C above average pack temperature during fast DC charging at 60kW.',
-    impactMetric: 'Thermal variance: 41.8°C (Norm: < 37.0°C)',
-    suggestedAction: 'Submit routine diagnostic inspection proposal in Decision Chamber.',
+      'Dữ liệu đo xa phát hiện cụm cell #4 hoạt động ở mức +4.8°C cao hơn nhiệt độ trung bình của bộ pin trong khi sạc nhanh DC ở công suất 60kW.',
+    impactMetric: 'Độ lệch nhiệt: 41.8°C (Chuẩn: < 37.0°C)',
+    suggestedAction: 'Gửi đề xuất kiểm tra chẩn đoán định kỳ tại Phòng Biểu Quyết.',
     isAdvisoryOnly: true,
     isMock: true,
     timestamp: '2026-09-16T01:15:00Z',
   },
   {
     id: 'FAIR_LE_HOANG_PRIORITY',
-    title: 'Fairness Parity Allocation for Le Hoang',
+    title: 'Phân Bổ Cân Bằng Công Bằng Cho Lê Hoàng',
     category: 'FAIRNESS_SUGGESTION',
     severity: 'INFO',
     confidenceScore: 98.2,
     description:
-      'Co-owner Le Hoang holds 20.0% equity but consumed only 11.4% of hours this month (Fairness Ratio: 0.78 < 1.00). Qualifies for scheduling priority per BR-FAIR-03.',
-    impactMetric: '+18 Priority Booking Bonus points',
-    suggestedAction: 'Grant priority booking slot handle in Chrono-Spatial Booking Chamber.',
+      'Đồng sở hữu Lê Hoàng nắm giữ 20.0% cổ phần nhưng chỉ tiêu thụ 11.4% số giờ trong tháng này (Tỷ lệ công bằng: 0.78 < 1.00). Đủ điều kiện ưu tiên đặt xe theo BR-FAIR-03.',
+    impactMetric: '+18 điểm thưởng ưu tiên đặt lịch',
+    suggestedAction: 'Cấp quyền ưu tiên chọn khung giờ đặt xe tại Phòng Đặt Lịch Không-Thời Gian.',
     isAdvisoryOnly: true,
     isMock: true,
     timestamp: '2026-09-15T09:00:00Z',
@@ -84,8 +84,8 @@ const INITIAL_RECOMMENDATIONS: AIRecommendationItem[] = [
 const INITIAL_DATA_NODES: AIDataNodeModel[] = [
   {
     id: 'NODE_MOBILITY',
-    name: 'Mobility Telemetry Node',
-    subtitle: 'VinFast VF8 Digital Twin Stream',
+    name: 'Nút Đo Xa Di Chuyển',
+    subtitle: 'Luồng Digital Twin VinFast VF8',
     position: [-3.6, 2.2, -0.8],
     color: '#06b6d4', // Cyan
     status: 'STREAMING',
@@ -98,8 +98,8 @@ const INITIAL_DATA_NODES: AIDataNodeModel[] = [
   },
   {
     id: 'NODE_FAIRNESS',
-    name: 'Fair Usage Quota Node',
-    subtitle: 'Equity Quotas & Consumption Units',
+    name: 'Nút Hạn Ngạch Sử Dụng Công Bằng',
+    subtitle: 'Hạn Ngạch Cổ Phần & Đơn Vị Tiêu Thụ',
     position: [3.6, 2.2, -0.8],
     color: '#8b5cf6', // Purple
     status: 'SYNCED',
@@ -112,8 +112,8 @@ const INITIAL_DATA_NODES: AIDataNodeModel[] = [
   },
   {
     id: 'NODE_FINANCIAL',
-    name: 'Financial Health Node',
-    subtitle: 'Cost Allocation & Reserve Forecast',
+    name: 'Nút Sức Khỏe Tài Chính',
+    subtitle: 'Phân Bổ Chi Phí & Dự Báo Dự Phòng',
     position: [-2.8, 3.2, 1.8],
     color: '#10b981', // Emerald
     status: 'SYNCED',
@@ -126,8 +126,8 @@ const INITIAL_DATA_NODES: AIDataNodeModel[] = [
   },
   {
     id: 'NODE_GOVERNANCE',
-    name: 'Governance Integrity Node',
-    subtitle: 'Consensus Cadence & Legal Audit',
+    name: 'Nút Liêm Chính Quản Trị',
+    subtitle: 'Nhịp Độ Đồng Thuận & Kiểm Toán Pháp Lý',
     position: [2.8, 3.2, 1.8],
     color: '#f59e0b', // Amber
     status: 'ATTENTION',
@@ -281,16 +281,16 @@ export const useAIStore = create<AICoreState & AIActions>((set, get) => ({
     let resultText = '';
     if (prompt.includes('FAIRNESS')) {
       resultText =
-        '[INSIGHT] ANALYSIS COMPLETE: Syndicate equity quota variance is within normal tolerances (0.94 Gini parity). Priority booking adjustment suggested for Co-Owner Le Hoang (FR 0.78).';
+        '[INSIGHT] ANALYSIS COMPLETE (PHÂN TÍCH HOÀN TẤT): Độ lệch hạn ngạch cổ phần nằm trong giới hạn cho phép (0.94 tỷ lệ Gini). Khuyến nghị điều chỉnh điểm ưu tiên cho Đồng sở hữu Lê Hoàng (Le Hoang - FR 0.78).';
     } else if (prompt.includes('BATTERY')) {
       resultText =
-        '[INSIGHT] High-voltage battery pack degradation trend is 0.2% below fleet baseline. Cell cluster #4 thermal variance (+4.8°C) requires workshop inspection.';
+        '[INSIGHT] Xu hướng suy giảm dung lượng pin cao áp thấp hơn 0.2% so với định mức toàn đội xe. Độ lệch nhiệt cụm cell #4 (+4.8°C) cần kiểm tra bảo dưỡng tại xưởng.';
     } else if (prompt.includes('CHARGING') || prompt.includes('COST')) {
       resultText =
-        '[RECOMMENDATION] 72% of current charging occurs in standard tariff brackets. Moving charging to 23:00–07:00 yields estimated 1,850,000 VND monthly group reserve savings.';
+        '[RECOMMENDATION] 72% lượng sạc hiện tại diễn ra trong khung giờ bình thường. Chuyển sang 23:00–07:00 ước tính tiết kiệm 1.850.000 VNĐ quỹ dự phòng nhóm hàng tháng.';
     } else {
       resultText =
-        '[INSIGHT] 1 critical thermal drift detected in traction battery cell #4. All brake, inverter, and tire telemetry nominal.';
+        '[INSIGHT] Phát hiện 1 độ lệch nhiệt quan trọng tại cell #4 cụm pin kéo. Dữ liệu phanh, bộ biến tần và áp suất lốp đều ở mức định mức chuẩn.';
     }
 
     set({ isAnalyzing: false, queryResult: resultText });

@@ -1,91 +1,101 @@
-# PHASE 06 – ENERGY, FINANCE, COST ALLOCATION & SHARED FUND
+# PHASE 06 – FINANCE, SHARED FUND & PAYMENT
 
 Implement only PHASE 06.
 
-Read:
-
-```text
-docs/REQUIREMENTS.md
-docs/BUSINESS_RULES.md
-docs/ARCHITECTURE.md
-docs/DATABASE.md
-docs/API.md
-```
-
 ## OBJECTIVE
 
-Build the complete financial, expense allocation, shared fund, and payment settlement subsystem.
+Build the complete financial subsystem.
 
 ---
 
-# EXPENSES & COST ALLOCATION
+# EXPENSE
 
-Implement:
+Support:
 
-* `ExpenseService`
-* `CostAllocationService`
+CHARGING
 
-Expense categories:
+MAINTENANCE
 
-* `CHARGING`
-* `PREVENTIVE_MAINTENANCE`
-* `EMERGENCY_REPAIR`
-* `INSURANCE`
-* `INSPECTION`
-* `CLEANING`
+INSURANCE
 
-Allocation strategies:
+INSPECTION
 
-* `OWNERSHIP_BASED`
-* `USAGE_BASED`
-* `HYBRID`
+CLEANING
 
-Critical rule:
+REPAIR
 
-Allocations must sum up exactly to the total expense amount. Use `DECIMAL(15, 2)` precision and handle rounding pennies deterministically.
+PARKING
+
+TOLL
+
+OTHER
 
 ---
 
-# SHARED FUND VAULT
+# COST ALLOCATION
 
-Implement:
+Support:
 
-* `FundService`
-* Group shared fund tracking
-* Liquidity threshold monitoring (e.g. 10,000,000 VND)
-* Transaction ledger (deposits, payouts, expense offsets)
-* Capital call generation when balance falls below threshold
+OWNERSHIP_BASED
 
----
+USAGE_BASED
 
-# PAYMENT INTEGRATION ABSTRACTION
+HYBRID
 
-Implement:
-
-* `PaymentService`
-* Provider abstraction:
-  * `BankTransferPaymentProvider`
-  * `EWalletPaymentProvider`
-  * `MockGatewayPaymentProvider`
-* Payment transaction lifecycle:
-  * `PENDING` -> `COMPLETED` / `FAILED`
-* Audit logging for every financial movement
-
----
-
-# API
-
-Implement:
+Create:
 
 ```text
-POST /api/v1/expenses
-GET  /api/v1/expenses/group/{groupId}
-GET  /api/v1/expenses/my-dues
-GET  /api/v1/funds/group/{groupId}
-GET  /api/v1/funds/{fundId}/transactions
-POST /api/v1/payments/initiate
-POST /api/v1/payments/confirm
+CostAllocationService
 ```
+
+All financial calculations must be deterministic and testable.
+
+---
+
+# SHARED FUND
+
+Implement:
+
+* balance
+* contribution
+* withdrawal
+* transaction history
+* audit
+
+Never modify financial history silently.
+
+---
+
+# PAYMENT
+
+Create provider abstraction:
+
+```text
+PaymentProvider
+```
+
+Support:
+
+* mock provider
+* bank transfer abstraction
+* e-wallet abstraction
+* gateway abstraction
+
+Payment statuses:
+
+PENDING
+
+PROCESSING
+
+SUCCESS
+
+FAILED
+
+REFUNDED
+
+CANCELLED
+
+Add idempotency protection where appropriate.
 
 ---
 
@@ -93,12 +103,13 @@ POST /api/v1/payments/confirm
 
 Test:
 
-* Expense creation and strategy calculation (Ownership, Usage, Hybrid)
-* Mathematical equality of allocations to total expense
-* Fund deposit and balance updates
-* Safety threshold alerts
-* Payment completion and ledger crediting
-* Concurrent transactions
+* expense
+* allocation
+* fund balance
+* transactions
+* duplicate payment request
+* payment failure
+* payment success
 
 Run:
 
@@ -106,10 +117,6 @@ Run:
 mvn clean test
 ```
 
-Update:
-
-```text
-agent/CURRENT_STATUS.md
-```
+Update API and database documentation.
 
 Then STOP.

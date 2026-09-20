@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useAdminStore } from './useAdminStore';
 import { ADMIN_CORES_CONFIG, COMMAND_THEME } from './adminLayout';
+import { formatCurrencyVND } from '@/i18n';
 
 export const DisputeCore3D: React.FC = () => {
   const {
@@ -40,16 +41,16 @@ export const DisputeCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        ARBITRATION DOCKET & SUMMARY CORE
+        LÕI PHÁN QUYẾT & HỒ SƠ TRANH CHẤP
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Supreme Summary Judgment • Compensatory Credits • Docket Expeditions
+        Phán quyết trọng tài tóm tắt • Cấp tín dụng bồi thường • Thụ lý hồ sơ khẩn
       </Text>
 
       {/* Floating Crimson Arbitration Crystal */}
@@ -88,12 +89,12 @@ export const DisputeCore3D: React.FC = () => {
         <group position={[-1.25, 0.55, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={config.primaryColor}
             anchorX="left"
             anchorY="middle"
           >
-            DOCKET CASE #{activeDispute.id}: {activeDispute.status}
+            HỒ SƠ TRANH CHẤP #{activeDispute.id}: {activeDispute.status === 'RESOLVED' ? 'ĐÃ GIẢI QUYẾT' : 'ĐANG THỤ LÝ'}
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -102,7 +103,7 @@ export const DisputeCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Parties: {activeDispute.complainant} vs {activeDispute.respondent}
+            Các bên: {activeDispute.complainant} & {activeDispute.respondent}
           </Text>
           <Text
             position={[0, -0.28, 0]}
@@ -113,8 +114,8 @@ export const DisputeCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Claim: {activeDispute.claimAmount.toLocaleString()} VND • Status:{' '}
-            {activeDispute.status}
+            Yêu cầu: {formatCurrencyVND(activeDispute.claimAmount)} • Trạng thái:{' '}
+            {activeDispute.status === 'RESOLVED' ? 'Đã giải quyết' : 'Đang hòa giải'}
           </Text>
         </group>
 
@@ -151,12 +152,12 @@ export const DisputeCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.062}
+              fontSize={0.055}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ⚖ ENFORCE SUMMARY ARBITRATION VERDICT ]
+              [ ⚖ THI HÀNH PHÁN QUYẾT TRỌNG TÀI TÓM TẮT ]
             </Text>
           </group>
 
@@ -187,12 +188,12 @@ export const DisputeCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.062}
+              fontSize={0.055}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 💸 GRANT 250,000 VND COMPENSATORY CREDIT ]
+              [ 💸 CẤP 250.000 đ TÍN DỤNG BỒI THƯỜNG ]
             </Text>
           </group>
         </group>

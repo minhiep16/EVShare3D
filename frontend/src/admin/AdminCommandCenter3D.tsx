@@ -36,42 +36,42 @@ export const AdminCommandCenter3D: React.FC<AdminCommandCenter3DProps> = ({
   const cameraButtons = [
     {
       key: 'ORBITAL_OVERVIEW',
-      label: 'OVERVIEW',
+      label: 'TỔNG QUAN',
       preset: ADMIN_CAMERA_PRESETS.ORBITAL_OVERVIEW,
     },
     {
       key: 'USER_CORE_FOCUS',
-      label: 'USER CORE',
+      label: 'NGƯỜI DÙNG',
       preset: ADMIN_CAMERA_PRESETS.USER_CORE_FOCUS,
     },
     {
       key: 'VEHICLE_CORE_FOCUS',
-      label: 'VEHICLE CORE',
+      label: 'ĐỘI XE',
       preset: ADMIN_CAMERA_PRESETS.VEHICLE_CORE_FOCUS,
     },
     {
       key: 'OWNERSHIP_CORE_FOCUS',
-      label: 'EQUITY CORE',
+      label: 'CỔ PHẦN',
       preset: ADMIN_CAMERA_PRESETS.OWNERSHIP_CORE_FOCUS,
     },
     {
       key: 'BOOKING_CORE_FOCUS',
-      label: 'BOOKING CORE',
+      label: 'ĐẶT XE',
       preset: ADMIN_CAMERA_PRESETS.BOOKING_CORE_FOCUS,
     },
     {
       key: 'FINANCE_CORE_FOCUS',
-      label: 'FINANCE CORE',
+      label: 'TÀI CHÍNH',
       preset: ADMIN_CAMERA_PRESETS.FINANCE_CORE_FOCUS,
     },
     {
       key: 'DISPUTE_CORE_FOCUS',
-      label: 'DISPUTE CORE',
+      label: 'TRANH CHẤP',
       preset: ADMIN_CAMERA_PRESETS.DISPUTE_CORE_FOCUS,
     },
     {
       key: 'SYSTEM_CORE_FOCUS',
-      label: 'ZENITH CORE',
+      label: 'HỆ THỐNG',
       preset: ADMIN_CAMERA_PRESETS.SYSTEM_CORE_FOCUS,
     },
   ];
@@ -93,7 +93,85 @@ export const AdminCommandCenter3D: React.FC<AdminCommandCenter3DProps> = ({
     useCameraStore.getState().transitionTo(targetPos, targetLook, 1.2);
   };
 
-  const activeNotice = rbacViolationNotice || errorMessage || feedbackNotice;
+  const translateAdminNotice = (msg: string | null): string | null => {
+    if (!msg) return null;
+    if (msg.includes('SOVEREIGN LOCKOUT')) {
+      return '⛔ TRUY CẬP BỊ TỪ CHỐI: Yêu cầu đặc quyền QUẢN TRỊ VIÊN TỐI CAO (ROLE_ADMIN).';
+    }
+    if (msg.includes('KYC verified')) {
+      return '✓ Đã xác thực sinh trắc học và ký chứng thư điện tử KYC thành công.';
+    }
+    if (msg.includes('SUSPENDED')) {
+      return '⛔ Đã tạm khóa tài khoản người dùng thành công.';
+    }
+    if (msg.includes('ACTIVATED') || msg.includes('ACTIVE')) {
+      return '⚡ Đã kích hoạt tài khoản người dùng thành công.';
+    }
+    if (msg.includes('Elevated role')) {
+      return '🔑 Đã thăng cấp vai trò người dùng thành công.';
+    }
+    if (msg.includes('LOCKED_SECURE')) {
+      return '🚨 Đã kích hoạt khóa chống trộm khẩn cấp từ xa cho phương tiện.';
+    }
+    if (msg.includes('UNLOCKED')) {
+      return '🔓 Đã gỡ lệnh khóa an ninh phương tiện thành công.';
+    }
+    if (msg.includes('synchronized')) {
+      return '🔄 Đã đồng bộ hóa dữ liệu viễn thông CAN-Bus toàn đội xe.';
+    }
+    if (msg.includes('dispatched to Workshop')) {
+      return '🛠 Đã điều phối phương tiện vào Xưởng Dịch vụ (Phân vùng 11).';
+    }
+    if (msg.includes('Transfers frozen')) {
+      return '🔒 Đã đóng băng giao dịch chuyển nhượng cổ phần tổ hợp.';
+    }
+    if (msg.includes('Transfers unfrozen')) {
+      return '🔓 Đã mở khóa giao dịch chuyển nhượng cổ phần tổ hợp.';
+    }
+    if (msg.includes('Cap table audited')) {
+      return '📜 Đã kiểm toán mật mã bảng phân bổ cổ phần (Độ tuân thủ: 100%).';
+    }
+    if (msg.includes('Arbitrated booking conflict')) {
+      return '⏱ Đã phân xử tranh chấp lịch đặt xe thành công.';
+    }
+    if (msg.includes('preempted')) {
+      return '⛔ Đã thu hồi khung giờ đặt xe để phục vụ nhu cầu ưu tiên nền tảng.';
+    }
+    if (msg.includes('purged')) {
+      return '⚡ Đã dọn dẹp các khung giờ giữ chỗ hết hạn trong hệ thống.';
+    }
+    if (msg.includes('Injected')) {
+      return '💰 Đã bổ sung 2.000.000 đ thanh khoản dự phòng vào két quỹ.';
+    }
+    if (msg.includes('Disbursements frozen')) {
+      return '🛑 Đã đóng băng toàn bộ lệnh giải ngân và chi quỹ SharedFund.';
+    }
+    if (msg.includes('Disbursements unfrozen')) {
+      return '🔓 Đã mở khóa lệnh giải ngân và chi quỹ SharedFund.';
+    }
+    if (msg.includes('verified')) {
+      return '🔍 Kiểm toán mã băm sổ cái két quỹ thành công: Tính toàn vẹn 100%.';
+    }
+    if (msg.includes('Summary verdict rendered')) {
+      return '⚖ Đã ban hành và thi hành phán quyết trọng tài tóm tắt.';
+    }
+    if (msg.includes('Credited')) {
+      return '💸 Đã cấp 250.000 đ tín dụng bồi thường thiện chí cho đồng sở hữu.';
+    }
+    if (msg.includes('LOCKDOWN ACTIVATED')) {
+      return '🚨 ĐÃ KÍCH HOẠT KHÓA KHẨN CẤP TOÀN BỘ NỀN TẢNG METAVERSE.';
+    }
+    if (msg.includes('LOCKDOWN DEACTIVATED')) {
+      return '🔓 ĐÃ HỦY LỆNH KHÓA KHẨN CẤP NỀN TẢNG. HỆ THỐNG HOẠT ĐỘNG BÌNH THƯỜNG.';
+    }
+    if (msg.includes('flushed successfully')) {
+      return '🔄 Đã xóa sạch bộ nhớ đệm hệ thống và biên dịch lại shader WebGL.';
+    }
+    return msg;
+  };
+
+  const rawNotice = rbacViolationNotice || errorMessage || feedbackNotice;
+  const activeNotice = translateAdminNotice(rawNotice);
   const isAuthorized = userRole === 'ROLE_ADMIN';
 
   return (
@@ -199,7 +277,7 @@ export const AdminCommandCenter3D: React.FC<AdminCommandCenter3DProps> = ({
             anchorX="left"
             anchorY="middle"
           >
-            CORE TELEPORT:
+            CHUYỂN ĐẾN LÕI:
           </Text>
 
           {cameraButtons.map((btn, idx) => {
@@ -225,14 +303,14 @@ export const AdminCommandCenter3D: React.FC<AdminCommandCenter3DProps> = ({
             anchorX="left"
             anchorY="middle"
           >
-            RBAC SIMULATED IDENTITY:
+            GIẢ LẬP VAI TRÒ (RBAC):
           </Text>
 
           {(
             [
-              { role: 'ROLE_CO_OWNER', label: '👤 CO-OWNER (ALICE)' },
-              { role: 'ROLE_STAFF', label: '🛠 PLATFORM STAFF' },
-              { role: 'ROLE_ADMIN', label: '👑 SUPREME ADMIN' },
+              { role: 'ROLE_CO_OWNER', label: '👤 ĐỒNG SỞ HỮU (ALICE)' },
+              { role: 'ROLE_STAFF', label: '🛠 NHÂN VIÊN SÀN' },
+              { role: 'ROLE_ADMIN', label: '👑 QUẢN TRỊ VIÊN' },
             ] as const
           ).map((item, idx) => {
             const isCurrent = userRole === item.role;
@@ -292,7 +370,7 @@ const StationButton3D: React.FC<StationButton3DProps> = ({
       </mesh>
       <Text
         position={[0, 0, 0.01]}
-        fontSize={0.058}
+        fontSize={0.052}
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
@@ -350,7 +428,7 @@ const RoleButton3D: React.FC<RoleButton3DProps> = ({
       </mesh>
       <Text
         position={[0, 0, 0.01]}
-        fontSize={0.068}
+        fontSize={0.062}
         color={isActive ? '#ffffff' : '#cbd5e1'}
         anchorX="center"
         anchorY="middle"

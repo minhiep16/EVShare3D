@@ -16,57 +16,57 @@ const DEFAULT_SYNDICATE_RULES: SyndicateRule[] = [
     id: 1,
     category: 'USAGE',
     severity: 'STRICT',
-    title: 'Reservation Overlap & Quota Cap',
-    description: 'Reservations must respect equity quota and 30-min turnaround buffer (BR-BKG-01..02).',
+    title: 'Hạn Mức Sử Dụng & Khoảng Đệm Lịch',
+    description: 'Lịch sử dụng phải tuân thủ hạn mức cổ phần và bảo đảm khoảng đệm hoàn trả xe 30 phút.',
   },
   {
     id: 2,
     category: 'USAGE',
     severity: 'NORMAL',
-    title: 'Cancellation Lead Time',
-    description: 'Free cancellation permitted up to 12 hours before start window (BR-BKG-03).',
+    title: 'Thời Hạn Miễn Phí Hủy Lịch',
+    description: 'Miễn phí hủy lịch khi thực hiện trước thời điểm bắt đầu chuyến đi tối thiểu 12 tiếng.',
   },
   {
     id: 3,
     category: 'CHARGING',
     severity: 'STRICT',
-    title: 'Minimum Return SoC Threshold',
-    description: 'Vehicle must be returned with >=20% SoC or connected to active charging stall.',
+    title: 'Mức Pin Tối Thiểu Khi Trả Xe',
+    description: 'Xe phải được trả về trạm với mức pin >=20% SoC hoặc đã kết nối với trụ sạc hoạt động.',
   },
   {
     id: 4,
     category: 'CHARGING',
     severity: 'NORMAL',
-    title: 'Charging Cost Settlement',
-    description: 'Direct Supercharger sessions billed to syndicate shared reserve fund.',
+    title: 'Khấu Trừ Chi Phí Sạc Nhanh',
+    description: 'Chi phí sạc tại trụ Supercharger được khấu trừ trực tiếp từ quỹ dự phòng chung của nhóm.',
   },
   {
     id: 5,
     category: 'MAINTENANCE',
     severity: 'WARNING',
-    title: 'Service Interval Notification',
-    description: 'Preventive inspection mandated every 10,000 km or 6 operating months.',
+    title: 'Chu Kỳ Bảo Dưỡng Phòng Ngừa',
+    description: 'Bảo trì phòng ngừa định kỳ bắt buộc sau mỗi 10.000 km hoặc 6 tháng vận hành xe.',
   },
   {
     id: 6,
     category: 'MAINTENANCE',
     severity: 'NORMAL',
-    title: 'Tire & Brake Pad Inspection',
-    description: 'Report telemetry anomalies via 3D diagnostic inspection terminal.',
+    title: 'Kiểm Tra Lốp & Má Phanh',
+    description: 'Báo cáo ngay mọi bất thường qua bàn kiểm tra chẩn đoán 3D tại trạm.',
   },
   {
     id: 7,
     category: 'PENALTY',
     severity: 'STRICT',
-    title: 'Late Return Penalties',
-    description: 'Returns exceeding scheduled end by >15 mins incur 50,000 VND / 30m block.',
+    title: 'Chế Tài Trả Xe Trễ Giờ',
+    description: 'Trả xe quá giờ đặt từ 15 phút trở lên chịu phạt 50.000 ₫ cho mỗi khung 30 phút phát sinh.',
   },
   {
     id: 8,
     category: 'PENALTY',
     severity: 'WARNING',
-    title: 'No-Show Fee',
-    description: 'Unclaimed slots after 30 mins are marked NO_SHOW and forfeited.',
+    title: 'Phí Vắng Mặt Không Nhận Xe',
+    description: 'Khung giờ đặt không nhận xe sau 30 phút sẽ bị đánh dấu VẮNG MẶT và hủy lịch.',
   },
 ];
 
@@ -97,10 +97,10 @@ export const RulesHoloStela3D: React.FC = () => {
   const { RULES_STELA_POS, RULES_STELA_ROT, THEME } = CO_OWNERSHIP_HALL_LAYOUT;
 
   const categories: Array<{ id: 'USAGE' | 'CHARGING' | 'MAINTENANCE' | 'PENALTY'; label: string }> = [
-    { id: 'USAGE', label: 'USAGE' },
-    { id: 'CHARGING', label: 'CHARGING' },
-    { id: 'MAINTENANCE', label: 'SERVICE' },
-    { id: 'PENALTY', label: 'PENALTIES' },
+    { id: 'USAGE', label: 'SỬ DỤNG' },
+    { id: 'CHARGING', label: 'SẠC PIN' },
+    { id: 'MAINTENANCE', label: 'BẢO TRÌ' },
+    { id: 'PENALTY', label: 'CHẾ TÀI' },
   ];
 
   return (
@@ -160,13 +160,13 @@ export const RulesHoloStela3D: React.FC = () => {
         {/* Stela Header */}
         <Text
           position={[0, 0.93, 0]}
-          fontSize={0.1}
+          fontSize={0.095}
           color={THEME.TEXT_GOLD_BRIGHT}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.06}
         >
-          {stelaMode === 'RULES' ? 'CO-OWNERSHIP GOVERNANCE RULES' : 'OWNERSHIP AUDIT & EQUITY LEDGER'}
+          {stelaMode === 'RULES' ? 'QUY CHẾ QUẢN TRỊ ĐỒNG SỞ HỮU' : 'SỔ CÁI KIỂM TOÁN CỔ PHẦN'}
         </Text>
 
         {/* Stela Subtitle */}
@@ -178,15 +178,15 @@ export const RulesHoloStela3D: React.FC = () => {
           anchorY="middle"
         >
           {stelaMode === 'RULES'
-            ? 'SYNDICATE BY-LAWS & FAIR USAGE ETIQUETTE'
-            : 'IMMUTABLE CHRONOLOGICAL SHARE ISSUANCE & TRANSFERS'}
+            ? 'QUY CHẾ VẬN HÀNH & NGUYÊN TẮC CÔNG BẰNG'
+            : 'SỔ CÁI BẤT BIẾN CẤP PHÁT & CHUYỂN NHƯỢNG CỔ PHẦN'}
         </Text>
 
         {/* Mode Switcher Toggle (RULES vs AUDIT) */}
         <group position={[0, 0.69, 0]}>
           {[
-            { id: 'RULES' as const, label: 'BY-LAWS & RULES' },
-            { id: 'AUDIT' as const, label: 'AUDIT LEDGER' },
+            { id: 'RULES' as const, label: 'QUY CHẾ HOẠT ĐỘNG' },
+            { id: 'AUDIT' as const, label: 'SỔ CÁI KIỂM TOÁN' },
           ].map((modeItem, mIdx) => {
             const isSelected = stelaMode === modeItem.id;
             const isHover = hoveredMode === modeItem.id;
@@ -305,6 +305,12 @@ export const RulesHoloStela3D: React.FC = () => {
                     : rule.severity === 'NORMAL'
                     ? THEME.CYBER_CYAN
                     : '#fbbf24';
+                const severityLabel =
+                  rule.severity === 'STRICT'
+                    ? 'NGHIÊM NGẶT'
+                    : rule.severity === 'NORMAL'
+                    ? 'TIÊU CHUẨN'
+                    : 'CẢNH BÁO';
 
                 return (
                   <group key={rule.id} position={[0, yOffset, 0]}>
@@ -345,7 +351,7 @@ export const RulesHoloStela3D: React.FC = () => {
                       anchorX="right"
                       anchorY="middle"
                     >
-                      {`[${rule.severity}]`}
+                      {`[${severityLabel}]`}
                     </Text>
 
                     <Text
@@ -424,7 +430,7 @@ export const RulesHoloStela3D: React.FC = () => {
                     anchorX="left"
                     anchorY="middle"
                   >
-                    {`SHARE: ${hist.previousPercentage}% ➔ ${hist.newPercentage}%  •  ACTING USER: #${hist.actingUserId}  •  ${hist.effectiveDate || '2026'}`}
+                    {`CỔ PHẦN: ${hist.previousPercentage}% ➔ ${hist.newPercentage}%  •  NGƯỜI DÙNG: #${hist.actingUserId}  •  ${hist.effectiveDate || '2026'}`}
                   </Text>
 
                   {/* Verified Tag */}
@@ -435,7 +441,7 @@ export const RulesHoloStela3D: React.FC = () => {
                     anchorX="right"
                     anchorY="middle"
                   >
-                    ✓ COMMITTED
+                    ✓ ĐÃ GHI SỔ
                   </Text>
                 </group>
               );
@@ -453,8 +459,8 @@ export const RulesHoloStela3D: React.FC = () => {
             anchorY="middle"
           >
             {stelaMode === 'RULES'
-              ? 'RULE AMENDMENTS REQUIRE 60% MAJORITY RATIFICATION VIA GOVERNANCE COUNCIL'
-              : 'IMMUTABLE LEDGER ENTRIES VERIFIED BY SPRING BOOT OWNERSHIP AUDIT SERVICE'}
+              ? 'VIỆC SỬA ĐỔI QUY CHẾ CẦN ĐẠT ĐA SỐ 60% TÁN THÀNH THÔNG QUA HỘI ĐỒNG BIỂU QUYẾT'
+              : 'DỮ LIỆU SỔ CÁI BẤT BIẾN ĐƯỢC XÁC THỰC BỞI DỊCH VỤ KIỂM TOÁN HỆ THỐNG'}
           </Text>
         </group>
       </group>

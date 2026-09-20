@@ -25,12 +25,12 @@ export const AIIntelligenceCenter3D: React.FC<AIIntelligenceCenter3DProps> = ({
   }, [fetchAIData]);
 
   const cameraButtons = [
-    { key: 'NEXUS_OVERVIEW', label: 'OVERVIEW', preset: AI_LAYOUT.cameraPresets.NEXUS_OVERVIEW },
-    { key: 'CORE_FOCUS', label: 'AI CORE', preset: AI_LAYOUT.cameraPresets.CORE_FOCUS },
-    { key: 'TERMINAL_FOCUS', label: 'TERMINAL', preset: AI_LAYOUT.cameraPresets.TERMINAL_FOCUS },
-    { key: 'HOLOGRAPHIC_RECOMMENDATIONS', label: 'RECOMMENDATIONS', preset: AI_LAYOUT.cameraPresets.HOLOGRAPHIC_RECOMMENDATIONS },
-    { key: 'DATA_NODES_FOCUS', label: 'DATA NODES', preset: AI_LAYOUT.cameraPresets.DATA_NODES_FOCUS },
-    { key: 'SAFETY_AUDIT_FOCUS', label: 'SAFETY INTERLOCKS', preset: AI_LAYOUT.cameraPresets.SAFETY_AUDIT_FOCUS },
+    { key: 'NEXUS_OVERVIEW', label: 'TỔNG QUAN', preset: AI_LAYOUT.cameraPresets.NEXUS_OVERVIEW },
+    { key: 'CORE_FOCUS', label: 'LÕI TRÍ TUỆ AI', preset: AI_LAYOUT.cameraPresets.CORE_FOCUS },
+    { key: 'TERMINAL_FOCUS', label: 'BÀN ĐIỀU KHIỂN', preset: AI_LAYOUT.cameraPresets.TERMINAL_FOCUS },
+    { key: 'HOLOGRAPHIC_RECOMMENDATIONS', label: 'KHUYẾN NGHỊ AI', preset: AI_LAYOUT.cameraPresets.HOLOGRAPHIC_RECOMMENDATIONS },
+    { key: 'DATA_NODES_FOCUS', label: 'NÚT DỮ LIỆU', preset: AI_LAYOUT.cameraPresets.DATA_NODES_FOCUS },
+    { key: 'SAFETY_AUDIT_FOCUS', label: 'KHÓA AN TOÀN', preset: AI_LAYOUT.cameraPresets.SAFETY_AUDIT_FOCUS },
   ];
 
   const handleCameraChange = (preset: typeof AI_LAYOUT.cameraPresets.NEXUS_OVERVIEW) => {

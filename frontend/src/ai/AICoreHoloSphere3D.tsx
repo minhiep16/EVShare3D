@@ -120,30 +120,34 @@ export const AICoreHoloSphere3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.06}
         >
-          AI MOBILITY INTELLIGENCE CORE
+          LÕI TRÍ TUỆ NHÂN TẠO AI
         </Text>
 
         {/* Honest Disclosure Banner */}
         <Text
           position={[0, 0.02, 0.02]}
-          fontSize={0.11}
+          fontSize={0.105}
           color={AI_LAYOUT.colors.goldWarning}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.04}
         >
-          {disclosureNotice}
+          {disclosureNotice
+            .replace('STATUS: NOT_AVAILABLE (AI API UNCONFIGURED) — ADVISORY HEURISTICS ACTIVE', 'TRẠNG THÁI: CHƯA KÍCH HOẠT (CHƯA CẤU HÌNH API AI) — MÔ HÌNH SUY LUẬN TƯ VẤN ĐANG HOẠT ĐỘNG')
+            .replace('STATUS: NOT_AVAILABLE (NO DEDICATED AI SERVICE) — ADVISORY HEURISTICS ACTIVE', 'TRẠNG THÁI: CHƯA KÍCH HOẠT (KHÔNG CÓ DỊCH VỤ AI RIÊNG) — MÔ HÌNH SUY LUẬN TƯ VẤN ĐANG HOẠT ĐỘNG')
+            .replace('STATUS: ONLINE', 'TRẠNG THÁI: TRỰC TUYẾN')
+            .replace('ADVISORY ONLY', 'CHỈ MANG TÍNH TƯ VẤN')}
         </Text>
 
         {/* Safety Boundary Subtitle */}
         <Text
           position={[0, -0.22, 0.02]}
-          fontSize={0.095}
+          fontSize={0.09}
           color={AI_LAYOUT.colors.cyanLight}
           anchorX="center"
           anchorY="middle"
         >
-          STRICTLY ADVISORY • NO AUTONOMOUS PAYMENTS OR CONTRACTS (BR-AI-SAFE-01)
+          CHỈ MANG TÍNH TƯ VẤN • KHÔNG TỰ ĐỘNG THANH TOÁN HAY KÝ HỢP ĐỒNG (BR-AI-SAFE-01)
         </Text>
       </group>
     </group>

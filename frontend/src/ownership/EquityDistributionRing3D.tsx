@@ -72,7 +72,7 @@ export const EquityDistributionRing3D: React.FC = () => {
           anchorY="middle"
           letterSpacing={0.06}
         >
-          EQUITY ALLOCATION
+          PHÂN BỔ CỔ PHẦN
         </Text>
         <Text
           position={[0, 0.15, 0.08]}
@@ -82,7 +82,7 @@ export const EquityDistributionRing3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          {`${activeGroup.totalSharesPercent.toFixed(2)}% TOTAL`}
+          {`TỔNG CỘNG ${activeGroup.totalSharesPercent.toFixed(2)}%`}
         </Text>
         <Text
           position={[0, 0.15, 0.26]}
@@ -92,7 +92,7 @@ export const EquityDistributionRing3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          {authoritativeValidation?.isValid ? '✓ BACKEND VERIFIED' : 'SPRING BOOT VALIDATING'}
+          {authoritativeValidation?.isValid ? '✓ ĐÃ XÁC THỰC MÁY CHỦ' : 'ĐANG XÁC THỰC HỆ THỐNG'}
         </Text>
       </group>
 
@@ -206,12 +206,12 @@ export const EquityDistributionRing3D: React.FC = () => {
               {/* Share Percentage */}
               <Text
                 position={[0, -0.04, 0.02]}
-                fontSize={0.105}
+                fontSize={0.095}
                 color={member.color}
                 anchorX="center"
                 anchorY="middle"
               >
-                {`${member.sharePercentage.toFixed(1)}% EQUITY`}
+                {`${member.sharePercentage.toFixed(1)}% CỔ PHẦN`}
               </Text>
 
               {/* Share Certificate */}

@@ -15,25 +15,25 @@ export const AITerminal3D: React.FC = () => {
   const clearBlockedAttempt = useAIStore((s) => s.clearBlockedAttempt);
 
   const queryPrompts = [
-    { label: 'ANALYZE FAIRNESS', prompt: 'ANALYZE SYNDICATE FAIRNESS' },
-    { label: 'BATTERY TELEMETRY', prompt: 'PREDICT BATTERY HEALTH' },
-    { label: 'TARIFF OPTIMIZATION', prompt: 'OPTIMIZE CHARGING TARIFFS' },
-    { label: 'ANOMALY SCAN', prompt: 'SCAN TELEMETRY ANOMALIES' },
+    { label: 'TỶ LỆ CÔNG BẰNG', prompt: 'ANALYZE SYNDICATE FAIRNESS' },
+    { label: 'CHẨN ĐOÁN PIN', prompt: 'PREDICT BATTERY HEALTH' },
+    { label: 'TỐI ƯU BIỂU GIÁ', prompt: 'OPTIMIZE CHARGING TARIFFS' },
+    { label: 'QUÉT BẤT THƯỜNG', prompt: 'SCAN TELEMETRY ANOMALIES' },
   ];
 
   const disclosureNotice = useAIStore((s) => s.disclosureNotice);
   const modelStatus = useAIStore((s) => s.modelStatus);
 
   const safetyActionsRow1: { label: string; action: AISafetyActionType }[] = [
-    { label: 'TEST AUTH BYPASS', action: 'BYPASS_AUTHENTICATION' },
-    { label: 'TEST RBAC BYPASS', action: 'BYPASS_RBAC' },
-    { label: 'TEST ALTER EQUITY', action: 'ALTER_OWNERSHIP' },
+    { label: 'THỬ VƯỢT XÁC THỰC', action: 'BYPASS_AUTHENTICATION' },
+    { label: 'THỬ VƯỢT PHÂN QUYỀN', action: 'BYPASS_RBAC' },
+    { label: 'THỬ SỬA TỶ LỆ VỐN', action: 'ALTER_OWNERSHIP' },
   ];
 
   const safetyActionsRow2: { label: string; action: AISafetyActionType }[] = [
-    { label: 'TEST AUTO-PAYMENT', action: 'AUTHORIZE_PAYMENT' },
-    { label: 'TEST AUTO-SIGN', action: 'APPROVE_CONTRACT' },
-    { label: 'TEST VOTE OVERRIDE', action: 'OVERRIDE_VOTING_RULES' },
+    { label: 'THỬ TỰ THANH TOÁN', action: 'AUTHORIZE_PAYMENT' },
+    { label: 'THỬ TỰ KÝ SỐ', action: 'APPROVE_CONTRACT' },
+    { label: 'THỬ ĐÈ BIỂU QUYẾT', action: 'OVERRIDE_VOTING_RULES' },
   ];
 
   return (
@@ -69,11 +69,11 @@ export const AITerminal3D: React.FC = () => {
             anchorY="middle"
             letterSpacing={0.08}
           >
-            AI INTERACTION &amp; SAFETY BOUNDARY CONSOLE
+            BÀN ĐIỀU KHIỂN TƯƠNG TÁC AI &amp; KHÓA AN TOÀN
           </Text>
           <Text
             position={[0, -0.16, 0]}
-            fontSize={0.09}
+            fontSize={0.085}
             color={modelStatus === 'NOT_AVAILABLE' ? '#f59e0b' : AI_LAYOUT.colors.goldWarning}
             anchorX="center"
             anchorY="middle"
@@ -81,7 +81,11 @@ export const AITerminal3D: React.FC = () => {
             maxWidth={3.8}
             textAlign="center"
           >
-            {disclosureNotice}
+            {disclosureNotice
+              .replace('STATUS: NOT_AVAILABLE (AI API UNCONFIGURED) — ADVISORY HEURISTICS ACTIVE', 'TRẠNG THÁI: CHƯA KÍCH HOẠT (CHƯA CẤU HÌNH API AI) — MÔ HÌNH SUY LUẬN TƯ VẤN ĐANG HOẠT ĐỘNG')
+              .replace('STATUS: NOT_AVAILABLE (NO DEDICATED AI SERVICE) — ADVISORY HEURISTICS ACTIVE', 'TRẠNG THÁI: CHƯA KÍCH HOẠT (KHÔNG CÓ DỊCH VỤ AI RIÊNG) — MÔ HÌNH SUY LUẬN TƯ VẤN ĐANG HOẠT ĐỘNG')
+              .replace('STATUS: ONLINE', 'TRẠNG THÁI: TRỰC TUYẾN')
+              .replace('ADVISORY ONLY', 'CHỈ MANG TÍNH TƯ VẤN')}
           </Text>
         </group>
 
@@ -94,7 +98,7 @@ export const AITerminal3D: React.FC = () => {
             anchorX="center"
             anchorY="middle"
           >
-            SELECT ADVISORY QUERY SYNTHESIS:
+            CHỌN YÊU CẦU TỔNG HỢP DỮ LIỆU TƯ VẤN:
           </Text>
           <group position={[0, -0.12, 0]}>
             {queryPrompts.map((p, idx) => {
@@ -137,8 +141,8 @@ export const AITerminal3D: React.FC = () => {
             lineHeight={1.3}
           >
             {isAnalyzing
-              ? 'SYNTHESIZING MOBILITY DATA NODES...'
-              : queryResult || 'SELECT A QUERY CHIP ABOVE TO RUN ADVISORY SYNTHESIS'}
+              ? 'ĐANG TỔNG HỢP DỮ LIỆU TỪ CÁC NÚT THÔNG TIN...'
+              : queryResult || 'CHỌN MỘT YÊU CẦU PHÍA TRÊN ĐỂ CHẠY PHÂN TÍCH TƯ VẤN'}
           </Text>
         </group>
 
@@ -152,7 +156,7 @@ export const AITerminal3D: React.FC = () => {
             anchorY="middle"
             letterSpacing={0.04}
           >
-            BR-AI-SAFE-01 BOUNDARY TEST (PROHIBITED AUTONOMOUS ACTIONS):
+            KIỂM TRA GIỚI HẠN BR-AI-SAFE-01 (CẤM CÁC HÀNH ĐỘNG TỰ ĐỘNG):
           </Text>
 
           {/* Row 1: Auth, RBAC, Ownership */}
@@ -204,13 +208,13 @@ export const AITerminal3D: React.FC = () => {
 
             <Text
               position={[0, 0.65, 0.02]}
-              fontSize={0.13}
+              fontSize={0.12}
               color={AI_LAYOUT.colors.safetyCrimson}
               anchorX="center"
               anchorY="middle"
               letterSpacing={0.06}
             >
-              ⚠ HARD SAFETY INTERLOCK ACTIVATED (BR-AI-SAFE-01)
+              ⚠ KÍCH HOẠT KHÓA BẢO VỆ CỨNG (BR-AI-SAFE-01)
             </Text>
 
             <Text
@@ -220,7 +224,18 @@ export const AITerminal3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              {`ATTEMPTED: ${lastBlockedAttempt.actionLabel}`}
+              {`HÀNH ĐỘNG BỊ CHẶN: ${(() => {
+                const map: Record<string, string> = {
+                  'Bypass User Authentication / Identity Verification': 'Bỏ qua Xác thực Người dùng / Định danh',
+                  'Bypass Role-Based Access Control (RBAC)': 'Bỏ qua Phân quyền Dựa trên Vai trò (RBAC)',
+                  'Alter Member Ownership / Equity Shares': 'Thay đổi Cổ phần Sở hữu Thành viên',
+                  'Authorize Direct Payment / Fund Withdrawal': 'Tự động Thanh toán / Rút Tiền Quỹ',
+                  'Execute / Sign Digital Contract': 'Tự động Thực thi / Ký Hợp đồng Số',
+                  'Override Syndicate Voting Rules / Quorum': 'Can thiệp Quy tắc Biểu quyết / Túc số Nhóm',
+                  'Irreversible Financial Commitment': 'Cam kết Tài chính Không thể Hoàn tác',
+                };
+                return map[lastBlockedAttempt.actionLabel] || lastBlockedAttempt.actionLabel;
+              })()}`}
             </Text>
 
             <Text
@@ -233,7 +248,18 @@ export const AITerminal3D: React.FC = () => {
               textAlign="center"
               lineHeight={1.3}
             >
-              {lastBlockedAttempt.blockedReason}
+              {(() => {
+                const map: Record<string, string> = {
+                  BYPASS_AUTHENTICATION: 'VI PHẠM: Thuật toán AI không thể giả mạo hoặc thay thế thông tin xác thực mật mã hoặc token JWT của người dùng. Xác thực bắt buộc do tầng an ninh nền tảng quản lý.',
+                  BYPASS_RBAC: 'VI PHẠM: Chính sách an ninh mật mã không thể bị ghi đè bởi thuật toán dự đoán. Mã ủy quyền phải bắt nguồn từ hệ thống xác thực Keycloak/JWT.',
+                  ALTER_OWNERSHIP: 'VI PHẠM: AI không thể chỉnh sửa bảng phân bổ cổ phần sở hữu nhóm. Mọi thay đổi cổ phần đòi hỏi biểu quyết chính thức tại Phòng Biểu Quyết (BR-VOT-01).',
+                  AUTHORIZE_PAYMENT: 'VI PHẠM: AI chỉ có chức năng cố vấn. Các giao dịch tài chính đòi hỏi xác thực sinh trắc học 2 lớp trực tiếp từ đồng sở hữu tại Trung tâm Tài chính (BR-FIN-03).',
+                  APPROVE_CONTRACT: 'VI PHẠM: Thỏa thuận pháp lý yêu cầu chữ ký số cá nhân và chuỗi băm mật mã xác thực tại Phòng Hợp Đồng Số (BR-CON-02).',
+                  OVERRIDE_VOTING_RULES: 'VI PHẠM: AI không thể bỏ phiếu, không thể vượt qua yêu cầu túc số 60.00% hoặc ghi đè ngưỡng đồng thuận dân chủ. Kết quả AI chỉ mang tính tham khảo.',
+                  IRREVERSIBLE_FINANCIAL_ACTION: 'VI PHẠM: Tái cân bằng quỹ dự phòng hoặc thoái vốn không thể thực hiện tự động bởi AI. Đòi hỏi xác nhận túc số từ các đồng sở hữu.',
+                };
+                return map[lastBlockedAttempt.attemptedAction] || lastBlockedAttempt.blockedReason;
+              })()}
             </Text>
 
             <Text
@@ -243,7 +269,18 @@ export const AITerminal3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              {`REQUIRED AUTHORITY: ${lastBlockedAttempt.requiredAuthority}`}
+              {`QUYỀN HẠN YÊU CẦU: ${(() => {
+                const map: Record<string, string> = {
+                  'CRYPTOGRAPHIC_USER_CREDENTIALS_AND_JWT': 'THÔNG TIN MẬT MÃ NGƯỜI DÙNG & TOKEN JWT',
+                  'PLATFORM_SECURITY_ADMINISTRATOR': 'QUẢN TRỊ VIÊN AN NINH NỀN TẢNG',
+                  'SYNDICATE_PARLIAMENTARY_CONSENSUS (75% SUPERMAJORITY)': 'ĐỒNG THUẬN BIỂU QUYẾT NHÓM (ĐA SỐ ĐẶC BIỆT 75%)',
+                  'HUMAN_CO_OWNER_BIOMETRIC_SIGNATURE': 'CHỮ KÝ SINH TRẮC HỌC CỦA ĐỒNG SỞ HỮU',
+                  'AUTHENTICATED_CO_OWNER_LEGAL_SIGNATURE': 'CHỮ KÝ PHÁP LÝ ĐƯỢC XÁC THỰC CỦA ĐỒNG SỞ HỮU',
+                  'DEMOCRATIC_CO_OWNER_BALLOT_QUORUM': 'TÚC SỐ BỎ PHIẾU DÂN CHỦ CỦA ĐỒNG SỞ HỮU',
+                  'SYNDICATE_CO_OWNERS_QUORUM_APPROVAL': 'PHÊ DUYỆT TÚC SỐ ĐỒNG SỞ HỮU NHÓM',
+                };
+                return map[lastBlockedAttempt.requiredAuthority] || lastBlockedAttempt.requiredAuthority;
+              })()}`}
             </Text>
 
             {/* Dismiss Button in Pure 3D */}
@@ -255,11 +292,11 @@ export const AITerminal3D: React.FC = () => {
               }}
             >
               <mesh position={[0, 0, 0]}>
-                <planeGeometry args={[1.8, 0.25]} />
+                <planeGeometry args={[2.0, 0.25]} />
                 <meshStandardMaterial color="#2d0a0e" roughness={0.4} metalness={0.6} />
               </mesh>
               <lineSegments position={[0, 0, 0.005]}>
-                <edgesGeometry args={[new THREE.PlaneGeometry(1.8, 0.25)]} />
+                <edgesGeometry args={[new THREE.PlaneGeometry(2.0, 0.25)]} />
                 <lineBasicMaterial color={AI_LAYOUT.colors.safetyCrimson} />
               </lineSegments>
               <Text
@@ -269,7 +306,7 @@ export const AITerminal3D: React.FC = () => {
                 anchorX="center"
                 anchorY="middle"
               >
-                [ ACKNOWLEDGE SAFETY BOUNDARY ]
+                [ XÁC NHẬN GIỚI HẠN AN TOÀN ]
               </Text>
             </group>
           </group>

@@ -195,22 +195,22 @@ export const HydraulicLift3D: React.FC = () => {
           {/* Header */}
           <Text
             position={[0, 0.22, 0.06]}
-            fontSize={0.055}
+            fontSize={0.046}
             color={WORKSHOP_THEME.secondary}
             anchorX="center"
             anchorY="middle"
-            letterSpacing={0.05}
+            letterSpacing={0.03}
           >
-            HYDRAULIC LIFT CONTROLLER
+            ĐIỀU KHIỂN CẦU NÂNG THỦY LỰC
           </Text>
           <Text
             position={[0, 0.12, 0.06]}
-            fontSize={0.045}
+            fontSize={0.044}
             color="#94a3b8"
             anchorX="center"
             anchorY="middle"
           >
-            HEIGHT: {liftHeight.toFixed(2)}M • 220 BAR
+            CHIỀU CAO: {liftHeight.toFixed(2)}M • 220 BAR
           </Text>
 
           {/* Button 1: Elevate */}
@@ -240,12 +240,12 @@ export const HydraulicLift3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.025]}
-              fontSize={0.05}
+              fontSize={0.046}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              ▲ ELEVATE (1.80M)
+              ▲ NÂNG LÊN (1,80M)
             </Text>
           </group>
 
@@ -276,12 +276,12 @@ export const HydraulicLift3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.025]}
-              fontSize={0.05}
+              fontSize={0.046}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              ▼ LOWER (0.20M)
+              ▼ HẠ XUỐNG (0,20M)
             </Text>
           </group>
         </group>

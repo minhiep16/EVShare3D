@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import { useBookingStore } from './useBookingStore';
 import { BOOKING_CHAMBER_THEME } from './bookingLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND } from '@/i18n';
 
 export const TimeSelector3D: React.FC = () => {
   const startHour = useBookingStore((s) => s.startHour);
@@ -20,10 +21,10 @@ export const TimeSelector3D: React.FC = () => {
   const { CHRONO_CYAN, AVAILABLE_GREEN, CONFLICT_RED } = BOOKING_CHAMBER_THEME;
 
   const presets = [
-    { label: '2 HOURS', hours: 2 },
-    { label: '4 HOURS', hours: 4 },
-    { label: '8 HOURS', hours: 8 },
-    { label: 'FULL DAY', hours: 14 },
+    { label: '2 GIỜ', hours: 2 },
+    { label: '4 GIỜ', hours: 4 },
+    { label: '8 GIỜ', hours: 8 },
+    { label: 'CẢ NGÀY', hours: 14 },
   ];
 
   return (
@@ -33,7 +34,7 @@ export const TimeSelector3D: React.FC = () => {
         {/* Start Hour Stepper */}
         <group position={[-1.25, 0, 0]}>
           <Text position={[0, 0.16, 0.02]} fontSize={0.075} color="#94a3b8" anchorX="center" anchorY="middle">
-            START TIME:
+            GIỜ BẮT ĐẦU:
           </Text>
           <group position={[0, -0.05, 0]}>
             {/* Dec button */}
@@ -93,7 +94,7 @@ export const TimeSelector3D: React.FC = () => {
         {/* End Hour Stepper */}
         <group position={[1.25, 0, 0]}>
           <Text position={[0, 0.16, 0.02]} fontSize={0.075} color="#94a3b8" anchorX="center" anchorY="middle">
-            RETURN TIME:
+            GIỜ TRẢ XE:
           </Text>
           <group position={[0, -0.05, 0]}>
             {/* Dec button */}
@@ -193,15 +194,15 @@ export const TimeSelector3D: React.FC = () => {
       <group position={[0, -0.1, 0.02]}>
         {isCheckingAvailability ? (
           <Text fontSize={0.08} color="#f59e0b" anchorX="center" anchorY="middle">
-            {'VERIFYING AVAILABILITY & TURNAROUND BUFFER...'}
+            {'ĐANG KIỂM TRA TÍNH KHẢ DỤNG & KHOẢNG ĐỆM HOÀN TRẢ...'}
           </Text>
         ) : isSlotAvailable ? (
-          <Text fontSize={0.085} color={AVAILABLE_GREEN} anchorX="center" anchorY="middle">
-            {`SLOT VERIFIED AVAILABLE • ${durationHours}H TOTAL • EST: ${(estimatedCostVnd || 0).toLocaleString()} VND`}
+          <Text fontSize={0.08} color={AVAILABLE_GREEN} anchorX="center" anchorY="middle">
+            {`KHUNG GIỜ HỢP LỆ • TỔNG ${durationHours} GIỜ • PHÍ ƯỚC TÍNH: ${formatCurrencyVND(estimatedCostVnd || 0)}`}
           </Text>
         ) : (
           <Text fontSize={0.075} color={CONFLICT_RED} anchorX="center" anchorY="middle">
-            {conflictReason || 'UNAVAILABLE: Turnaround buffer conflict or existing booking'}
+            {conflictReason || 'KHÔNG KHẢ DỤNG: Xung đột khoảng đệm 30 phút hoặc đã có người đặt'}
           </Text>
         )}
       </group>
@@ -222,7 +223,7 @@ export const TimeSelector3D: React.FC = () => {
             <meshStandardMaterial color="#334155" />
           </mesh>
           <Text position={[0, 0, 0.02]} fontSize={0.075} color="#cbd5e1" anchorX="center" anchorY="middle">
-            {'◄ CALENDAR'}
+            {'◄ LỊCH XE'}
           </Text>
         </group>
 
@@ -247,13 +248,13 @@ export const TimeSelector3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.08}
+            fontSize={0.075}
             color={isSlotAvailable ? '#ffffff' : '#64748b'}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {'REVIEW & CONFIRM ►'}
+            {'XEM & XÁC NHẬN ►'}
           </Text>
         </group>
       </group>

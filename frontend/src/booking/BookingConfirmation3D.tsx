@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import { useBookingStore } from './useBookingStore';
 import { BOOKING_CHAMBER_THEME } from './bookingLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND, formatDateVN } from '@/i18n';
 
 export const BookingConfirmation3D: React.FC = () => {
   const vehicles = useBookingStore((s) => s.vehicles);
@@ -32,13 +33,13 @@ export const BookingConfirmation3D: React.FC = () => {
       <group position={[0, 1.25, 0]}>
         <Text
           position={[0, 0, 0]}
-          fontSize={0.13}
+          fontSize={0.125}
           color={CHRONO_CYAN}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          CONFIRM VEHICLE RESERVATION
+          XÁC NHẬN ĐẶT LỊCH SỬ DỤNG XE
         </Text>
         <Text
           position={[0, -0.16, 0]}
@@ -47,7 +48,7 @@ export const BookingConfirmation3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          Review scheduled interval, turnaround buffer, and syndicate billing authorization
+          Kiểm tra khung giờ nhận/trả xe, khoảng đệm hoàn trả và ủy quyền thanh toán
         </Text>
       </group>
 
@@ -55,7 +56,7 @@ export const BookingConfirmation3D: React.FC = () => {
       <group position={[-1.75, 0.75, 0.02]}>
         {/* Row 1: Vehicle */}
         <Text position={[0, 0, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          VEHICLE TARGET:
+          XE ĐÃ CHỌN:
         </Text>
         <Text position={[1.4, 0, 0]} fontSize={0.085} color="#ffffff" anchorX="left" anchorY="middle">
           {`${vehicle.manufacturer} ${vehicle.modelName} (${vehicle.licensePlate})`}
@@ -63,31 +64,31 @@ export const BookingConfirmation3D: React.FC = () => {
 
         {/* Row 2: Date */}
         <Text position={[0, -0.18, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          RESERVATION DATE:
+          NGÀY SỬ DỤNG:
         </Text>
         <Text position={[1.4, -0.18, 0]} fontSize={0.085} color={CHRONO_CYAN} anchorX="left" anchorY="middle">
-          {selectedDate}
+          {formatDateVN(selectedDate)}
         </Text>
 
         {/* Row 3: Time Interval */}
         <Text position={[0, -0.36, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          ACCESS WINDOW:
+          KHUNG GIỜ TRUY CẬP:
         </Text>
         <Text position={[1.4, -0.36, 0]} fontSize={0.085} color="#f8fafc" anchorX="left" anchorY="middle">
-          {`${startTimeStr} – ${endTimeStr} (${durationHours} Hours)`}
+          {`${startTimeStr} – ${endTimeStr} (${durationHours} Giờ)`}
         </Text>
 
         {/* Row 4: Mandatory Buffer Notice */}
         <Text position={[0, -0.54, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          TURNAROUND BUFFER:
+          KHOẢNG ĐỆM HOÀN TRẢ:
         </Text>
         <Text position={[1.4, -0.54, 0]} fontSize={0.075} color={BUFFER_PURPLE} anchorX="left" anchorY="middle">
-          {`Enforced to ${bufferTimeStr} (+30m cleaning/inspection)`}
+          {`Áp dụng đến ${bufferTimeStr} (+30 phút vệ sinh/kiểm tra)`}
         </Text>
 
         {/* Row 5: Estimated Cost */}
         <Text position={[0, -0.72, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          ESTIMATED CHARGE:
+          PHÍ ƯỚC TÍNH:
         </Text>
         <Text
           position={[1.4, -0.72, 0]}
@@ -97,12 +98,12 @@ export const BookingConfirmation3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          {`${(estimatedCostVnd || 0).toLocaleString()} VND`}
+          {formatCurrencyVND(estimatedCostVnd || 0)}
         </Text>
 
         {/* Row 6: Syndicate */}
         <Text position={[0, -0.9, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          SYNDICATE GROUP:
+          NHÓM ĐỒNG SỞ HỮU:
         </Text>
         <Text position={[1.4, -0.9, 0]} fontSize={0.08} color="#94a3b8" anchorX="left" anchorY="middle">
           {vehicle.groupName}
@@ -132,7 +133,7 @@ export const BookingConfirmation3D: React.FC = () => {
             <meshStandardMaterial color="#334155" />
           </mesh>
           <Text position={[0, 0, 0.02]} fontSize={0.075} color="#cbd5e1" anchorX="center" anchorY="middle">
-            {'◄ ADJUST TIME'}
+            {'◄ CHỈNH SỬA GIỜ'}
           </Text>
         </group>
 
@@ -157,13 +158,13 @@ export const BookingConfirmation3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.03]}
-            fontSize={0.085}
+            fontSize={0.08}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            {isSubmitting ? 'CONFIRMING...' : '⚡ CONFIRM RESERVATION'}
+            {isSubmitting ? 'ĐANG XỬ LÝ...' : '⚡ XÁC NHẬN ĐẶT XE'}
           </Text>
         </group>
       </group>

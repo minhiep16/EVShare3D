@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text } from '@react-three/drei';
 import { useDisputeStore } from './useDisputeStore';
 import { DISPUTE_THEME, DISPUTE_STATIONS } from './disputeLayout';
+import { formatStatusVN } from '@/i18n';
 
 export const StaffMediationConsole3D: React.FC = () => {
   const {
@@ -27,13 +28,12 @@ export const StaffMediationConsole3D: React.FC = () => {
       {/* Station Header */}
       <Text
         position={[0, 3.2, 0]}
-        fontSize={0.22}
+        fontSize={0.2}
         color={DISPUTE_THEME.secondary}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        STAFF MEDIATION & REVIEW CONSOLE
+        BÀN HÒA GIẢI & ĐÁNH GIÁ CỦA NHÂN VIÊN
       </Text>
       <Text
         position={[0, 2.94, 0]}
@@ -42,7 +42,7 @@ export const StaffMediationConsole3D: React.FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        Dispute Investigation • Factual Notes • Settlement Proposals
+        Điều tra tranh chấp • Ghi chú sự thật • Đề xuất hòa giải
       </Text>
 
       {/* Desk Base Structure */}
@@ -95,14 +95,14 @@ export const StaffMediationConsole3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.062}
+            fontSize={0.056}
             color={isAuthorized ? '#86efac' : '#fca5a5'}
             anchorX="center"
             anchorY="middle"
           >
             {isAuthorized
-              ? `✓ AUTHORIZED MEDIATOR: Active Session (${userRole})`
-              : `🔒 RBAC RESTRICTION: ROLE_STAFF or ROLE_ADMIN Required (Current: ${userRole})`}
+              ? `✓ HÒA GIẢI VIÊN ĐƯỢC ỦY QUYỀN: Phiên hoạt động (${userRole})`
+              : `🔒 HẠN CHẾ RBAC: Yêu cầu ROLE_STAFF hoặc ROLE_ADMIN (Hiện tại: ${userRole})`}
           </Text>
         </group>
 
@@ -110,22 +110,22 @@ export const StaffMediationConsole3D: React.FC = () => {
         <group position={[-1.35, 0.62, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={DISPUTE_THEME.cyberCyan}
             anchorX="left"
             anchorY="middle"
           >
-            CASE #{activeDispute.id}: {activeDispute.title.slice(0, 48)}...
+            VỤ VIỆC #{activeDispute.id}: {activeDispute.title.slice(0, 48)}...
           </Text>
           <Text
             position={[0, -0.12, 0]}
-            fontSize={0.06}
+            fontSize={0.056}
             color={DISPUTE_THEME.textMuted}
             anchorX="left"
             anchorY="middle"
           >
-            Complainant: {activeDispute.complainantUserName} vs Respondent:{' '}
-            {activeDispute.respondentUserName} • Status: {activeDispute.status}
+            Nguyên đơn: {activeDispute.complainantUserName} vs Bị đơn:{' '}
+            {activeDispute.respondentUserName} • Trạng thái: {formatStatusVN(activeDispute.status)}
           </Text>
         </group>
 
@@ -133,12 +133,12 @@ export const StaffMediationConsole3D: React.FC = () => {
         <group position={[-1.35, 0.28, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.07}
+            fontSize={0.066}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            Mediation Log & Evidence Notes:
+            Nhật ký hòa giải & Ghi chú chứng cứ:
           </Text>
 
           {/* Notes display frame */}
@@ -148,7 +148,7 @@ export const StaffMediationConsole3D: React.FC = () => {
           </mesh>
           <Text
             position={[0.08, -0.18, 0.02]}
-            fontSize={0.056}
+            fontSize={0.054}
             color="#f1f5f9"
             anchorX="left"
             anchorY="middle"
@@ -165,7 +165,7 @@ export const StaffMediationConsole3D: React.FC = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   setStaffNotesInput(
-                    'Telematics analysis confirms speed/impact anomaly matching physical scratch timestamp.'
+                    'Dữ liệu viễn thông xác nhận va chạm/tốc độ bất thường khớp với thời điểm trầy xước.'
                   );
                 }}
                 onPointerOver={() => setHoveredBtn('note-telematics')}
@@ -181,12 +181,12 @@ export const StaffMediationConsole3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.048}
+                  fontSize={0.046}
                   color={DISPUTE_THEME.secondary}
                   anchorX="center"
                   anchorY="middle"
                 >
-                  [ + Telematics Verified ]
+                  [ + Xác nhận viễn thông ]
                 </Text>
               </group>
 
@@ -214,12 +214,12 @@ export const StaffMediationConsole3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.054}
+                  fontSize={0.052}
                   color="#ffffff"
                   anchorX="center"
                   anchorY="middle"
                 >
-                  [ 📝 RECORD NOTES ]
+                  [ 📝 GHI NHẬN BIÊN BẢN ]
                 </Text>
               </group>
             </group>
@@ -230,12 +230,12 @@ export const StaffMediationConsole3D: React.FC = () => {
         <group position={[-1.35, -0.26, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.07}
+            fontSize={0.066}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            Proposed Resolution / Settlement Terms:
+            Đề xuất phương án hòa giải / Thỏa thuận:
           </Text>
 
           {/* Proposed resolution display frame */}
@@ -245,7 +245,7 @@ export const StaffMediationConsole3D: React.FC = () => {
           </mesh>
           <Text
             position={[0.08, -0.16, 0.02]}
-            fontSize={0.056}
+            fontSize={0.054}
             color="#f1f5f9"
             anchorX="left"
             anchorY="middle"
@@ -262,7 +262,7 @@ export const StaffMediationConsole3D: React.FC = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   setProposedResolutionInput(
-                    'Parties agree 50/50 split of 500,000 VND bumper repair fee via SharedFund.'
+                    'Hai bên thống nhất phân chia 50/50 chi phí sửa chữa 500.000 đ qua quỹ chung.'
                   );
                 }}
                 onPointerOver={() => setHoveredBtn('split-50')}
@@ -276,12 +276,12 @@ export const StaffMediationConsole3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.048}
+                  fontSize={0.046}
                   color={DISPUTE_THEME.secondary}
                   anchorX="center"
                   anchorY="middle"
                 >
-                  [ 50/50 Shared Split ]
+                  [ Phân chia 50/50 ]
                 </Text>
               </group>
 
@@ -309,12 +309,12 @@ export const StaffMediationConsole3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.054}
+                  fontSize={0.052}
                   color="#ffffff"
                   anchorX="center"
                   anchorY="middle"
                 >
-                  [ 🤝 PROPOSE RESOLUTION ]
+                  [ 🤝 GỬI ĐỀ XUẤT HÒA GIẢI ]
                 </Text>
               </group>
             </group>
@@ -357,12 +357,12 @@ export const StaffMediationConsole3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.07}
+              fontSize={0.062}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ⚖ ESCALATE DISPUTE TO FORMAL ADMIN ARBITRATION ]
+              [ ⚖ CHUYỂN TRANH CHẤP LÊN TRỌNG TÀI TỐI CAO ]
             </Text>
           </group>
         </group>

@@ -35,32 +35,32 @@ export const DisputeRoom3D: React.FC<DisputeRoom3DProps> = ({
   const cameraButtons = [
     {
       key: 'CHAMBER_OVERVIEW',
-      label: 'CHAMBER OVERVIEW',
+      label: 'TỔNG QUAN',
       preset: DISPUTE_CAMERA_PRESETS.CHAMBER_OVERVIEW,
     },
     {
       key: 'CRYSTAL_FOCUS',
-      label: 'DISPUTE CRYSTAL',
+      label: 'TINH THỂ',
       preset: DISPUTE_CAMERA_PRESETS.CRYSTAL_FOCUS,
     },
     {
       key: 'HOLOTANK_FOCUS',
-      label: 'DEFECT HOLOTANK',
+      label: 'BỂ ẢNH 3D',
       preset: DISPUTE_CAMERA_PRESETS.HOLOTANK_FOCUS,
     },
     {
       key: 'EVIDENCE_FOCUS',
-      label: 'EVIDENCE CAROUSEL',
+      label: 'CHỨNG CỨ',
       preset: DISPUTE_CAMERA_PRESETS.EVIDENCE_FOCUS,
     },
     {
       key: 'STAFF_CONSOLE_FOCUS',
-      label: 'STAFF MEDIATION',
+      label: 'HÒA GIẢI',
       preset: DISPUTE_CAMERA_PRESETS.STAFF_CONSOLE_FOCUS,
     },
     {
       key: 'ADMIN_DAIS_FOCUS',
-      label: 'ADMIN DAIS',
+      label: 'TRỌNG TÀI',
       preset: DISPUTE_CAMERA_PRESETS.ADMIN_DAIS_FOCUS,
     },
   ];
@@ -83,6 +83,38 @@ export const DisputeRoom3D: React.FC<DisputeRoom3DProps> = ({
   };
 
   const activeNotice = rbacViolationNotice || errorMessage || feedbackMessage;
+
+  const translateDisputeNotice = (notice: string | null): string => {
+    if (!notice) return '';
+    if (notice.includes('SOVEREIGN ARBITRATION LOCKOUT')) {
+      return 'KHÓA TRỌNG TÀI TỐI CAO (403): Chỉ Quản trị viên (ROLE_ADMIN) mới có quyền ra phán quyết ràng buộc.';
+    }
+    if (notice.includes('ROLE_STAFF or ROLE_ADMIN')) {
+      return 'HẠN CHẾ QUYỀN TRUY CẬP (RBAC): Cần vai trò Nhân viên sàn hoặc Quản trị viên để hòa giải.';
+    }
+    if (notice.includes('ROLE_ADMIN Required') || notice.includes('requires ROLE_ADMIN')) {
+      return 'HẠN CHẾ QUYỀN TRUY CẬP (RBAC): Cần vai trò Quản trị viên (ROLE_ADMIN) để thực thi phán quyết.';
+    }
+    if (notice.includes('DISPUTE ESCALATED')) {
+      return 'TRANH CHẤP ĐÃ LEO THANG: Chuyển lên Bục trọng tài tối cao để phân xử chung thẩm.';
+    }
+    if (notice.includes('ARBITRATION COMPLETE')) {
+      return 'PHÁN QUYẾT HOÀN TẤT: Phán quyết chung thẩm đã thi hành & điều chỉnh quỹ thành công.';
+    }
+    if (notice.includes('Mediation review notes recorded')) {
+      return 'ĐÃ GHI NHẬN BIÊN BẢN: Ghi chú đánh giá của hòa giải viên đã được lưu.';
+    }
+    if (notice.includes('registered successfully')) {
+      return 'ĐÃ ĐĂNG KÝ HỒ SƠ: Tranh chấp đã được ghi nhận vào hệ thống thành công.';
+    }
+    if (notice.includes('attached with 3D defect coordinates')) {
+      return 'ĐÃ ĐÍNH KÈM CHỨNG CỨ: Tọa độ điểm hỏng 3D đã được đồng bộ lên bể ảnh.';
+    }
+    if (notice.includes('Staff Mediation Docket: Loaded')) {
+      return notice.replace('Staff Mediation Docket: Loaded', 'Sổ thụ lý hòa giải: Đã nạp').replace('disputes', 'vụ việc.');
+    }
+    return notice;
+  };
 
   return (
     <group name="DisputeRoomSector" position={position}>
@@ -177,13 +209,13 @@ export const DisputeRoom3D: React.FC<DisputeRoom3DProps> = ({
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.11}
+            fontSize={0.095}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
             maxWidth={6.9}
           >
-            {activeNotice}
+            {translateDisputeNotice(activeNotice)}
           </Text>
         </group>
       )}
@@ -209,12 +241,12 @@ export const DisputeRoom3D: React.FC<DisputeRoom3DProps> = ({
         <group position={[0, 0.28, 0.02]}>
           <Text
             position={[-4.1, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={DISPUTE_THEME.primary}
             anchorX="left"
             anchorY="middle"
           >
-            STATION TELEPORT:
+            CHUYỂN VỊ TRÍ:
           </Text>
 
           {cameraButtons.map((btn, idx) => {
@@ -235,19 +267,19 @@ export const DisputeRoom3D: React.FC<DisputeRoom3DProps> = ({
         <group position={[0, -0.28, 0.02]}>
           <Text
             position={[-4.1, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            RBAC SIMULATED IDENTITY:
+            GIẢ LẬP VAI TRÒ (RBAC):
           </Text>
 
           {(
             [
-              { role: 'ROLE_CO_OWNER', label: '👤 CO-OWNER (ALICE)' },
-              { role: 'ROLE_STAFF', label: '🛠 PLATFORM STAFF' },
-              { role: 'ROLE_ADMIN', label: '👑 SUPREME ADMIN' },
+              { role: 'ROLE_CO_OWNER', label: '👤 ĐỒNG SỞ HỮU' },
+              { role: 'ROLE_STAFF', label: '🛠 NHÂN VIÊN SÀN' },
+              { role: 'ROLE_ADMIN', label: '👑 QUẢN TRỊ VIÊN' },
             ] as const
           ).map((item, idx) => {
             const isCurrent = userRole === item.role;

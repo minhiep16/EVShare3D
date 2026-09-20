@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import type { ExpenseItemModel } from './financeTypes';
 import { CATEGORY_CONFIGS } from './financeTypes';
 import { useFinanceStore } from './useFinanceStore';
+import { formatCurrencyVND } from '@/i18n';
 
 interface FloatingExpenseCrystal3DProps {
   expense: ExpenseItemModel;
@@ -148,13 +149,13 @@ export const FloatingExpenseCrystal3D: React.FC<FloatingExpenseCrystal3DProps> =
                   </Text>
                   <Text
                     position={[0, -0.12, 0]}
-                    fontSize={0.08}
+                    fontSize={0.075}
                     color={alloc.isPaid ? '#00e676' : '#ffab00'}
                     anchorX="center"
                     anchorY="middle"
                     font="/fonts/JetBrainsMono-Bold.ttf"
                   >
-                    {`${alloc.allocatedAmountVnd.toLocaleString()} ₫`}
+                    {formatCurrencyVND(alloc.allocatedAmountVnd)}
                   </Text>
                   <Text
                     position={[0, -0.22, 0]}
@@ -163,7 +164,7 @@ export const FloatingExpenseCrystal3D: React.FC<FloatingExpenseCrystal3DProps> =
                     anchorX="center"
                     anchorY="middle"
                   >
-                    {alloc.isPaid ? 'PAID' : 'DUE'}
+                    {alloc.isPaid ? 'ĐÃ TRẢ' : 'CÒN NỢ'}
                   </Text>
                 </group>
               </group>
@@ -209,25 +210,25 @@ export const FloatingExpenseCrystal3D: React.FC<FloatingExpenseCrystal3DProps> =
         {/* Amount */}
         <Text
           position={[0, -0.04, 0]}
-          fontSize={0.11}
+          fontSize={0.105}
           color={config.color}
           anchorX="center"
           anchorY="middle"
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
-          {`${expense.amountVnd.toLocaleString()} VND`}
+          {formatCurrencyVND(expense.amountVnd)}
         </Text>
 
         {/* Settlement status tag */}
         <Text
           position={[0, -0.16, 0]}
-          fontSize={0.075}
+          fontSize={0.068}
           color={expense.isSettled ? '#00e676' : '#ffab00'}
           anchorX="center"
           anchorY="middle"
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
-          {expense.isSettled ? '● ALL SETTLED' : isSelected ? '▼ SPLIT VIEW (CLICK TO CLOSE)' : '● UNSETTLED (CLICK TO SPLIT)'}
+          {expense.isSettled ? '● ĐÃ THANH TOÁN ĐỦ' : isSelected ? '▼ XEM PHÂN BỔ (BẤM ĐÓNG)' : '● CHƯA THANH TOÁN (BẤM XEM)'}
         </Text>
       </group>
     </group>

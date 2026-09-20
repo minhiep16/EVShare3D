@@ -40,32 +40,32 @@ export const AI_LAYOUT = {
 
   cameraPresets: {
     NEXUS_OVERVIEW: {
-      name: 'Neural Nexus Overview',
+      name: 'Toàn Cảnh Trung Tâm Nơ-ron',
       position: [0, 6.5, 9.8],
       target: [0, 2.0, 0],
     } as AICameraPreset,
     CORE_FOCUS: {
-      name: 'AI Core Holosphere',
+      name: 'Lõi Toàn Ảnh AI',
       position: [0, 2.8, 4.2],
       target: [0, 2.5, 0],
     } as AICameraPreset,
     TERMINAL_FOCUS: {
-      name: 'Advisory Interaction Console',
+      name: 'Bàn Tương Tác Cố Vấn',
       position: [0, 2.2, 4.8],
       target: [0, 1.1, 3.2],
     } as AICameraPreset,
     HOLOGRAPHIC_RECOMMENDATIONS: {
-      name: 'Recommendation Holograms',
+      name: 'Khuyến Nghị Toàn Ảnh',
       position: [0, 3.0, -0.6],
       target: [0, 2.2, -3.2],
     } as AICameraPreset,
     DATA_NODES_FOCUS: {
-      name: 'Satellite Data Nodes',
+      name: 'Nút Dữ Liệu Vệ Tinh',
       position: [3.8, 3.2, 2.0],
       target: [2.5, 2.2, -0.5],
     } as AICameraPreset,
     SAFETY_AUDIT_FOCUS: {
-      name: 'Safety Boundary Interlocks',
+      name: 'Khóa Bảo Vệ Ranh Giới An Toàn',
       position: [-3.8, 3.2, 2.0],
       target: [-2.5, 2.2, -0.5],
     } as AICameraPreset,

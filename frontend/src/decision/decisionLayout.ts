@@ -36,32 +36,32 @@ export const DECISION_LAYOUT = {
 
   cameraPresets: {
     ARENA_OVERVIEW: {
-      name: 'Arena Overview',
+      name: 'Toàn Cảnh Đấu Trường',
       position: [0, 6.8, 9.8],
       target: [0, 1.2, -1.8],
     } as DecisionCameraPreset,
     TERMINAL_FOCUS: {
-      name: 'Voting Terminal',
+      name: 'Bàn Biểu Quyết',
       position: [0, 2.3, 3.6],
       target: [0, 1.1, 1.2],
     } as DecisionCameraPreset,
     PROPOSAL_PODS_FOCUS: {
-      name: 'Proposal Deliberation',
+      name: 'Thảo Luận Đề Xuất',
       position: [0, 3.2, 0.8],
       target: [0, 1.5, -3.2],
     } as DecisionCameraPreset,
     EQUITY_FOCUS: {
-      name: 'Member Equity Weight',
+      name: 'Trọng Số Cổ Phần Thành Viên',
       position: [-2.8, 3.0, 3.0],
       target: [-4.5, 1.4, -0.5],
     } as DecisionCameraPreset,
     QUORUM_RESULTS_FOCUS: {
-      name: 'Quorum Threshold',
+      name: 'Ngưỡng Túc Số Nghị Viện',
       position: [2.8, 3.0, 3.0],
       target: [4.5, 1.4, -0.5],
     } as DecisionCameraPreset,
     STELA_FOCUS: {
-      name: 'Authoritative Verdict',
+      name: 'Bia Phán Quyết Chính Thức',
       position: [0, 3.2, -2.2],
       target: [0, 2.2, -6.5],
     } as DecisionCameraPreset,

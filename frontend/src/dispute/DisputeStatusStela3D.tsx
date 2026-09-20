@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useDisputeStore } from './useDisputeStore';
 import { DISPUTE_THEME, DISPUTE_STATIONS } from './disputeLayout';
+import { formatStatusVN, formatCurrencyVND } from '@/i18n';
 
 export const DisputeStatusStela3D: React.FC = () => {
   const { activeDispute } = useDisputeStore();
@@ -41,13 +42,12 @@ export const DisputeStatusStela3D: React.FC = () => {
       {/* Stela Header Marker */}
       <Text
         position={[0, 4.4, 0]}
-        fontSize={0.24}
+        fontSize={0.21}
         color={statusColor}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        CHRONOLOGICAL AUDIT & RESOLUTION STELA
+        BIA ĐÁ KIỂM TOÁN LỊCH TRÌNH & PHÁN QUYẾT
       </Text>
       <Text
         position={[0, 4.12, 0]}
@@ -56,7 +56,7 @@ export const DisputeStatusStela3D: React.FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        Immutable Ledger Receipts • Cryptographic Event Ordering
+        Biên nhận sổ cái bất biến • Trình tự sự kiện mã hóa
       </Text>
 
       {/* Monolithic Obsidian Pillar Body */}
@@ -84,12 +84,12 @@ export const DisputeStatusStela3D: React.FC = () => {
         </mesh>
         <Text
           position={[0, 1.55, 0.02]}
-          fontSize={0.11}
+          fontSize={0.095}
           color={statusColor}
           anchorX="center"
           anchorY="middle"
         >
-          CURRENT STATUS: {activeDispute.status}
+          TRẠNG THÁI HIỆN TẠI: {formatStatusVN(activeDispute.status)}
         </Text>
 
         {/* Audit Event Timeline Entries */}
@@ -102,21 +102,21 @@ export const DisputeStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0.1, 0.04, 0]}
-              fontSize={0.062}
+              fontSize={0.06}
               color={DISPUTE_THEME.cyberCyan}
               anchorX="left"
               anchorY="middle"
             >
-              08:00 AM • DISPUTE FILED
+              08:00 • NỘP ĐƠN TRANH CHẤP
             </Text>
             <Text
               position={[0.1, -0.06, 0]}
-              fontSize={0.052}
+              fontSize={0.05}
               color="#e2e8f0"
               anchorX="left"
               anchorY="middle"
             >
-              Alice Owner filed claim against Bob Driver for Session #105.
+              {activeDispute.complainantUserName} nộp đơn khiếu nại {activeDispute.respondentUserName} cho Phiên #105.
             </Text>
           </group>
 
@@ -128,21 +128,21 @@ export const DisputeStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0.1, 0.04, 0]}
-              fontSize={0.062}
+              fontSize={0.06}
               color={DISPUTE_THEME.cyberCyan}
               anchorX="left"
               anchorY="middle"
             >
-              08:15 AM • DEFECT COORDINATES PINNED
+              08:15 • GHIM TỌA ĐỘ ĐIỂM HỎNG 3D
             </Text>
             <Text
               position={[0.1, -0.06, 0]}
-              fontSize={0.052}
+              fontSize={0.05}
               color="#e2e8f0"
               anchorX="left"
               anchorY="middle"
             >
-              2 immutable evidence files attached with 3D mesh defect coordinates.
+              2 tập tin chứng cứ bất biến được ghim kèm tọa độ điểm hỏng 3D thực tế.
             </Text>
           </group>
 
@@ -154,21 +154,21 @@ export const DisputeStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0.1, 0.04, 0]}
-              fontSize={0.062}
+              fontSize={0.06}
               color={DISPUTE_THEME.secondary}
               anchorX="left"
               anchorY="middle"
             >
-              08:30 AM • STAFF MEDIATION REVIEW
+              08:30 • NHÂN VIÊN ĐÁNH GIÁ HÒA GIẢI
             </Text>
             <Text
               position={[0.1, -0.06, 0]}
-              fontSize={0.052}
+              fontSize={0.05}
               color="#e2e8f0"
               anchorX="left"
               anchorY="middle"
             >
-              Factual telematics logs correlated; resolution terms proposed.
+              Đối chiếu dữ liệu viễn thông xe; đề xuất các điều khoản hòa giải.
             </Text>
           </group>
 
@@ -180,25 +180,25 @@ export const DisputeStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0.1, 0.04, 0]}
-              fontSize={0.062}
+              fontSize={0.06}
               color={statusColor}
               anchorX="left"
               anchorY="middle"
             >
-              LATEST LIFECYCLE EVENT: {activeDispute.status}
+              SỰ KIỆN VÒNG ĐỜI MỚI NHẤT: {formatStatusVN(activeDispute.status)}
             </Text>
             <Text
               position={[0.1, -0.06, 0]}
-              fontSize={0.052}
+              fontSize={0.05}
               color="#e2e8f0"
               anchorX="left"
               anchorY="middle"
             >
               {activeDispute.status === 'RESOLVED'
-                ? 'Binding arbitration concluded with atomic fund adjustment.'
+                ? 'Phán quyết chung thẩm đã hoàn tất kèm quyết toán quỹ tự động.'
                 : activeDispute.status === 'ESCALATED'
-                ? 'Case escalated to sovereign admin arbitration dais.'
-                : 'Case active in mediation review.'}
+                ? 'Vụ việc đã leo thang lên Bục trọng tài tối cao.'
+                : 'Vụ việc đang trong quá trình xem xét hòa giải.'}
             </Text>
           </group>
         </group>
@@ -216,16 +216,16 @@ export const DisputeStatusStela3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0.16, 0.02]}
-              fontSize={0.075}
+              fontSize={0.068}
               color="#6ee7b7"
               anchorX="center"
               anchorY="middle"
             >
-              ✓ FINAL BINDING ARBITRATION VERDICT
+              ✓ PHÁN QUYẾT TRỌNG TÀI RÀNG BUỘC CHUNG THẨM
             </Text>
             <Text
               position={[0, 0.02, 0.02]}
-              fontSize={0.056}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
@@ -235,13 +235,13 @@ export const DisputeStatusStela3D: React.FC = () => {
             </Text>
             <Text
               position={[0, -0.16, 0.02]}
-              fontSize={0.054}
+              fontSize={0.05}
               color={DISPUTE_THEME.secondary}
               anchorX="center"
               anchorY="middle"
             >
-              TxRef: {activeDispute.fundTransactionReference} • Amount:{' '}
-              {activeDispute.fundAdjustmentAmount?.toLocaleString()} VND
+              Mã giao dịch: {activeDispute.fundTransactionReference} • Số tiền:{' '}
+              {formatCurrencyVND(activeDispute.fundAdjustmentAmount || 0)}
             </Text>
           </group>
         )}

@@ -60,31 +60,42 @@ export const WorldAccessNotice3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
       >
-        SECURITY REJECTED
+        TỪ CHỐI TRUY CẬP AN NINH
       </Text>
 
       {/* Main Notice Message */}
       <Text
         position={[0, -0.05, 0.02]}
-        fontSize={0.15}
+        fontSize={0.14}
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
         font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
       >
-        {notice.message}
+        {(() => {
+          if (notice.message.includes('Biometric Authentication') || notice.message.includes('UNAUTHORIZED') || notice.message.includes('PERIMETER VIOLATION')) {
+            return 'VI PHẠM VÀNH ĐAI: Vui lòng hoàn tất xác thực sinh trắc học để vào Metaverse';
+          }
+          const roleVN: Record<string, string> = {
+            ROLE_CO_OWNER: 'ĐỒNG SỞ HỮU (ROLE_CO_OWNER)',
+            ROLE_STAFF: 'NHÂN VIÊN (ROLE_STAFF)',
+            ROLE_ADMIN: 'QUẢN TRỊ VIÊN (ROLE_ADMIN)',
+          };
+          const roleName = (notice.requiredRole && roleVN[notice.requiredRole]) || notice.requiredRole || 'CẤP ĐỘ CAO HƠN';
+          return `TRUY CẬP BỊ GIỚI HẠN: Khu vực yêu cầu quyền ${roleName}`;
+        })()}
       </Text>
 
       {/* Subtitle / Tip */}
       <Text
         position={[0, -0.32, 0.02]}
-        fontSize={0.12}
+        fontSize={0.11}
         color="#f87171"
         anchorX="center"
         anchorY="middle"
         font="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_ad56U.woff"
       >
-        CONTACT SECTOR ADMINISTRATOR FOR CREDENTIALS
+        LIÊN HỆ QUẢN TRỊ VIÊN ĐỂ ĐƯỢC CẤP QUYỀN TRUY CẬP
       </Text>
     </group>
   );

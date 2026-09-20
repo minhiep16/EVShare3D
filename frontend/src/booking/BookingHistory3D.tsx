@@ -4,6 +4,7 @@ import { useBookingStore } from './useBookingStore';
 import { BOOKING_CHAMBER_THEME } from './bookingLayout';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
 import type { BookingResponseDTO } from '@/api/bookingsApi';
+import { formatCurrencyVND, formatStatusVN } from '@/i18n';
 
 export const BookingHistory3D: React.FC = () => {
   const userBookings = useBookingStore((s) => s.userBookings);
@@ -48,13 +49,13 @@ export const BookingHistory3D: React.FC = () => {
       <group position={[0, 1.25, 0]}>
         <Text
           position={[0, 0, 0]}
-          fontSize={0.13}
+          fontSize={0.125}
           color={CHRONO_CYAN}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          {viewMode === 'LIST' ? 'MY RESERVATION HISTORY' : 'IMMUTABLE AUDIT TRAIL'}
+          {viewMode === 'LIST' ? 'LỊCH SỬ ĐẶT XE CỦA TÔI' : 'SỔ CÁI KIỂM TOÁN LỊCH ĐẶT XE'}
         </Text>
         <Text
           position={[0, -0.16, 0]}
@@ -64,8 +65,8 @@ export const BookingHistory3D: React.FC = () => {
           anchorY="middle"
         >
           {viewMode === 'LIST'
-            ? 'Active, upcoming, and historical bookings with BR-BKG-03 cancellation terms'
-            : `Cryptographic audit log for reservation #BKG-${selectedBooking?.id || ''}`}
+            ? 'Danh sách lịch đặt đang hoạt động, sắp tới và lịch sử theo điều khoản BR-BKG-03'
+            : `Nhật ký kiểm toán mật mã cho lịch đặt #BKG-${selectedBooking?.id || ''}`}
         </Text>
 
         {/* View Mode Toggle Button */}
@@ -79,11 +80,11 @@ export const BookingHistory3D: React.FC = () => {
             }}
           >
             <mesh>
-              <boxGeometry args={[0.9, 0.2, 0.02]} />
+              <boxGeometry args={[1.05, 0.2, 0.02]} />
               <meshStandardMaterial color="#1e293b" emissive={CHRONO_CYAN} emissiveIntensity={0.3} />
             </mesh>
-            <Text position={[0, 0, 0.02]} fontSize={0.06} color="#ffffff" anchorX="center" anchorY="middle">
-              {viewMode === 'LIST' ? 'VIEW AUDIT' : 'BACK TO LIST'}
+            <Text position={[0, 0, 0.02]} fontSize={0.055} color="#ffffff" anchorX="center" anchorY="middle">
+              {viewMode === 'LIST' ? 'XEM KIỂM TOÁN' : 'QUAY LẠI'}
             </Text>
           </group>
         )}
@@ -118,7 +119,7 @@ export const BookingHistory3D: React.FC = () => {
           {userBookings.length === 0 ? (
             <group position={[0, -0.4, 0]}>
               <Text fontSize={0.09} color="#64748b" anchorX="center" anchorY="middle">
-                No reservations logged yet
+                Chưa có lịch đặt xe nào
               </Text>
             </group>
           ) : (
@@ -173,12 +174,12 @@ export const BookingHistory3D: React.FC = () => {
                     anchorY="middle"
                     font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                   >
-                    {`#BKG-${bkg.id} • ${bkg.vehicleModel || 'EV Model'}`}
+                    {`#BKG-${bkg.id} • ${bkg.vehicleModel || 'Xe Điện'}`}
                   </Text>
 
                   {/* Plate and Status Tag */}
                   <Text position={[0.7, 0.1, 0]} fontSize={0.065} color={statusColor} anchorX="right" anchorY="middle">
-                    {`[${bkg.status}]`}
+                    {`[ ${formatStatusVN(bkg.status)} ]`}
                   </Text>
 
                   {/* Time Window */}
@@ -188,7 +189,7 @@ export const BookingHistory3D: React.FC = () => {
 
                   {/* Cost */}
                   <Text position={[0.7, -0.08, 0]} fontSize={0.065} color={AVAILABLE_GREEN} anchorX="right" anchorY="middle">
-                    {`${(Number(bkg.estimatedCost) || 0).toLocaleString()} VND`}
+                    {formatCurrencyVND(Number(bkg.estimatedCost) || 0)}
                   </Text>
 
                   {/* Cancel Button (if active) */}
@@ -207,12 +208,12 @@ export const BookingHistory3D: React.FC = () => {
                       </mesh>
                       <Text
                         position={[0, 0, 0.02]}
-                        fontSize={0.055}
+                        fontSize={0.052}
                         color="#ffffff"
                         anchorX="center"
                         anchorY="middle"
                       >
-                        {isCancelling && selectedBooking?.id === bkg.id ? 'CANCELING...' : 'CANCEL (BR-03)'}
+                        {isCancelling && selectedBooking?.id === bkg.id ? 'ĐANG HỦY...' : 'HỦY LỊCH (BR-03)'}
                       </Text>
                     </group>
                   )}
@@ -228,11 +229,11 @@ export const BookingHistory3D: React.FC = () => {
         <group position={[0, 0.45, 0.02]}>
           {isLoadingHistory ? (
             <Text position={[0, -0.4, 0]} fontSize={0.08} color={CHRONO_CYAN} anchorX="center" anchorY="middle">
-              QUERYING SPRING BOOT AUDIT LOG SERVICE...
+              ĐANG TRUY VẤN DỊCH VỤ KIỂM TOÁN HỆ THỐNG...
             </Text>
           ) : activeBookingHistory.length === 0 ? (
             <Text position={[0, -0.4, 0]} fontSize={0.08} color="#94a3b8" anchorX="center" anchorY="middle">
-              No audit entries recorded for this booking
+              Không có bản ghi kiểm toán nào cho lịch đặt này
             </Text>
           ) : (
             activeBookingHistory.slice(0, 4).map((hist, hIdx) => {
@@ -277,12 +278,12 @@ export const BookingHistory3D: React.FC = () => {
 
                   <Text
                     position={[-1.75, -0.06, 0]}
-                    fontSize={0.052}
+                    fontSize={0.05}
                     color="#cbd5e1"
                     anchorX="left"
                     anchorY="middle"
                   >
-                    {`ACTING USER: #${hist.actingUserId || 1} (${hist.actingUserName || 'Nguyen Van A'}) • STATE SNAPSHOT COMMITTED`}
+                    {`NGƯỜI THỰC HIỆN: #${hist.actingUserId || 1} (${hist.actingUserName || 'Nguyễn Văn A'}) • ĐÃ LƯU ẢNH CHỤP TRẠNG THÁI`}
                   </Text>
                 </group>
               );
@@ -306,7 +307,7 @@ export const BookingHistory3D: React.FC = () => {
             <meshStandardMaterial color="#1e293b" emissive={CHRONO_CYAN} emissiveIntensity={0.2} />
           </mesh>
           <Text position={[0, 0, 0.02]} fontSize={0.075} color="#ffffff" anchorX="center" anchorY="middle">
-            {'◄ CREATE NEW RESERVATION'}
+            {'◄ TẠO LỊCH ĐẶT MỚI'}
           </Text>
         </group>
       </group>

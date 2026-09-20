@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useDisputeStore } from './useDisputeStore';
 import { DISPUTE_STATIONS, DISPUTE_THEME } from './disputeLayout';
+import { formatStatusVN } from '@/i18n';
 
 export const FloatingDisputeCrystal3D: React.FC = () => {
   const crystalOuterRef = useRef<THREE.Mesh>(null);
@@ -101,25 +102,24 @@ export const FloatingDisputeCrystal3D: React.FC = () => {
           <edgesGeometry args={[new THREE.PlaneGeometry(2.8, 0.62)]} />
           <lineBasicMaterial color={statusColor} />
         </lineSegments>
-
         <Text
           position={[0, 0.16, 0.02]}
-          fontSize={0.08}
+          fontSize={0.075}
           color={statusColor}
           anchorX="center"
           anchorY="middle"
-          letterSpacing={0.06}
+          letterSpacing={0.05}
         >
-          DISPUTE #{activeDispute.id} // {activeDispute.status}
+          TRANH CHẤP #{activeDispute.id} // {formatStatusVN(activeDispute.status)}
         </Text>
         <Text
           position={[0, 0.01, 0.02]}
-          fontSize={0.058}
+          fontSize={0.056}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
         >
-          {activeDispute.complainantUserName} vs {activeDispute.respondentUserName}
+          {activeDispute.complainantUserName} tranh chấp {activeDispute.respondentUserName}
         </Text>
         <Text
           position={[0, -0.16, 0.02]}

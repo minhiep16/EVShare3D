@@ -104,25 +104,25 @@ export const App: React.FC = () => {
   }, []);
 
   const availableSectors: { id: SectorId; label: string }[] = [
-    { id: 'SECURITY_CHECKPOINT', label: 'SECURITY GATE' },
-    { id: 'CENTRAL_GARAGE', label: 'EV SHOWROOM' },
-    { id: 'CO_OWNERSHIP_HALL', label: 'OWNERSHIP HALL' },
-    { id: 'BOOKING_CHAMBER', label: 'BOOKING CHAMBER' },
-    { id: 'ENERGY_FINANCE_CENTER', label: 'FINANCE CENTER' },
-    { id: 'SHARED_FUND_VAULT', label: 'SHARED FUND VAULT' },
-    { id: 'DIGITAL_CONTRACT_ROOM', label: 'CONTRACT ROOM' },
-    { id: 'DECISION_CHAMBER', label: 'DECISION CHAMBER' },
-    { id: 'AI_INTELLIGENCE_CENTER', label: 'AI INTELLIGENCE' },
-    { id: 'OPERATIONS_CENTER', label: 'OPERATIONS' },
-    { id: 'SERVICE_WORKSHOP', label: 'WORKSHOP' },
-    { id: 'DISPUTE_ROOM', label: 'DISPUTE ROOM' },
-    { id: 'ADMIN_COMMAND_CENTER', label: 'ADMIN COMMAND' },
+    { id: 'SECURITY_CHECKPOINT', label: 'CỔNG AN NINH' },
+    { id: 'CENTRAL_GARAGE', label: 'GARAGE TRUNG TÂM' },
+    { id: 'CO_OWNERSHIP_HALL', label: 'SẢNH ĐỒNG SỞ HỮU' },
+    { id: 'BOOKING_CHAMBER', label: 'PHÒNG ĐẶT LỊCH' },
+    { id: 'ENERGY_FINANCE_CENTER', label: 'TRUNG TÂM TÀI CHÍNH' },
+    { id: 'SHARED_FUND_VAULT', label: 'KHO QUỸ CHUNG' },
+    { id: 'DIGITAL_CONTRACT_ROOM', label: 'PHÒNG HỢP ĐỒNG' },
+    { id: 'DECISION_CHAMBER', label: 'PHÒNG BIỂU QUYẾT' },
+    { id: 'AI_INTELLIGENCE_CENTER', label: 'TRÍ TUỆ NHÂN TẠO' },
+    { id: 'OPERATIONS_CENTER', label: 'TRUNG TÂM VẬN HÀNH' },
+    { id: 'SERVICE_WORKSHOP', label: 'XƯỞNG BẢO TRÌ' },
+    { id: 'DISPUTE_ROOM', label: 'GIẢI QUYẾT TRANH CHẤP' },
+    { id: 'ADMIN_COMMAND_CENTER', label: 'ĐIỀU HÀNH QUẢN TRỊ' },
   ];
 
   const cameraModes: { id: CameraMode; label: string }[] = [
-    { id: 'ORBIT', label: 'ORBIT' },
-    { id: 'FIRST_PERSON', label: '1ST PERSON' },
-    { id: 'THIRD_PERSON', label: '3RD PERSON' },
+    { id: 'ORBIT', label: 'XOAY QUANH' },
+    { id: 'FIRST_PERSON', label: 'GÓC NHÌN THỨ 1' },
+    { id: 'THIRD_PERSON', label: 'GÓC NHÌN THỨ 3' },
   ];
 
   const qualities: EngineQuality[] = ['LOW', 'MEDIUM', 'HIGH', 'ULTRA'];
@@ -144,7 +144,7 @@ export const App: React.FC = () => {
     } else {
       focusObject({
         id: 'biometric_beacon',
-        name: 'Biometric Gateway Terminal',
+        name: 'Trạm Cổng Xác Thực Sinh Trắc Học',
         category: 'TERMINAL',
         targetPosition: [0, 1.5, 0],
       });
@@ -209,7 +209,7 @@ export const App: React.FC = () => {
               marginBottom: '0.6rem',
             }}
           >
-            CHECKPOINT 08-AF MOBILE/TABLET 3D INPUT
+            ĐỒNG SỞ HỮU XE ĐIỆN — EVSHARE 3D
           </div>
 
           <h1
@@ -223,7 +223,7 @@ export const App: React.FC = () => {
               textShadow: '0 0 16px rgba(0, 229, 255, 0.4)',
             }}
           >
-            Mobile &amp; Tablet 3D Touch Engine
+            Hệ Thống Đa Vũ Trụ Xe Điện 3D
           </h1>
 
           <p
@@ -234,7 +234,7 @@ export const App: React.FC = () => {
               marginBottom: '0.85rem',
             }}
           >
-            Touch virtual joystick, tap selection raycasting, touch camera orbit &amp; look, two-finger pinch zoom, and responsive viewport FOV adaptation.
+            Tương tác không gian thời gian thực: Cần điều khiển cảm ứng ảo, chạm chọn đối tượng 3D, xoay góc nhìn camera và thu phóng hai ngón tay.
           </p>
 
           {/* Camera Modes Selector */}
@@ -248,7 +248,7 @@ export const App: React.FC = () => {
                 letterSpacing: '0.5px',
               }}
             >
-              CAMERA PERSPECTIVE MODE:
+              CHẾ ĐỘ GÓC NHÌN CAMERA:
             </div>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               {cameraModes.map((m) => (
@@ -292,7 +292,7 @@ export const App: React.FC = () => {
                 letterSpacing: '0.5px',
               }}
             >
-              CAMERA TRANSITIONS &amp; SEQUENCES:
+              CHUYỂN GÓC NHÌN &amp; TOÀN CẢNH:
             </div>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               <button
@@ -315,7 +315,7 @@ export const App: React.FC = () => {
                   transition: 'all 0.15s ease',
                 }}
               >
-                {isFocused ? 'RETURN CAM (ESC)' : 'FOCUS BEACON'}
+                {isFocused ? 'TRỞ LẠI (ESC)' : 'TIÊU ĐIỂM'}
               </button>
               <button
                 onClick={handleCinematicSweep}
@@ -332,7 +332,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                CINEMATIC
+                TOÀN CẢNH
               </button>
               <button
                 onClick={() => resetCamera()}
@@ -349,7 +349,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                RESET
+                ĐẶT LẠI
               </button>
             </div>
           </div>
@@ -365,7 +365,7 @@ export const App: React.FC = () => {
                 letterSpacing: '0.5px',
               }}
             >
-              TRIGGER 3D ANIMATION STATES:
+              KÍCH HOẠT TRẠNG THÁI HOẠT HỌA 3D:
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.3rem' }}>
               {(['HOVER', 'SELECTED', 'ACTIVE', 'LOADING', 'SUCCESS', 'ERROR', 'IDLE'] as AnimationState[]).map(
@@ -399,7 +399,19 @@ export const App: React.FC = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {anim}
+                    {anim === 'HOVER'
+                      ? 'RÊ CHUỘT'
+                      : anim === 'SELECTED'
+                      ? 'ĐÃ CHỌN'
+                      : anim === 'ACTIVE'
+                      ? 'KÍCH HOẠT'
+                      : anim === 'LOADING'
+                      ? 'ĐANG TẢI'
+                      : anim === 'SUCCESS'
+                      ? 'THÀNH CÔNG'
+                      : anim === 'ERROR'
+                      ? 'LỖI'
+                      : 'CHỜ'}
                   </button>
                 )
               )}
@@ -419,9 +431,9 @@ export const App: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <span>AUDIO ENGINE &amp; PROCEDURAL SYNTH:</span>
+              <span>HỆ THỐNG ÂM THANH:</span>
               <span style={{ color: isMuted ? '#ff1744' : '#00e676' }}>
-                {isMuted ? 'MUTED' : `${Math.round(masterVolume * 100)}%`}
+                {isMuted ? 'TẮT TIẾNG' : `${Math.round(masterVolume * 100)}%`}
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.35rem', marginBottom: '0.35rem' }}>
@@ -440,7 +452,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                {isMuted ? 'UNMUTE' : 'MUTE'}
+                {isMuted ? 'BẬT TIẾNG' : 'TẮT TIẾNG'}
               </button>
               <button
                 onClick={() => sound.startAmbient()}
@@ -457,7 +469,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                START DRONE
+                BẬT ÂM NỀN
               </button>
               <button
                 onClick={() => sound.stopAmbient()}
@@ -474,7 +486,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                STOP DRONE
+                DỪNG ÂM NỀN
               </button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.3rem' }}>
@@ -552,7 +564,7 @@ export const App: React.FC = () => {
                 letterSpacing: '0.5px',
               }}
             >
-              3D WEBGL SPATIAL INTERFACES:
+              GIAO DIỆN KHÔNG GIAN 3D WEBGL:
             </div>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               <button
@@ -570,7 +582,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                FOCUS TERMINAL
+                TIÊU ĐIỂM TRẠM 3D
               </button>
               <button
                 onClick={() => useUI3DStore.getState().openModal('security_protocol_modal')}
@@ -587,7 +599,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                OPEN 3D MODAL
+                HỘP THOẠI 3D
               </button>
             </div>
           </div>
@@ -605,9 +617,9 @@ export const App: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <span>AUTHENTICATION &amp; IDENTITY:</span>
+              <span>XÁC THỰC &amp; DANH TÍNH:</span>
               <span id="hud-auth-status" style={{ color: currentUser ? '#00e676' : '#ffab00' }}>
-                {currentUser ? `${currentUser.fullName} (${currentUser.roles.join(', ')})` : 'UNAUTHENTICATED (GUEST)'}
+                {currentUser ? `${currentUser.fullName} (${currentUser.roles.map(r => r === 'ROLE_CO_OWNER' ? 'ĐỒNG SỞ HỮU' : r === 'ROLE_STAFF' ? 'NHÂN VIÊN' : r === 'ROLE_ADMIN' ? 'QUẢN TRỊ VIÊN' : r).join(', ')})` : 'CHƯA ĐĂNG NHẬP (KHÁCH)'}
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.3rem' }}>
@@ -630,7 +642,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                LOGIN CO-OWNER
+                ĐỒNG SỞ HỮU
               </button>
               <button
                 id="btn-auth-staff"
@@ -651,7 +663,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                LOGIN STAFF
+                NHÂN VIÊN
               </button>
               <button
                 id="btn-auth-admin"
@@ -672,7 +684,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                LOGIN ADMIN
+                QUẢN TRỊ
               </button>
               <button
                 id="btn-auth-logout"
@@ -690,7 +702,7 @@ export const App: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                LOGOUT
+                ĐĂNG XUẤT
               </button>
             </div>
           </div>
@@ -708,9 +720,9 @@ export const App: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <span>SWITCH ACTIVE ENVIRONMENT:</span>
+              <span>CHUYỂN KHÔNG GIAN 3D:</span>
               <span id="hud-active-sector" style={{ color: '#00e5ff' }}>
-                {currentSector}
+                {availableSectors.find(s => s.id === currentSector)?.label || currentSector}
               </span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.3rem' }}>
@@ -760,99 +772,101 @@ export const App: React.FC = () => {
             }}
           >
             <div>
-              <span style={{ color: '#8a94a6' }}>Pointer NDC: </span>
+              <span style={{ color: '#8a94a6' }}>Tọa độ con trỏ: </span>
               <span style={{ color: '#00e5ff' }}>
                 [{pointer.ndcX.toFixed(2)}, {pointer.ndcY.toFixed(2)}]
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Pointer State: </span>
+              <span style={{ color: '#8a94a6' }}>Trạng thái trỏ: </span>
               <span style={{ color: pointer.isDragging ? '#ffab00' : pointer.isDown ? '#00e676' : '#8a94a6' }}>
-                {pointer.isDragging ? 'DRAGGING' : pointer.isDown ? 'DOWN' : 'IDLE'}
+                {pointer.isDragging ? 'ĐANG KÉO' : pointer.isDown ? 'NHẤN' : 'CHỜ'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>WASD Axes: </span>
+              <span style={{ color: '#8a94a6' }}>Trục di chuyển: </span>
               <span style={{ color: '#00e676' }}>
-                F:{movement.forward} S:{movement.strafe}
+                Tiến:{movement.forward} Ngang:{movement.strafe}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Modifiers: </span>
+              <span style={{ color: '#8a94a6' }}>Phím bổ trợ: </span>
               <span style={{ color: movement.sprint ? '#ffab00' : '#8a94a6' }}>
-                {movement.sprint ? 'SPRINT' : movement.jump ? 'JUMP' : 'NONE'}
+                {movement.sprint ? 'CHẠY NHANH' : movement.jump ? 'NHẢY' : 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Touch Gesture: </span>
+              <span style={{ color: '#8a94a6' }}>Cảm ứng: </span>
               <span style={{ color: '#00e5ff' }}>
-                {touch.gesture} ({touch.touchCount})
+                {touch.gesture} ({touch.touchCount} điểm)
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Typing Mode: </span>
+              <span style={{ color: '#8a94a6' }}>Chế độ nhập: </span>
               <span style={{ color: isTypingMode ? '#ff1744' : '#00e676' }}>
-                {isTypingMode ? 'TEXT INPUT' : 'NAVIGATION'}
+                {isTypingMode ? 'NHẬP VĂN BẢN' : 'ĐIỀU HƯỚNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Avatar Pos: </span>
+              <span style={{ color: '#8a94a6' }}>Vị trí nhân vật: </span>
               <span style={{ color: '#00e5ff' }}>
                 [{playerPosition[0].toFixed(1)}, {playerPosition[2].toFixed(1)}]
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Player Mode: </span>
+              <span style={{ color: '#8a94a6' }}>Trạng thái đi: </span>
               <span style={{ color: playerMovement === 'IDLE' ? '#8a94a6' : '#00e676' }}>
-                {playerMovement}
+                {playerMovement === 'IDLE' ? 'ĐỨNG YÊN' : playerMovement === 'WALKING' ? 'ĐANG ĐI' : 'CHẠY'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Hover Target: </span>
+              <span style={{ color: '#8a94a6' }}>Mục tiêu rê chuột: </span>
               <span style={{ color: hoveredObjectId ? '#00e676' : '#8a94a6' }}>
-                {hoveredObjectId || 'NONE'}
+                {hoveredObjectId || 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Select Target: </span>
+              <span style={{ color: '#8a94a6' }}>Mục tiêu chọn: </span>
               <span style={{ color: selectedObjectId ? '#ffab00' : '#8a94a6' }}>
-                {selectedObjectId || 'NONE'}
+                {selectedObjectId || 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Focus Target: </span>
+              <span style={{ color: '#8a94a6' }}>Mục tiêu tiêu điểm: </span>
               <span style={{ color: isFocused ? '#00e5ff' : '#8a94a6' }}>
-                {focusedTargetId || 'NONE'}
+                {focusedTargetId || 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Focus Preset: </span>
+              <span style={{ color: '#8a94a6' }}>Thể loại tiêu điểm: </span>
               <span style={{ color: activeCategory ? '#ffab00' : '#8a94a6' }}>
-                {activeCategory || 'NONE'}
+                {activeCategory || 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Audio Output: </span>
+              <span style={{ color: '#8a94a6' }}>Âm thanh đầu ra: </span>
               <span style={{ color: isMuted ? '#ff1744' : '#00e676' }}>
-                {isMuted ? 'MUTED' : `${Math.round(masterVolume * 100)}%`}
+                {isMuted ? 'TẮT TIẾNG' : `${Math.round(masterVolume * 100)}%`}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Camera Mode: </span>
-              <span style={{ color: '#00e5ff' }}>{cameraMode}</span>
+              <span style={{ color: '#8a94a6' }}>Góc nhìn camera: </span>
+              <span style={{ color: '#00e5ff' }}>
+                {cameraMode === 'ORBIT' ? 'XOAY QUANH' : cameraMode === 'FIRST_PERSON' ? 'GÓC NHÌN THỨ 1' : 'GÓC NHÌN THỨ 3'}
+              </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Active Modal: </span>
+              <span style={{ color: '#8a94a6' }}>Hộp thoại mở: </span>
               <span style={{ color: activeModalId ? '#ffab00' : '#8a94a6' }}>
-                {activeModalId || 'NONE'}
+                {activeModalId || 'KHÔNG'}
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Adaptive DPR: </span>
+              <span style={{ color: '#8a94a6' }}>Tỷ lệ DPR: </span>
               <span style={{ color: '#00e5ff' }}>{adaptiveDpr.toFixed(2)}</span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Measured FPS: </span>
+              <span style={{ color: '#8a94a6' }}>Khung hình (FPS): </span>
               <span
                 style={{
                   color: measuredFps >= 45 ? '#00e676' : measuredFps >= 28 ? '#ffab00' : '#ff1744',
@@ -862,9 +876,9 @@ export const App: React.FC = () => {
               </span>
             </div>
             <div>
-              <span style={{ color: '#8a94a6' }}>Scene State: </span>
+              <span style={{ color: '#8a94a6' }}>Trạng thái phòng: </span>
               <span style={{ color: sceneLifecycle === 'ACTIVE' ? '#00e676' : '#ffab00' }}>
-                {sceneLifecycle}
+                {sceneLifecycle === 'ACTIVE' ? 'HOẠT ĐỘNG' : sceneLifecycle}
               </span>
             </div>
           </div>
@@ -880,7 +894,7 @@ export const App: React.FC = () => {
                 letterSpacing: '0.5px',
               }}
             >
-              PERFORMANCE TIER (08-AD):
+              MỨC HIỆU NĂNG ĐỒ HỌA:
             </div>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               {(['LOW', 'MEDIUM', 'HIGH'] as PerformanceTier[]).map((tier) => (
@@ -910,7 +924,7 @@ export const App: React.FC = () => {
                     transition: 'all 0.15s ease',
                   }}
                 >
-                  {tier}
+                  {tier === 'LOW' ? 'THẤP' : tier === 'MEDIUM' ? 'TRUNG BÌNH' : 'CAO'}
                 </button>
               ))}
             </div>

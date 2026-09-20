@@ -18,11 +18,11 @@ export const VehicleInspectionBay3D: React.FC = () => {
   });
 
   const sensorPoints = [
-    { name: 'FRONT LIDAR', pos: [0, 0.45, -1.9] as [number, number, number] },
-    { name: 'LEFT HUB', pos: [-1.2, 0.3, 0] as [number, number, number] },
-    { name: 'RIGHT HUB', pos: [1.2, 0.3, 0] as [number, number, number] },
-    { name: 'BATTERY TRAY', pos: [0, 0.18, 0] as [number, number, number] },
-    { name: 'CHARGE PORT', pos: [0, 0.45, 1.9] as [number, number, number] },
+    { name: 'LIDAR TRƯỚC', pos: [0, 0.45, -1.9] as [number, number, number] },
+    { name: 'TRỤC TRÁI', pos: [-1.2, 0.3, 0] as [number, number, number] },
+    { name: 'TRỤC PHẢI', pos: [1.2, 0.3, 0] as [number, number, number] },
+    { name: 'KHAY PIN', pos: [0, 0.18, 0] as [number, number, number] },
+    { name: 'CỔNG SẠC', pos: [0, 0.45, 1.9] as [number, number, number] },
   ];
 
   return (
@@ -107,13 +107,13 @@ export const VehicleInspectionBay3D: React.FC = () => {
       <group position={[0, 2.2, 0]}>
         <Text
           position={[0, 0.16, 0]}
-          fontSize={0.12}
+          fontSize={0.115}
           color={OPERATIONS_THEME.secondary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          BAY 02 // AUTOMATED CHASSIS INSPECTION PAD
+          KHOANG 02 // KHU TỰ ĐỘNG QUÉT THÂN VỎ
         </Text>
         <Text
           position={[0, -0.05, 0]}
@@ -122,7 +122,7 @@ export const VehicleInspectionBay3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          TIRES: 2.4 BAR • PACK TEMP: 28°C • BRAKE LINING: NOMINAL
+          LỐP XE: 2,4 BAR • NHIỆT PIN: 28°C • MÁ PHANH: CHUẨN
         </Text>
       </group>
     </group>

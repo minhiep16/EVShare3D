@@ -54,6 +54,8 @@ export const VehicleConditionDisplay3D: React.FC = () => {
   );
 };
 
+import { formatStatusVN } from '@/i18n';
+
 interface SubsystemNodeProps {
   subsystem: VehicleConditionSubsystem;
   isSelected: boolean;
@@ -63,6 +65,23 @@ interface SubsystemNodeProps {
   onHover: (hovered: boolean) => void;
   onQuickRepair: () => void;
 }
+
+const getSubsystemVNName = (id: string, defaultName: string): string => {
+  switch (id) {
+    case 'BRAKE_SYSTEM':
+      return 'HỆ THỐNG PHANH GỐM';
+    case 'LIDAR_ADAS':
+      return 'CẢM BIẾN LIDAR & ADAS';
+    case 'HIGH_VOLTAGE_BATTERY':
+      return 'PIN CAO ÁP 800V';
+    case 'ELECTRIC_DRIVE_MOTOR':
+      return 'ĐỘNG CƠ ĐIỆN ĐỒNG BỘ';
+    case 'THERMAL_MANAGEMENT':
+      return 'HỆ THỐNG QUẢN LÝ NHIỆT';
+    default:
+      return defaultName.toUpperCase();
+  }
+};
 
 const DiagnosticSubsystemNode3D: React.FC<SubsystemNodeProps> = ({
   subsystem,
@@ -155,25 +174,25 @@ const DiagnosticSubsystemNode3D: React.FC<SubsystemNodeProps> = ({
         {/* Subsystem Name */}
         <Text
           position={[0, 0.16, 0.01]}
-          fontSize={0.062}
+          fontSize={0.054}
           color="#f8fafc"
           anchorX="center"
           anchorY="middle"
         >
-          {subsystem.name.toUpperCase()}
+          {getSubsystemVNName(subsystem.subsystemId, subsystem.name)}
         </Text>
 
         {/* Health & Fault Line */}
         <Text
           position={[0, 0.02, 0.01]}
-          fontSize={0.058}
+          fontSize={0.05}
           color={statusColor}
           anchorX="center"
           anchorY="middle"
         >
           {subsystem.faultCode
-            ? `FAULT: ${subsystem.faultCode} • ${subsystem.healthPercentage}%`
-            : `HEALTH: ${subsystem.healthPercentage}% • ${subsystem.status}`}
+            ? `LỖI: ${subsystem.faultCode} • SỨC KHỎE: ${subsystem.healthPercentage}%`
+            : `SỨC KHỎE: ${subsystem.healthPercentage}% • ${formatStatusVN(subsystem.status)}`}
         </Text>
 
         {/* Quick Action Button */}
@@ -191,23 +210,23 @@ const DiagnosticSubsystemNode3D: React.FC<SubsystemNodeProps> = ({
             </mesh>
             <Text
               position={[0, 0, 0.01]}
-              fontSize={0.048}
+              fontSize={0.042}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              🛠 REPLACE: {subsystem.replacementPartName.slice(0, 24)}...
+              🛠 THAY: {subsystem.replacementPartName.slice(0, 20)}...
             </Text>
           </group>
         ) : (
           <Text
             position={[0, -0.15, 0.01]}
-            fontSize={0.048}
+            fontSize={0.046}
             color="#10b981"
             anchorX="center"
             anchorY="middle"
           >
-            ✓ NOMINAL SPECIFICATION
+            ✓ THÔNG SỐ ĐẠT CHUẨN
           </Text>
         )}
       </group>

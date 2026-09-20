@@ -99,24 +99,24 @@ export const SignaturePedestal3D: React.FC = () => {
         {/* Station Title */}
         <Text
           position={[0, 0.75, 0.03]}
-          fontSize={0.12}
+          fontSize={0.11}
           color={CONTRACT_LAYOUT.theme.sapphirePrimary}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          BIOMETRIC SIGNATURE DAIS
+          BÀN KÝ SỐ SINH TRẮC HỌC
         </Text>
 
         <Text
           position={[0, 0.62, 0.03]}
-          fontSize={0.085}
+          fontSize={0.08}
           color={CONTRACT_LAYOUT.theme.textMuted}
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
         >
-          CRYPTOGRAPHIC SHA-256 DIGITAL RATIFICATION
+          PHÊ CHUẨN KÝ SỐ MẬT MÃ SHA-256
         </Text>
 
         {/* 3. Biometric Scanner Glass Pad */}
@@ -158,13 +158,13 @@ export const SignaturePedestal3D: React.FC = () => {
           {/* Biometric Icon / Instructions */}
           <Text
             position={[0, 0, 0.03]}
-            fontSize={0.08}
+            fontSize={0.075}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            {isSuccess ? '✓ BIOMETRIC CAPTURED' : isProcessing ? 'SCANNING...' : 'TOUCH PLATE READY'}
+            {isSuccess ? '✓ ĐÃ THU THẬP SINH TRẮC HỌC' : isProcessing ? 'ĐANG QUÉT...' : 'BÀN CHẠM ĐÃ SẴN SÀNG'}
           </Text>
         </group>
 
@@ -200,13 +200,13 @@ export const SignaturePedestal3D: React.FC = () => {
 
           <Text
             position={[-0.78, 0, 0]}
-            fontSize={0.085}
+            fontSize={0.08}
             color={acceptedTerms ? '#ffffff' : CONTRACT_LAYOUT.theme.textMuted}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            I ACKNOWLEDGE & ACCEPT ALL CO-OWNERSHIP COVENANTS
+            TÔI XÁC NHẬN VÀ CHẤP THUẬN MỌI ĐIỀU KHOẢN ĐỒNG SỞ HỮU
           </Text>
         </group>
 
@@ -242,21 +242,21 @@ export const SignaturePedestal3D: React.FC = () => {
             />
           </mesh>
           <Text
-            fontSize={0.1}
+            fontSize={0.09}
             color={isAlreadySigned || isActive ? '#000000' : '#ffffff'}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
             {isAlreadySigned
-              ? '✓ YOUR SIGNATURE RECORDED'
+              ? '✓ CHỮ KÝ CỦA BẠN ĐÃ ĐƯỢC GHI NHẬN'
               : isActive
-                ? '✓ CONTRACT FULLY ACTIVE'
+                ? '✓ HỢP ĐỒNG ĐÃ HOẠT ĐỘNG TOÀN DIỆN'
                 : isDraft
-                  ? 'DRAFT MODE • SUBMIT TO SIGN'
+                  ? 'DỰ THẢO • CẦN GỬI ĐỂ BẮT ĐẦU KÝ'
                   : isProcessing
-                    ? 'TRANSMITTING SIGNATURE...'
-                    : 'EXECUTE DIGITAL SIGNATURE'}
+                    ? 'ĐANG TRUYỀN DỮ LIỆU KÝ...'
+                    : 'THỰC HIỆN KÝ SỐ ĐIỆN TỬ'}
           </Text>
         </group>
 
@@ -272,7 +272,7 @@ export const SignaturePedestal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                SHA-256 PROVENANCE DIGEST:
+                MÃ BĂM NGUỒN GỐC SHA-256:
               </Text>
               <Text
                 position={[0, -0.06, 0]}

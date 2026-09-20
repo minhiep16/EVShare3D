@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useOperationsStore } from './useOperationsStore';
 import { OPERATIONS_STATIONS, OPERATIONS_THEME } from './operationsLayout';
+import { formatStatusVN } from '@/i18n';
 
 export const OperationalNotifications3D: React.FC = () => {
   const { alerts, acknowledgeAlert, dismissAllAlerts } = useOperationsStore();
@@ -67,7 +68,7 @@ export const OperationalNotifications3D: React.FC = () => {
             anchorY="middle"
             letterSpacing={0.06}
           >
-            OPERATIONAL ALERTS STREAM
+            LUỒNG CẢNH BÁO VẬN HÀNH
           </Text>
           {/* Active Count Pill */}
           <mesh position={[0.95, 0, 0]}>
@@ -83,7 +84,7 @@ export const OperationalNotifications3D: React.FC = () => {
             anchorX="center"
             anchorY="middle"
           >
-            {activeCount > 0 ? `${activeCount} ACTIVE` : 'ALL CLEAR'}
+            {activeCount > 0 ? `${activeCount} ĐANG MỞ` : 'AN TOÀN'}
           </Text>
         </group>
 
@@ -118,17 +119,17 @@ export const OperationalNotifications3D: React.FC = () => {
 
               {/* Severity Pill */}
               <mesh position={[-1.15, 0.12, 0.01]}>
-                <planeGeometry args={[0.42, 0.12]} />
+                <planeGeometry args={[0.48, 0.12]} />
                 <meshStandardMaterial color={sevColor} />
               </mesh>
               <Text
                 position={[-1.15, 0.12, 0.02]}
-                fontSize={0.055}
+                fontSize={0.05}
                 color="#000000"
                 anchorX="center"
                 anchorY="middle"
               >
-                {alert.severity}
+                {formatStatusVN(alert.severity)}
               </Text>
 
               {/* Title & Target */}
@@ -179,12 +180,12 @@ export const OperationalNotifications3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.052}
+                  fontSize={0.05}
                   color="#ffffff"
                   anchorX="center"
                   anchorY="middle"
                 >
-                  {alert.isAcknowledged ? '✓ ACK' : 'ACKNOWLEDGE'}
+                  {alert.isAcknowledged ? '✓ ĐÃ XỬ LÝ' : 'XÁC NHẬN'}
                 </Text>
               </group>
             </group>
@@ -216,12 +217,12 @@ export const OperationalNotifications3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.01]}
-            fontSize={0.062}
+            fontSize={0.058}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            🗙 ACKNOWLEDGE ALL OPERATIONAL ALERTS
+            🗙 XÁC NHẬN TOÀN BỘ CẢNH BÁO VẬN HÀNH
           </Text>
         </group>
       </group>

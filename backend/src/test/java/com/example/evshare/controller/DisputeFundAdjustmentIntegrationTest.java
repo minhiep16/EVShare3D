@@ -87,7 +87,7 @@ class DisputeFundAdjustmentIntegrationTest {
 
         testVehicle = new Vehicle();
         testVehicle.setVin("VIN" + uid.toUpperCase() + "DISP00");
-        testVehicle.setLicensePlate("51H-" + uid.substring(0, 4).toUpperCase());
+        testVehicle.setLicensePlate("51H-" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase());
         testVehicle.setModelName("VinFast VF8 Plus");
         testVehicle.setManufacturer("VinFast");
         testVehicle.setModel3dAssetPath("models/vehicles/vf8.glb");

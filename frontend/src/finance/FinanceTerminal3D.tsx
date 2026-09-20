@@ -5,6 +5,7 @@ import { useFinanceStore } from './useFinanceStore';
 import { FINANCE_LAYOUT } from './financeLayout';
 import type { FinanceTab } from './financeTypes';
 import type { ExpenseCategory } from '@/api/financeApi';
+import { formatCurrencyVND } from '@/i18n';
 
 export const FinanceTerminal3D: React.FC = () => {
   const activeTab = useFinanceStore((state) => state.activeTab);
@@ -24,11 +25,11 @@ export const FinanceTerminal3D: React.FC = () => {
   const totalBurn = expenses.reduce((acc, e) => acc + e.amountVnd, 0);
 
   const tabs: { id: FinanceTab; label: string }[] = [
-    { id: 'OVERVIEW', label: 'TREASURY' },
-    { id: 'EXPENSES', label: 'EXPENSES' },
-    { id: 'ALLOCATION', label: 'ALLOCATION' },
-    { id: 'PAYMENT', label: 'PAY KIOSK' },
-    { id: 'AUDIT', label: 'AUDIT' },
+    { id: 'OVERVIEW', label: 'TỔNG QUAN' },
+    { id: 'EXPENSES', label: 'CHI PHÍ' },
+    { id: 'ALLOCATION', label: 'PHÂN BỔ' },
+    { id: 'PAYMENT', label: 'THANH TOÁN' },
+    { id: 'AUDIT', label: 'KIỂM TOÁN' },
   ];
 
   const handlePostExpense = async () => {
@@ -73,13 +74,13 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* Terminal Header */}
         <Text
           position={[-1.25, 0.73, 0.04]}
-          fontSize={0.08}
+          fontSize={0.075}
           color="#00e5ff"
           anchorX="left"
           anchorY="middle"
           font="/fonts/Orbitron-Bold.ttf"
         >
-          FINANCE &amp; COST ALLOCATION TERMINAL
+          TRUNG TÂM TÀI CHÍNH & PHÂN BỔ CHI PHÍ
         </Text>
 
         <Text
@@ -90,7 +91,7 @@ export const FinanceTerminal3D: React.FC = () => {
           anchorY="middle"
           font="/fonts/JetBrainsMono-Bold.ttf"
         >
-          ● BACKEND API CONNECTED
+          ● ĐÃ KẾT NỐI BACKEND API
         </Text>
 
         {/* 3D Tab Breadcrumbs */}
@@ -118,7 +119,7 @@ export const FinanceTerminal3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.06}
+                  fontSize={0.055}
                   color={isSelected ? '#040b17' : '#f0f4fc'}
                   anchorX="center"
                   anchorY="middle"
@@ -142,11 +143,11 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[0.8, 0.34]} />
                   <meshBasicMaterial color="#071526" />
                 </mesh>
-                <Text position={[0, 0.08, 0.01]} fontSize={0.05} color="#8a94a6" anchorX="center">
-                  MONTHLY EXPENSE POOL
+                <Text position={[0, 0.08, 0.01]} fontSize={0.045} color="#8a94a6" anchorX="center">
+                  TỔNG QUỸ CHI PHÍ THÁNG
                 </Text>
-                <Text position={[0, -0.05, 0.01]} fontSize={0.085} color="#00e5ff" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
-                  {`${(totalBurn / 1000000).toFixed(1)}M VND`}
+                <Text position={[0, -0.05, 0.01]} fontSize={0.08} color="#00e5ff" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
+                  {formatCurrencyVND(totalBurn)}
                 </Text>
               </group>
 
@@ -156,11 +157,11 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[0.8, 0.34]} />
                   <meshBasicMaterial color="#071526" />
                 </mesh>
-                <Text position={[0, 0.08, 0.01]} fontSize={0.05} color="#8a94a6" anchorX="center">
-                  VAULT LIQUIDITY (BR-FIN-03)
+                <Text position={[0, 0.08, 0.01]} fontSize={0.045} color="#8a94a6" anchorX="center">
+                  DỰ PHÒNG CHUNG (BR-FIN-03)
                 </Text>
-                <Text position={[0, -0.05, 0.01]} fontSize={0.085} color="#00e676" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
-                  {`${(sharedFund.currentBalance / 1000000).toFixed(1)}M VND`}
+                <Text position={[0, -0.05, 0.01]} fontSize={0.08} color="#00e676" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
+                  {formatCurrencyVND(sharedFund.currentBalance)}
                 </Text>
               </group>
 
@@ -170,11 +171,11 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[0.8, 0.34]} />
                   <meshBasicMaterial color="#071526" />
                 </mesh>
-                <Text position={[0, 0.08, 0.01]} fontSize={0.05} color="#8a94a6" anchorX="center">
-                  YOUR PENDING DUES
+                <Text position={[0, 0.08, 0.01]} fontSize={0.045} color="#8a94a6" anchorX="center">
+                  NỢ PHÍ CỦA BẠN
                 </Text>
-                <Text position={[0, -0.05, 0.01]} fontSize={0.085} color={mySummary.outstandingDueVnd > 0 ? '#ff1744' : '#00e676'} anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
-                  {`${(mySummary.outstandingDueVnd / 1000000).toFixed(2)}M VND`}
+                <Text position={[0, -0.05, 0.01]} fontSize={0.08} color={mySummary.outstandingDueVnd > 0 ? '#ff1744' : '#00e676'} anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
+                  {formatCurrencyVND(mySummary.outstandingDueVnd)}
                 </Text>
               </group>
             </group>
@@ -189,11 +190,11 @@ export const FinanceTerminal3D: React.FC = () => {
                 }}
               >
                 <mesh>
-                  <planeGeometry args={[0.6, 0.18]} />
+                  <planeGeometry args={[0.62, 0.18]} />
                   <meshBasicMaterial color="#ffab00" transparent opacity={0.3} side={THREE.DoubleSide} />
                 </mesh>
-                <Text position={[0, 0, 0.01]} fontSize={0.065} color="#ffab00" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                  + LOG EXPENSE
+                <Text position={[0, 0, 0.01]} fontSize={0.055} color="#ffab00" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  + GHI CHI PHÍ
                 </Text>
               </group>
 
@@ -205,11 +206,11 @@ export const FinanceTerminal3D: React.FC = () => {
                 }}
               >
                 <mesh>
-                  <planeGeometry args={[0.6, 0.18]} />
+                  <planeGeometry args={[0.62, 0.18]} />
                   <meshBasicMaterial color="#00e676" transparent opacity={0.3} side={THREE.DoubleSide} />
                 </mesh>
-                <Text position={[0, 0, 0.01]} fontSize={0.065} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                  ⚡ PAY DUES NOW
+                <Text position={[0, 0, 0.01]} fontSize={0.055} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  ⚡ NỘP TIỀN NGAY
                 </Text>
               </group>
 
@@ -221,26 +222,26 @@ export const FinanceTerminal3D: React.FC = () => {
                 }}
               >
                 <mesh>
-                  <planeGeometry args={[0.6, 0.18]} />
+                  <planeGeometry args={[0.62, 0.18]} />
                   <meshBasicMaterial color="#00e5ff" transparent opacity={0.3} side={THREE.DoubleSide} />
                 </mesh>
-                <Text position={[0, 0, 0.01]} fontSize={0.065} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                  📊 VIEW BARS
+                <Text position={[0, 0, 0.01]} fontSize={0.055} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  📊 XEM BIỂU ĐỒ
                 </Text>
               </group>
             </group>
 
             {/* Camera View Navigation Row */}
             <group position={[0, -0.32, 0]}>
-              <Text position={[-1.2, 0, 0]} fontSize={0.055} color="#8a94a6" anchorX="left">
-                CAMERA SHORTCUTS:
+              <Text position={[-1.2, 0, 0]} fontSize={0.05} color="#8a94a6" anchorX="left">
+                PHÍM TẮT GÓC QUAY:
               </Text>
               {[
-                { label: 'OVERVIEW', st: 'OVERVIEW' },
-                { label: 'CRYSTALS', st: 'CRYSTALS' },
-                { label: 'BARS', st: 'ALLOCATION' },
-                { label: 'VAULT', st: 'COLUMN' },
-                { label: 'KIOSK', st: 'KIOSK' },
+                { label: 'TỔNG THỂ', st: 'OVERVIEW' },
+                { label: 'TINH THỂ', st: 'CRYSTALS' },
+                { label: 'BIỂU ĐỒ', st: 'ALLOCATION' },
+                { label: 'CỘT QUỸ', st: 'COLUMN' },
+                { label: 'TRẠM TT', st: 'KIOSK' },
               ].map((c, idx) => (
                 <group
                   key={c.st}
@@ -254,7 +255,7 @@ export const FinanceTerminal3D: React.FC = () => {
                     <planeGeometry args={[0.38, 0.14]} />
                     <meshBasicMaterial color="#0b1e36" transparent opacity={0.6} side={THREE.DoubleSide} />
                   </mesh>
-                  <Text position={[0, 0, 0.01]} fontSize={0.05} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  <Text position={[0, 0, 0.01]} fontSize={0.045} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
                     {c.label}
                   </Text>
                 </group>
@@ -266,22 +267,27 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* LOG NEW EXPENSE FORM (In pure 3D) */}
         {isLoggingExpense && (
           <group position={[0, -0.05, 0.04]}>
-            <Text position={[0, 0.35, 0]} fontSize={0.09} color="#ffab00" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-              LOG NEW SYNDICATE EXPENSE (BACKEND POST)
+            <Text position={[0, 0.35, 0]} fontSize={0.08} color="#ffab00" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+              GHI NHẬN CHI PHÍ ĐỒNG SỞ HỮU (LƯU SỔ CÁI)
             </Text>
 
             {/* Category selection */}
             <group position={[0, 0.18, 0]}>
-              {(['CHARGING', 'MAINTENANCE', 'CLEANING', 'PARKING'] as ExpenseCategory[]).map((cat, idx) => {
-                const isSel = newExpCategory === cat;
+              {([
+                { id: 'CHARGING', label: 'SẠC PIN' },
+                { id: 'MAINTENANCE', label: 'BẢO DƯỠNG' },
+                { id: 'CLEANING', label: 'VỆ SINH' },
+                { id: 'PARKING', label: 'GỬI XE' },
+              ] as { id: ExpenseCategory; label: string }[]).map((cat, idx) => {
+                const isSel = newExpCategory === cat.id;
                 const x = (idx - 1.5) * 0.6;
                 return (
                   <group
-                    key={cat}
+                    key={cat.id}
                     position={[x, 0, 0]}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setNewExpCategory(cat);
+                      setNewExpCategory(cat.id);
                     }}
                   >
                     <mesh>
@@ -289,7 +295,7 @@ export const FinanceTerminal3D: React.FC = () => {
                       <meshBasicMaterial color={isSel ? '#00e5ff' : '#081729'} transparent opacity={isSel ? 0.8 : 0.4} side={THREE.DoubleSide} />
                     </mesh>
                     <Text position={[0, 0, 0.01]} fontSize={0.05} color={isSel ? '#040b17' : '#f0f4fc'} anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                      {cat}
+                      {cat.label}
                     </Text>
                   </group>
                 );
@@ -298,11 +304,11 @@ export const FinanceTerminal3D: React.FC = () => {
 
             {/* Amount stepper */}
             <group position={[0, -0.02, 0]}>
-              <Text position={[-0.8, 0, 0]} fontSize={0.07} color="#8a94a6" anchorX="left">
-                Amount:
+              <Text position={[-0.8, 0, 0]} fontSize={0.065} color="#8a94a6" anchorX="left">
+                Số tiền:
               </Text>
-              <Text position={[0, 0, 0]} fontSize={0.11} color="#00e676" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
-                {`${newExpAmount.toLocaleString()} VND`}
+              <Text position={[0, 0, 0]} fontSize={0.1} color="#00e676" anchorX="center" font="/fonts/JetBrainsMono-Bold.ttf">
+                {formatCurrencyVND(newExpAmount)}
               </Text>
               <group
                 position={[0.55, 0, 0]}
@@ -349,8 +355,8 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[0.7, 0.16]} />
                   <meshBasicMaterial color="#00e676" transparent opacity={0.5} side={THREE.DoubleSide} />
                 </mesh>
-                <Text position={[0, 0, 0.01]} fontSize={0.065} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                  ✓ SUBMIT TO LEDGER
+                <Text position={[0, 0, 0.01]} fontSize={0.055} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  ✓ GỬI VÀO SỔ CÁI
                 </Text>
               </group>
 
@@ -365,8 +371,8 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[0.6, 0.16]} />
                   <meshBasicMaterial color="#ff1744" transparent opacity={0.3} side={THREE.DoubleSide} />
                 </mesh>
-                <Text position={[0, 0, 0.01]} fontSize={0.065} color="#ff1744" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                  CANCEL
+                <Text position={[0, 0, 0.01]} fontSize={0.06} color="#ff1744" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                  HỦY
                 </Text>
               </group>
             </group>
@@ -376,8 +382,8 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* TAB 2: EXPENSES */}
         {activeTab === 'EXPENSES' && (
           <group position={[0, -0.05, 0.04]}>
-            <Text position={[0, 0.35, 0]} fontSize={0.085} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-              ACTIVE SYNDICATE EXPENDITURE LEDGER
+            <Text position={[0, 0.35, 0]} fontSize={0.08} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+              SỔ CÁI CHI PHÍ ĐỒNG SỞ HỮU ĐANG HOẠT ĐỘNG
             </Text>
             {expenses.slice(0, 4).map((exp, idx) => (
               <group key={exp.id} position={[0, 0.15 - idx * 0.18, 0]}>
@@ -385,14 +391,14 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[2.5, 0.14]} />
                   <meshBasicMaterial color="#071526" transparent opacity={0.6} />
                 </mesh>
-                <Text position={[-1.15, 0, 0.01]} fontSize={0.06} color="#ffffff" anchorX="left">
+                <Text position={[-1.15, 0, 0.01]} fontSize={0.055} color="#ffffff" anchorX="left">
                   {exp.title}
                 </Text>
-                <Text position={[0.4, 0, 0.01]} fontSize={0.065} color="#00e5ff" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
-                  {`${exp.amountVnd.toLocaleString()} VND`}
+                <Text position={[0.4, 0, 0.01]} fontSize={0.06} color="#00e5ff" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
+                  {formatCurrencyVND(exp.amountVnd)}
                 </Text>
-                <Text position={[1.15, 0, 0.01]} fontSize={0.055} color={exp.isSettled ? '#00e676' : '#ffab00'} anchorX="right">
-                  {exp.isSettled ? 'SETTLED' : 'DUE'}
+                <Text position={[1.15, 0, 0.01]} fontSize={0.05} color={exp.isSettled ? '#00e676' : '#ffab00'} anchorX="right">
+                  {exp.isSettled ? 'ĐÃ QUYẾT TOÁN' : 'CHƯA ĐÓNG'}
                 </Text>
               </group>
             ))}
@@ -402,8 +408,8 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* TAB 3: ALLOCATION */}
         {activeTab === 'ALLOCATION' && (
           <group position={[0, -0.05, 0.04]}>
-            <Text position={[0, 0.35, 0]} fontSize={0.085} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-              MEMBER ALLOCATION BALANCES
+            <Text position={[0, 0.35, 0]} fontSize={0.08} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+              CÂN ĐỐI PHÂN BỔ TỪNG THÀNH VIÊN
             </Text>
             {memberSummaries.map((m, idx) => (
               <group key={m.userId} position={[0, 0.15 - idx * 0.18, 0]}>
@@ -411,17 +417,17 @@ export const FinanceTerminal3D: React.FC = () => {
                   <planeGeometry args={[2.5, 0.14]} />
                   <meshBasicMaterial color="#071526" transparent opacity={0.6} />
                 </mesh>
-                <Text position={[-1.15, 0, 0.01]} fontSize={0.065} color="#ffffff" anchorX="left">
+                <Text position={[-1.15, 0, 0.01]} fontSize={0.06} color="#ffffff" anchorX="left">
                   {m.userName}
                 </Text>
-                <Text position={[-0.2, 0, 0.01]} fontSize={0.055} color="#8a94a6" anchorX="left">
-                  {`Share: ${m.equityPercentage}%`}
+                <Text position={[-0.2, 0, 0.01]} fontSize={0.05} color="#8a94a6" anchorX="left">
+                  {`Cổ phần: ${m.equityPercentage}%`}
                 </Text>
-                <Text position={[0.4, 0, 0.01]} fontSize={0.065} color="#00e5ff" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
-                  {`${(m.allocatedTotalVnd / 1000000).toFixed(2)}M`}
+                <Text position={[0.4, 0, 0.01]} fontSize={0.06} color="#00e5ff" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
+                  {formatCurrencyVND(m.allocatedTotalVnd)}
                 </Text>
-                <Text position={[1.15, 0, 0.01]} fontSize={0.06} color={m.outstandingDueVnd === 0 ? '#00e676' : '#ff1744'} anchorX="right">
-                  {m.outstandingDueVnd === 0 ? 'SETTLED' : `DUE: ${(m.outstandingDueVnd / 1000000).toFixed(2)}M`}
+                <Text position={[1.15, 0, 0.01]} fontSize={0.055} color={m.outstandingDueVnd === 0 ? '#00e676' : '#ff1744'} anchorX="right">
+                  {m.outstandingDueVnd === 0 ? 'ĐÃ XONG' : `NỢ: ${formatCurrencyVND(m.outstandingDueVnd)}`}
                 </Text>
               </group>
             ))}
@@ -431,11 +437,11 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* TAB 4: PAYMENT LINK */}
         {activeTab === 'PAYMENT' && (
           <group position={[0, -0.05, 0.04]}>
-            <Text position={[0, 0.2, 0]} fontSize={0.09} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-              3D PAYMENT KIOSK ACTIVE
+            <Text position={[0, 0.2, 0]} fontSize={0.085} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+              TRẠM THANH TOÁN 3D ĐÃ SẴN SÀNG
             </Text>
-            <Text position={[0, 0.05, 0]} fontSize={0.07} color="#8a94a6" anchorX="center">
-              Please step up to the Contactless 3D Payment Kiosk on your right to settle dues.
+            <Text position={[0, 0.05, 0]} fontSize={0.065} color="#8a94a6" anchorX="center">
+              Vui lòng bước tới Trạm thanh toán 3D bên phải để thanh toán các khoản phí nợ.
             </Text>
             <group
               position={[0, -0.2, 0]}
@@ -448,8 +454,8 @@ export const FinanceTerminal3D: React.FC = () => {
                 <planeGeometry args={[0.9, 0.18]} />
                 <meshBasicMaterial color="#00e676" transparent opacity={0.4} side={THREE.DoubleSide} />
               </mesh>
-              <Text position={[0, 0, 0.01]} fontSize={0.07} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-                FOCUS PAYMENT KIOSK ➔
+              <Text position={[0, 0, 0.01]} fontSize={0.06} color="#00e676" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+                ĐẾN TRẠM THANH TOÁN ➔
               </Text>
             </group>
           </group>
@@ -458,29 +464,29 @@ export const FinanceTerminal3D: React.FC = () => {
         {/* TAB 5: AUDIT */}
         {activeTab === 'AUDIT' && (
           <group position={[0, -0.05, 0.04]}>
-            <Text position={[0, 0.35, 0]} fontSize={0.085} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
-              IMMUTABLE FINANCIAL AUDIT TRAIL
+            <Text position={[0, 0.35, 0]} fontSize={0.08} color="#00e5ff" anchorX="center" font="/fonts/Orbitron-Bold.ttf">
+              SỔ KIỂM TOÁN TÀI CHÍNH BẤT BIẾN
             </Text>
             {[
-              { id: 'TX-1092', action: 'PAYMENT_SETTLED', user: 'Minh Hiep', amount: '2,975,000 VND', status: 'VERIFIED' },
-              { id: 'TX-1091', action: 'FUND_TOPUP', user: 'Tran Duc', amount: '10,000,000 VND', status: 'VERIFIED' },
-              { id: 'TX-1090', action: 'EXPENSE_RECORDED', user: 'System', amount: '4,200,000 VND', status: 'COMMITTED' },
+              { id: 'TX-1092', action: 'QUYẾT TOÁN PHÍ', user: 'Minh Hiep', amount: '2.975.000 ₫', status: 'ĐÃ XÁC MINH' },
+              { id: 'TX-1091', action: 'NẠP QUỸ CHUNG', user: 'Tran Duc', amount: '10.000.000 ₫', status: 'ĐÃ XÁC MINH' },
+              { id: 'TX-1090', action: 'GHI CHI PHÍ MỚI', user: 'Hệ thống', amount: '4.200.000 ₫', status: 'ĐÃ GHI SỔ' },
             ].map((log, idx) => (
               <group key={log.id} position={[0, 0.15 - idx * 0.18, 0]}>
                 <mesh position={[0, 0, 0]}>
                   <planeGeometry args={[2.5, 0.14]} />
                   <meshBasicMaterial color="#071526" transparent opacity={0.6} />
                 </mesh>
-                <Text position={[-1.15, 0, 0.01]} fontSize={0.06} color="#8a94a6" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
+                <Text position={[-1.15, 0, 0.01]} fontSize={0.055} color="#8a94a6" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
                   {log.id}
                 </Text>
-                <Text position={[-0.6, 0, 0.01]} fontSize={0.06} color="#ffffff" anchorX="left">
+                <Text position={[-0.6, 0, 0.01]} fontSize={0.055} color="#ffffff" anchorX="left">
                   {log.action}
                 </Text>
                 <Text position={[0.4, 0, 0.01]} fontSize={0.06} color="#00e5ff" anchorX="left" font="/fonts/JetBrainsMono-Bold.ttf">
                   {log.amount}
                 </Text>
-                <Text position={[1.15, 0, 0.01]} fontSize={0.055} color="#00e676" anchorX="right">
+                <Text position={[1.15, 0, 0.01]} fontSize={0.05} color="#00e676" anchorX="right">
                   {log.status}
                 </Text>
               </group>

@@ -105,7 +105,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         currentUser: user,
         isGateUnlocked: true,
         authMode: 'AUTHENTICATED',
-        successNotice: `Welcome back, ${user.fullName || user.email}.`,
+        successNotice: `Chào mừng trở lại, ${user.fullName || user.email}.`,
       });
 
       return true;
@@ -132,7 +132,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const password = passwordOverride ?? get().passwordInput;
 
     if (!email || !password) {
-      set({ authError: 'Please enter both email and password.' });
+      set({ authError: 'Vui lòng nhập đầy đủ email và mật mã.' });
       return false;
     }
 
@@ -160,7 +160,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         currentUser: authData.user,
         isGateUnlocked: true,
         authMode: 'AUTHENTICATED',
-        successNotice: `Access Granted. Identity verified as ${authData.user.fullName || authData.user.email}.`,
+        successNotice: `Đã cấp quyền truy cập. Danh tính xác thực: ${authData.user.fullName || authData.user.email}.`,
         authError: null,
       });
 
@@ -170,7 +170,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       AudioEngine.play('NOTIF_ERROR');
       set({
         isLoading: false,
-        authError: message || 'Authentication failed. Please check credentials.',
+        authError: message || 'Xác thực thất bại. Vui lòng kiểm tra lại thông tin.',
         isGateUnlocked: false,
       });
       return false;
@@ -184,7 +184,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const phoneNumber = get().phoneNumberInput.trim();
 
     if (!fullName || !email || !password) {
-      set({ authError: 'Please fill in full name, email, and password.' });
+      set({ authError: 'Vui lòng điền đầy đủ họ tên, email và mật khẩu.' });
       return false;
     }
 
@@ -202,7 +202,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const loginSuccess = await get().login(email, password);
       if (loginSuccess) {
         set({
-          successNotice: `Account registered successfully! Welcome, ${newUser.fullName}.`,
+          successNotice: `Đăng ký tài khoản thành công! Chào mừng, ${newUser.fullName}.`,
         });
         return true;
       }
@@ -210,7 +210,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({
         isLoading: false,
         authMode: 'LOGIN',
-        successNotice: 'Registration complete. Please sign in with your credentials.',
+        successNotice: 'Đăng ký hoàn tất. Vui lòng đăng nhập với thông tin của bạn.',
       });
       return true;
     } catch (err) {
@@ -218,7 +218,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       AudioEngine.play('NOTIF_ERROR');
       set({
         isLoading: false,
-        authError: message || 'Registration failed. Email may already be in use.',
+        authError: message || 'Đăng ký thất bại. Email có thể đã được sử dụng.',
       });
       return false;
     }
@@ -241,7 +241,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         isGateUnlocked: false,
         authMode: 'LOGIN',
         authError: null,
-        successNotice: 'Session terminated. Gateway barrier armed.',
+        successNotice: 'Phiên làm việc kết thúc. Cổng an ninh đã kích hoạt khóa.',
       });
 
       // Navigate back to Security Checkpoint if player was inside
@@ -259,7 +259,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         passwordInput: 'Password123!',
         fullNameInput: 'Alice Owner',
         authError: null,
-        successNotice: 'Pre-filled Co-Owner credentials (alice@evshare.io).',
+        successNotice: 'Đã điền thông tin mẫu Đồng sở hữu (alice@evshare.io).',
       });
     } else if (role === 'STAFF') {
       set({
@@ -267,7 +267,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         passwordInput: 'Password123!',
         fullNameInput: 'Tuan Staff',
         authError: null,
-        successNotice: 'Pre-filled Operations Staff credentials (tuan@evshare.io).',
+        successNotice: 'Đã điền thông tin mẫu Nhân viên vận hành (tuan@evshare.io).',
       });
     } else if (role === 'ADMIN') {
       set({
@@ -275,14 +275,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         passwordInput: 'Password123!',
         fullNameInput: 'Minh Hiep',
         authError: null,
-        successNotice: 'Pre-filled Sovereign Administrator credentials (admin@evshare.io).',
+        successNotice: 'Đã điền thông tin mẫu Quản trị viên (admin@evshare.io).',
       });
     }
   },
 
   enterWorld: async () => {
     if (!get().isGateUnlocked || !useAppStore.getState().isAuthenticated) {
-      set({ authError: 'Gate is locked. Please authenticate first.' });
+      set({ authError: 'Cổng đang khóa. Vui lòng xác thực danh tính trước.' });
       return false;
     }
 

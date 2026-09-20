@@ -6,6 +6,7 @@ import { VAULT_LAYOUT } from './vaultLayout';
 import type { VaultTab } from './vaultTypes';
 import type { PaymentMethod } from '@/api/financeApi';
 import { AudioEngine } from '@/engine/audio/AudioEngine';
+import { formatCurrencyVND } from '@/i18n';
 
 export const VaultTerminal3D: React.FC = () => {
   const activeTab = useVaultStore((state) => state.activeTab);
@@ -34,11 +35,11 @@ export const VaultTerminal3D: React.FC = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const tabs: { id: VaultTab; label: string }[] = [
-    { id: 'OVERVIEW', label: 'OVERVIEW' },
-    { id: 'CONTRIBUTE', label: 'CONTRIBUTE' },
-    { id: 'WITHDRAW', label: 'WITHDRAW' },
-    { id: 'TRANSACTIONS', label: 'LEDGER' },
-    { id: 'AUDIT_RECONCILIATION', label: 'AUDIT' },
+    { id: 'OVERVIEW', label: 'TỔNG QUAN' },
+    { id: 'CONTRIBUTE', label: 'NẠP TIỀN' },
+    { id: 'WITHDRAW', label: 'RÚT TIỀN' },
+    { id: 'TRANSACTIONS', label: 'SỔ CÁI' },
+    { id: 'AUDIT_RECONCILIATION', label: 'KIỂM TOÁN' },
   ];
 
   const currentBalance = sharedFund?.currentBalance ?? 45000000;
@@ -97,13 +98,13 @@ export const VaultTerminal3D: React.FC = () => {
         <group position={[0, 0.95, 0.03]}>
           <Text
             position={[-1.7, 0, 0]}
-            fontSize={0.15}
+            fontSize={0.13}
             color={VAULT_LAYOUT.theme.goldPrimary}
             anchorX="left"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            EVSHARE VAULT OS v4.2 • CO-OWNERSHIP TREASURY
+            HỆ THỐNG KHO QUỸ EVSHARE v4.2 • QUỸ DỰ PHÒNG ĐỒNG SỞ HỮU
           </Text>
 
           {/* Sync Button */}
@@ -122,13 +123,13 @@ export const VaultTerminal3D: React.FC = () => {
               <meshBasicMaterial color={hoveredButton === 'SYNC' ? VAULT_LAYOUT.theme.amberAccent : '#1e293b'} />
             </mesh>
             <Text
-              fontSize={0.11}
+              fontSize={0.095}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
             >
-              SYNC
+              ĐỒNG BỘ
             </Text>
           </group>
         </group>
@@ -169,7 +170,7 @@ export const VaultTerminal3D: React.FC = () => {
                   />
                 </mesh>
                 <Text
-                  fontSize={0.11}
+                  fontSize={0.095}
                   color={isActive ? '#000000' : '#ffffff'}
                   anchorX="center"
                   anchorY="middle"
@@ -200,27 +201,27 @@ export const VaultTerminal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                TOTAL VAULT LIQUIDITY
+                TỔNG THANH KHOẢN QUỸ
               </Text>
               <Text
                 position={[-1.6, 0.28, 0.01]}
-                fontSize={0.22}
+                fontSize={0.19}
                 color={VAULT_LAYOUT.theme.goldPrimary}
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                {currentBalance.toLocaleString('vi-VN')} VND
+                {formatCurrencyVND(currentBalance)}
               </Text>
               <Text
                 position={[-1.6, 0.06, 0.01]}
-                fontSize={0.1}
+                fontSize={0.095}
                 color={isBelowReserve ? '#ff5252' : VAULT_LAYOUT.theme.solvencyGreen}
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                {isBelowReserve ? '⚠️ BELOW SAFETY RESERVE' : '✓ 100% SOLVENT & OPERATIONAL'}
+                {isBelowReserve ? '⚠️ DƯỚI HẠN MỨC DỰ PHÒNG' : '✓ THANH KHOẢN AN TOÀN 100%'}
               </Text>
 
               {/* Reserve Box */}
@@ -236,27 +237,27 @@ export const VaultTerminal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                BR-FIN-03 MIN RESERVE
+                DỰ PHÒNG TỐI THIỂU BR-FIN-03
               </Text>
               <Text
                 position={[0.1, 0.28, 0.01]}
-                fontSize={0.2}
+                fontSize={0.19}
                 color="#ffffff"
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                {minimumReserve.toLocaleString('vi-VN')} VND
+                {formatCurrencyVND(minimumReserve)}
               </Text>
               <Text
                 position={[0.1, 0.06, 0.01]}
-                fontSize={0.1}
+                fontSize={0.095}
                 color={VAULT_LAYOUT.theme.textMuted}
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
               >
-                NON-OVERDRAFT PROTECTION ACTIVE
+                CHỐNG THẤU CHI ĐANG HOẠT ĐỘNG
               </Text>
 
               {/* Quick Actions Pedestals */}
@@ -276,13 +277,13 @@ export const VaultTerminal3D: React.FC = () => {
                     <meshBasicMaterial color={hoveredButton === 'GOTO_DEP' ? VAULT_LAYOUT.theme.goldPrimary : '#132338'} />
                   </mesh>
                   <Text
-                    fontSize={0.13}
+                    fontSize={0.12}
                     color={hoveredButton === 'GOTO_DEP' ? '#000000' : '#ffffff'}
                     anchorX="center"
                     anchorY="middle"
                     font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                   >
-                    + DEPOSIT FUNDS
+                    + NẠP VỐN VÀO QUỸ
                   </Text>
                 </group>
 
@@ -301,13 +302,13 @@ export const VaultTerminal3D: React.FC = () => {
                     <meshBasicMaterial color={hoveredButton === 'GOTO_WTH' ? VAULT_LAYOUT.theme.dangerRed : '#24141c'} />
                   </mesh>
                   <Text
-                    fontSize={0.13}
+                    fontSize={0.12}
                     color="#ffffff"
                     anchorX="center"
                     anchorY="middle"
                     font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                   >
-                    - DISBURSE FUNDS
+                    - CHI TIỀN TỪ QUỸ
                   </Text>
                 </group>
               </group>
@@ -319,13 +320,13 @@ export const VaultTerminal3D: React.FC = () => {
             <group>
               <Text
                 position={[-1.7, 0.58, 0]}
-                fontSize={0.14}
+                fontSize={0.13}
                 color={VAULT_LAYOUT.theme.goldPrimary}
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                SELECT CONTRIBUTION CAPITAL AMOUNT:
+                CHỌN SỐ TIỀN ĐÓNG GÓP VỐN:
               </Text>
 
               {/* Amount Chips */}
@@ -355,13 +356,13 @@ export const VaultTerminal3D: React.FC = () => {
                         />
                       </mesh>
                       <Text
-                        fontSize={0.12}
+                        fontSize={0.11}
                         color={isSel ? '#000000' : '#ffffff'}
                         anchorX="center"
                         anchorY="middle"
                         font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
                       >
-                        +{(amt / 1000000).toFixed(0)}M VND
+                        +{(amt / 1000000).toFixed(0)} Tr ₫
                       </Text>
                     </group>
                   );
@@ -371,13 +372,13 @@ export const VaultTerminal3D: React.FC = () => {
               {/* Selected Amount Display */}
               <Text
                 position={[0, 0.06, 0]}
-                fontSize={0.22}
+                fontSize={0.19}
                 color={VAULT_LAYOUT.theme.goldPrimary}
                 anchorX="center"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                AMOUNT: {depositAmountVnd.toLocaleString('vi-VN')} VND
+                SỐ TIỀN: {formatCurrencyVND(depositAmountVnd)}
               </Text>
 
               {/* Payment Method Chips */}
@@ -385,6 +386,12 @@ export const VaultTerminal3D: React.FC = () => {
                 {paymentMethods.map((m, idx) => {
                   const x = -1.25 + idx * 0.83;
                   const isSel = depositPaymentMethod === m;
+                  const methodLabels: Record<PaymentMethod, string> = {
+                    VNPAY: 'VNPAY',
+                    MOMO: 'MOMO',
+                    BANK_TRANSFER: 'CHUYỂN KHOẢN',
+                    SYNDICATE_WALLET: 'VÍ NHÓM',
+                  };
                   return (
                     <group
                       key={m}
@@ -403,13 +410,13 @@ export const VaultTerminal3D: React.FC = () => {
                         />
                       </mesh>
                       <Text
-                        fontSize={0.09}
+                        fontSize={0.08}
                         color={isSel ? '#000000' : '#94a3b8'}
                         anchorX="center"
                         anchorY="middle"
                         font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                       >
-                        {m.replace('_', ' ')}
+                        {methodLabels[m] || m}
                       </Text>
                     </group>
                   );
@@ -433,13 +440,13 @@ export const VaultTerminal3D: React.FC = () => {
                   />
                 </mesh>
                 <Text
-                  fontSize={0.14}
+                  fontSize={0.12}
                   color={hoveredButton === 'SUBMIT_DEP' ? '#000000' : '#ffffff'}
                   anchorX="center"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  TRANSMIT DEPOSIT TO BACKEND VAULT
+                  GỬI YÊU CẦU NẠP TIỀN VÀO QUỸ
                 </Text>
               </group>
             </group>
@@ -450,13 +457,13 @@ export const VaultTerminal3D: React.FC = () => {
             <group>
               <Text
                 position={[-1.7, 0.58, 0]}
-                fontSize={0.13}
+                fontSize={0.12}
                 color={VAULT_LAYOUT.theme.dangerRed}
                 anchorX="left"
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                DISBURSE FUNDS • BR-FIN-03 RESERVE PROTECTION:
+                CHI TIỀN TỪ QUỸ • BẢO VỆ HẠN MỨC DỰ PHÒNG BR-FIN-03:
               </Text>
 
               {/* Amount Chips (Includes 35M to demonstrate real BR-FIN-03 rejection!) */}
@@ -486,13 +493,13 @@ export const VaultTerminal3D: React.FC = () => {
                         />
                       </mesh>
                       <Text
-                        fontSize={0.11}
+                        fontSize={0.1}
                         color="#ffffff"
                         anchorX="center"
                         anchorY="middle"
                         font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
                       >
-                        -{(amt / 1000000).toFixed(1)}M VND
+                        -{(amt / 1000000).toFixed(1)} Tr ₫
                       </Text>
                     </group>
                   );
@@ -503,17 +510,17 @@ export const VaultTerminal3D: React.FC = () => {
               <group position={[0, 0.05, 0]}>
                 <Text
                   position={[-1.6, 0, 0]}
-                  fontSize={0.16}
+                  fontSize={0.14}
                   color={VAULT_LAYOUT.theme.dangerRed}
                   anchorX="left"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  AMOUNT: {withdrawalAmountVnd.toLocaleString('vi-VN')} VND
+                  SỐ TIỀN: {formatCurrencyVND(withdrawalAmountVnd)}
                 </Text>
                 <Text
                   position={[1.6, 0, 0]}
-                  fontSize={0.13}
+                  fontSize={0.12}
                   color={
                     currentBalance - withdrawalAmountVnd < minimumReserve
                       ? '#ff5252'
@@ -523,7 +530,7 @@ export const VaultTerminal3D: React.FC = () => {
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
                 >
-                  PROJECTED: {(currentBalance - withdrawalAmountVnd).toLocaleString('vi-VN')} VND
+                  DỰ PHÓNG SAU CHI: {formatCurrencyVND(currentBalance - withdrawalAmountVnd)}
                 </Text>
               </group>
 
@@ -545,23 +552,23 @@ export const VaultTerminal3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[-1.1, 0, 0]}
-                  fontSize={0.12}
+                  fontSize={0.11}
                   color="#ffffff"
                   anchorX="left"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
                 >
-                  ALLOW OVERDRAFT (SPECIAL QUORUM WAIVER)
+                  CHO PHÉP THẤU CHI (MIỄN TRỪ CẦN BIỂU QUYẾT ĐẶC BIỆT)
                 </Text>
                 <Text
                   position={[1.6, 0, 0]}
-                  fontSize={0.11}
+                  fontSize={0.1}
                   color={withdrawalAllowOverdraft ? VAULT_LAYOUT.theme.goldPrimary : VAULT_LAYOUT.theme.textMuted}
                   anchorX="right"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  [{withdrawalAllowOverdraft ? 'OVERDRAFT: ENABLED' : 'OVERDRAFT: BLOCKED'}]
+                  [{withdrawalAllowOverdraft ? 'THẤU CHI: ĐÃ BẬT' : 'THẤU CHI: ĐÃ CHẶN'}]
                 </Text>
               </group>
 
@@ -582,13 +589,13 @@ export const VaultTerminal3D: React.FC = () => {
                   />
                 </mesh>
                 <Text
-                  fontSize={0.14}
+                  fontSize={0.12}
                   color="#ffffff"
                   anchorX="center"
                   anchorY="middle"
                   font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                 >
-                  EXECUTE DISBURSEMENT FROM VAULT
+                  THỰC HIỆN LỆNH CHI TIỀN TỪ QUỸ
                 </Text>
               </group>
             </group>
@@ -605,7 +612,7 @@ export const VaultTerminal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                RECENT VAULT TRANSACTIONS:
+                GIAO DỊCH QUỸ GẦN ĐÂY:
               </Text>
 
               {transactions.slice(0, 4).map((tx, idx) => {
@@ -629,13 +636,13 @@ export const VaultTerminal3D: React.FC = () => {
                     </Text>
                     <Text
                       position={[1.6, 0, 0.01]}
-                      fontSize={0.12}
+                      fontSize={0.11}
                       color={isDeposit ? VAULT_LAYOUT.theme.solvencyGreen : VAULT_LAYOUT.theme.dangerRed}
                       anchorX="right"
                       anchorY="middle"
                       font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                     >
-                      {isDeposit ? '+' : '-'}{tx.amountVnd.toLocaleString('vi-VN')} VND
+                      {isDeposit ? '+' : '-'}{formatCurrencyVND(tx.amountVnd)}
                     </Text>
                   </group>
                 );
@@ -654,7 +661,7 @@ export const VaultTerminal3D: React.FC = () => {
                 anchorY="middle"
                 font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
               >
-                CRYPTOGRAPHIC AUDIT TRAIL:
+                CHUỖI BẰNG CHỨNG KIỂM TOÁN MẬT MÃ:
               </Text>
 
               {auditHistory.slice(0, 3).map((item, idx) => {
@@ -667,17 +674,17 @@ export const VaultTerminal3D: React.FC = () => {
                     </mesh>
                     <Text
                       position={[-1.6, 0.08, 0.01]}
-                      fontSize={0.11}
+                      fontSize={0.1}
                       color={VAULT_LAYOUT.theme.goldPrimary}
                       anchorX="left"
                       anchorY="middle"
                       font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
                     >
-                      [{item.action}] BY {item.actorName} ({item.ipAddress})
+                      [{item.action}] BỞI {item.actorName} ({item.ipAddress})
                     </Text>
                     <Text
                       position={[-1.6, -0.08, 0.01]}
-                      fontSize={0.09}
+                      fontSize={0.085}
                       color={VAULT_LAYOUT.theme.textMuted}
                       anchorX="left"
                       anchorY="middle"
@@ -710,7 +717,7 @@ export const VaultTerminal3D: React.FC = () => {
             </mesh>
             <Text
               position={[-1.7, 0, 0.01]}
-              fontSize={0.1}
+              fontSize={0.095}
               color={
                 operationStatus.status === 'SUCCESS'
                   ? VAULT_LAYOUT.theme.solvencyGreen

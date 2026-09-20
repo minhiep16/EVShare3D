@@ -65,13 +65,12 @@ export const EvidenceDisplay3D: React.FC = () => {
       {/* Station Title */}
       <Text
         position={[0, 3.2, 0]}
-        fontSize={0.22}
+        fontSize={0.2}
         color={DISPUTE_THEME.cyberCyan}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        IMMUTABLE EVIDENCE STAGING CAROUSEL
+        BĂNG CHUYỀN TRÌNH DIỄN CHỨNG CỨ BẤT BIẾN
       </Text>
       <Text
         position={[0, 2.94, 0]}
@@ -80,7 +79,7 @@ export const EvidenceDisplay3D: React.FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        BR-DIS-01 Compliant • Permanent Cryptographic Hash Registry
+        Chuẩn BR-DIS-01 • Sổ đăng ký băm mật mã vĩnh viễn
       </Text>
 
       {/* Heavy Base Pedestal */}
@@ -132,12 +131,12 @@ export const EvidenceDisplay3D: React.FC = () => {
         <group position={[-1.05, 0.45, 0.02]}>
           <Text
             position={[0, 0.35, 0]}
-            fontSize={0.09}
+            fontSize={0.082}
             color={DISPUTE_THEME.cyberCyan}
             anchorX="center"
             anchorY="middle"
           >
-            EVIDENCE DOSSIER ({evidenceList.length})
+            HỒ SƠ CHỨNG CỨ ({evidenceList.length})
           </Text>
 
           {evidenceList.map((item, idx) => {
@@ -182,21 +181,21 @@ export const EvidenceDisplay3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[-0.42, 0.08, 0.02]}
-                  fontSize={0.068}
+                  fontSize={0.065}
                   color={isSelected ? DISPUTE_THEME.secondary : '#ffffff'}
                   anchorX="left"
                   anchorY="middle"
                 >
-                  DOC #{item.id} • {item.fileUrl.endsWith('.pdf') ? 'PDF' : 'JPG'}
+                  TÀI LIỆU #{item.id} • {item.fileUrl.endsWith('.pdf') ? 'PDF' : 'JPG'}
                 </Text>
                 <Text
                   position={[-0.42, -0.06, 0.02]}
-                  fontSize={0.052}
+                  fontSize={0.05}
                   color={DISPUTE_THEME.textMuted}
                   anchorX="left"
                   anchorY="middle"
                 >
-                  By: {item.uploadedByUserName}
+                  Bởi: {item.uploadedByUserName}
                 </Text>
               </group>
             );
@@ -232,12 +231,12 @@ export const EvidenceDisplay3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.062}
+              fontSize={0.058}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ➕ ATTACH EVIDENCE ]
+              [ ➕ THÊM CHỨNG CỨ ]
             </Text>
           </group>
         </group>
@@ -252,22 +251,22 @@ export const EvidenceDisplay3D: React.FC = () => {
             </mesh>
             <Text
               position={[0.45, 0.8, 0.02]}
-              fontSize={0.058}
+              fontSize={0.054}
               color="#34d399"
               anchorX="center"
               anchorY="middle"
             >
-              ✓ IMMUTABLE • BR-DIS-01
+              ✓ BẤT BIẾN • BR-DIS-01
             </Text>
 
             <Text
               position={[-0.85, 0.8, 0]}
-              fontSize={0.095}
+              fontSize={0.09}
               color={DISPUTE_THEME.cyberCyan}
               anchorX="left"
               anchorY="middle"
             >
-              EVIDENCE RECORD #{selectedEvidence.id}
+              BẢN GHI CHỨNG CỨ #{selectedEvidence.id}
             </Text>
 
             {/* Document / Photo Visual Thumbnail Simulator */}
@@ -287,7 +286,7 @@ export const EvidenceDisplay3D: React.FC = () => {
             {/* Thumbnail Content Mock Graphic */}
             <Text
               position={[0, 0.44, 0.02]}
-              fontSize={0.075}
+              fontSize={0.072}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
@@ -296,38 +295,38 @@ export const EvidenceDisplay3D: React.FC = () => {
             </Text>
             <Text
               position={[0, 0.28, 0.02]}
-              fontSize={0.058}
+              fontSize={0.054}
               color={DISPUTE_THEME.secondary}
               anchorX="center"
               anchorY="middle"
             >
-              SHA-256: 8f49b1a03e...c99d (Verified Signature)
+              SHA-256: 8f49b1a03e...c99d (Chữ ký xác thực)
             </Text>
 
             {/* 3D Coordinates Specification */}
             <Text
               position={[-0.85, -0.08, 0]}
-              fontSize={0.068}
+              fontSize={0.065}
               color={DISPUTE_THEME.secondary}
               anchorX="left"
               anchorY="middle"
             >
-              3D Mesh Defect Coordinates:
+              Tọa độ lưới điểm hỏng 3D:
             </Text>
             <Text
               position={[-0.85, -0.22, 0]}
-              fontSize={0.065}
+              fontSize={0.062}
               color="#38bdf8"
               anchorX="left"
               anchorY="middle"
             >
-              {selectedEvidence.mesh3dDefectCoordinates || 'None specified'}
+              {selectedEvidence.mesh3dDefectCoordinates || 'Chưa xác định tọa độ'}
             </Text>
 
             {/* Description Text */}
             <Text
               position={[-0.85, -0.38, 0]}
-              fontSize={0.062}
+              fontSize={0.06}
               color="#f8fafc"
               anchorX="left"
               anchorY="top"
@@ -367,12 +366,12 @@ export const EvidenceDisplay3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.02]}
-                fontSize={0.075}
+                fontSize={0.07}
                 color="#ffffff"
                 anchorX="center"
                 anchorY="middle"
               >
-                [ 📍 LOCATE ON 3D HOLOTANK ]
+                [ 📍 ĐỊNH VỊ TRÊN BỂ ẢNH 3D ]
               </Text>
             </group>
           </group>

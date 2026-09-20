@@ -94,17 +94,17 @@ export const DecisionChamberFloor3D: React.FC<DecisionChamberFloor3DProps> = () 
           anchorY="middle"
           letterSpacing={0.12}
         >
-          DECISION CHAMBER
+          PHÒNG HỘI NGHỊ BIỂU QUYẾT
         </Text>
         <Text
           position={[0, -0.45, 0]}
-          fontSize={0.2}
+          fontSize={0.19}
           color={DECISION_LAYOUT.colors.indigoLight}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          PARLIAMENTARY GOVERNANCE & DETERMINISTIC EQUITY VOTING
+          QUẢN TRỊ NGHỊ VIỆN & BIỂU QUYẾT TRỌNG SỐ CỔ PHẦN
         </Text>
       </group>
     </group>

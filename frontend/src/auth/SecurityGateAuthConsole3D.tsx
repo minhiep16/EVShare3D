@@ -34,13 +34,13 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
   const fillDemo = useAuthStore((state) => state.fillDemoCredentials);
   const enterWorld = useAuthStore((state) => state.enterWorld);
 
-  const statusLabel = isGateUnlocked ? 'CLEARED' : 'ARMED';
+  const statusLabel = isGateUnlocked ? 'ĐÃ MỞ KHÓA' : 'ĐANG BẢO VỆ';
   const statusVariant = isGateUnlocked ? 'emerald' : 'amber';
 
   return (
     <Terminal3D
       id="security_gate_auth_terminal"
-      title="Biometric Gateway Console"
+      title="Bàn Điều Khiển Cổng Xác Thực Sinh Trắc Học"
       statusLabel={statusLabel}
       statusVariant={statusVariant}
       position={position}
@@ -53,7 +53,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
         <group position={[0, 0.58, 0]}>
           <Button3D
             id="tab_login"
-            label="SIGN IN"
+            label="ĐĂNG NHẬP"
             width={0.9}
             height={0.18}
             variant={authMode === 'LOGIN' ? 'cyan' : 'dim'}
@@ -62,7 +62,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
           />
           <Button3D
             id="tab_register"
-            label="ENROLL / REGISTER"
+            label="ĐĂNG KÝ MỚI"
             width={1.05}
             height={0.18}
             variant={authMode === 'REGISTER' ? 'cyan' : 'dim'}
@@ -77,11 +77,11 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
         <group position={[0, 0.1, 0]}>
           <Input3D
             id="auth_login_email"
-            label="Driver Identity / Email"
+            label="Tài khoản Email / Tên đăng nhập"
             value={email}
             onChange={setEmail}
             onSubmit={() => login()}
-            placeholder="ENTER EMAIL..."
+            placeholder="NHẬP EMAIL..."
             width={2.0}
             height={0.22}
             position={[0, 0.28, 0]}
@@ -89,11 +89,11 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
 
           <Input3D
             id="auth_login_password"
-            label="Biometric Passkey"
+            label="Mật mã sinh trắc học"
             value={password}
             onChange={setPassword}
             onSubmit={() => login()}
-            placeholder="ENTER PASSKEY..."
+            placeholder="NHẬP MẬT MÃ..."
             isPassword
             width={2.0}
             height={0.22}
@@ -103,7 +103,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
           {/* Primary Submit Button */}
           <Button3D
             id="btn_auth_submit"
-            label={isLoading ? 'VERIFYING...' : 'AUTHORIZE ACCESS (ENTER)'}
+            label={isLoading ? 'ĐANG XÁC THỰC...' : 'XÁC THỰC TRUY CẬP (ENTER)'}
             width={2.0}
             height={0.24}
             variant="cyan"
@@ -120,12 +120,12 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
               anchorX="left"
               anchorY="middle"
             >
-              PRESET DEMO:
+              TÀI KHOẢN MẪU:
             </Text>
             <Button3D
               id="demo_co_owner"
-              label="CO-OWNER"
-              width={0.46}
+              label="ĐỒNG SỞ HỮU"
+              width={0.48}
               height={0.14}
               variant="amber"
               position={[-0.2, 0, 0]}
@@ -133,20 +133,20 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
             />
             <Button3D
               id="demo_staff"
-              label="STAFF"
-              width={0.38}
+              label="NHÂN VIÊN"
+              width={0.42}
               height={0.14}
               variant="amber"
-              position={[0.26, 0, 0]}
+              position={[0.28, 0, 0]}
               onClick={() => fillDemo('STAFF')}
             />
             <Button3D
               id="demo_admin"
-              label="ADMIN"
-              width={0.38}
+              label="QUẢN TRỊ"
+              width={0.4}
               height={0.14}
               variant="crimson"
-              position={[0.7, 0, 0]}
+              position={[0.72, 0, 0]}
               onClick={() => fillDemo('ADMIN')}
             />
           </group>
@@ -158,10 +158,10 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
         <group position={[0, 0.15, 0]}>
           <Input3D
             id="auth_reg_name"
-            label="Full Legal Name"
+            label="Họ và tên đầy đủ"
             value={fullName}
             onChange={setFullName}
-            placeholder="ENTER FULL NAME..."
+            placeholder="NHẬP HỌ TÊN..."
             width={2.0}
             height={0.2}
             position={[0, 0.28, 0]}
@@ -169,10 +169,10 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
 
           <Input3D
             id="auth_reg_email"
-            label="Account Email"
+            label="Địa chỉ Email"
             value={email}
             onChange={setEmail}
-            placeholder="ENTER EMAIL..."
+            placeholder="NHẬP EMAIL..."
             width={2.0}
             height={0.2}
             position={[0, 0.02, 0]}
@@ -180,10 +180,10 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
 
           <Input3D
             id="auth_reg_password"
-            label="Account Password"
+            label="Mật khẩu tài khoản"
             value={password}
             onChange={setPassword}
-            placeholder="CREATE PASSWORD..."
+            placeholder="TẠO MẬT KHẨU..."
             isPassword
             width={2.0}
             height={0.2}
@@ -192,7 +192,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
 
           <Button3D
             id="btn_reg_submit"
-            label={isLoading ? 'ENROLLING...' : 'ENROLL NEW IDENTITY'}
+            label={isLoading ? 'ĐANG ĐĂNG KÝ...' : 'ĐĂNG KÝ TÀI KHOẢN MỚI'}
             width={2.0}
             height={0.22}
             variant="emerald"
@@ -223,7 +223,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
             anchorY="middle"
             font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
           >
-            CLEARANCE GRANTED • IDENTITY VERIFIED
+            ĐÃ CẤP QUYỀN • DANH TÍNH ĐÃ XÁC THỰC
           </Text>
 
           <Text
@@ -234,7 +234,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
             anchorY="middle"
             font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
           >
-            {currentUser?.fullName || currentUser?.email || 'Authenticated Driver'}
+            {currentUser?.fullName || currentUser?.email || 'Người dùng đã xác thực'}
           </Text>
 
           <Text
@@ -245,13 +245,13 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
             anchorY="middle"
             letterSpacing={0.05}
           >
-            ROLE: {(currentUser?.roles || ['ROLE_CO_OWNER']).join(' | ')}
+            VAI TRÒ: {(currentUser?.roles || ['ROLE_CO_OWNER']).map(r => r === 'ROLE_ADMIN' ? 'QUẢN TRỊ VIÊN' : r === 'ROLE_STAFF' ? 'NHÂN VIÊN VẬN HÀNH' : 'ĐỒNG SỞ HỮU').join(' | ')}
           </Text>
 
           {/* Enter Metaverse Portal Button */}
           <Button3D
             id="btn_enter_world"
-            label="ENTER CENTRAL GARAGE ▶"
+            label="VÀO GARAGE TRUNG TÂM ▶"
             width={2.0}
             height={0.28}
             variant="emerald"
@@ -262,7 +262,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
           {/* Logout / Re-arm Barrier Button */}
           <Button3D
             id="btn_logout"
-            label="TERMINATE SESSION / RE-ARM GATE"
+            label="ĐĂNG XUẤT / KHÓA LẠI CỔNG"
             width={1.6}
             height={0.2}
             variant="crimson"
@@ -284,7 +284,7 @@ export const SecurityGateAuthConsole3D: React.FC<SecurityGateAuthConsole3DProps>
             maxWidth={2.2}
             textAlign="center"
           >
-            {`SECURITY ALERT: ${authError}`}
+            {`CẢNH BÁO AN NINH: ${authError}`}
           </Text>
         </group>
       )}

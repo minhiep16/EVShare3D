@@ -6,6 +6,8 @@ import { useDisputeStore } from './useDisputeStore';
 import { DISPUTE_THEME, DISPUTE_STATIONS } from './disputeLayout';
 import type { DefectMarker3D } from './disputeTypes';
 
+import { formatStatusVN, formatDateVN } from '@/i18n';
+
 export const DefectHolotank3D: React.FC = () => {
   const {
     defects,
@@ -45,6 +47,17 @@ export const DefectHolotank3D: React.FC = () => {
     setActiveTab('EVIDENCE');
   };
 
+  const formatSeverityVN = (sev: string) => {
+    switch (sev) {
+      case 'CRITICAL':
+        return 'NGHIÊM TRỌNG';
+      case 'MODERATE':
+        return 'TRUNG BÌNH';
+      default:
+        return 'NHẸ';
+    }
+  };
+
   const holotankPos = DISPUTE_STATIONS.DEFECT_HOLOTANK.relativePosition;
 
   return (
@@ -56,22 +69,21 @@ export const DefectHolotank3D: React.FC = () => {
       {/* Station Title Marker */}
       <Text
         position={[0, 3.4, 0]}
-        fontSize={0.24}
+        fontSize={0.21}
         color={DISPUTE_THEME.cyberCyan}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        3D DEFECT COORDINATE HOLOTANK
+        BỂ ẢNH 3D TỌA ĐỘ ĐIỂM HỎNG THỰC TẾ
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.12}
+        fontSize={0.11}
         color={DISPUTE_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Real-Time Spatial Damage Twin • Interactive Defect Pins
+        Bản sao số không gian thời gian thực • Ghim điểm hỏng 3D
       </Text>
 
       {/* Heavy Cylindrical Obsidian Pedestal */}
@@ -271,16 +283,16 @@ export const DefectHolotank3D: React.FC = () => {
                 </mesh>
                 <Text
                   position={[0, 0.04, 0]}
-                  fontSize={0.075}
+                  fontSize={0.07}
                   color={markerColor}
                   anchorX="center"
                   anchorY="middle"
                 >
-                  {defect.id}: {defect.severity}
+                  {defect.id}: {formatSeverityVN(defect.severity)}
                 </Text>
                 <Text
                   position={[0, -0.05, 0]}
-                  fontSize={0.055}
+                  fontSize={0.052}
                   color="#ffffff"
                   anchorX="center"
                   anchorY="middle"
@@ -324,12 +336,12 @@ export const DefectHolotank3D: React.FC = () => {
           {/* Header Title */}
           <Text
             position={[-0.95, 0.76, 0.02]}
-            fontSize={0.11}
+            fontSize={0.095}
             color={DISPUTE_THEME.cyberCyan}
             anchorX="left"
             anchorY="middle"
           >
-            DEFECT RECORD: {selectedDefect.id}
+            HỒ SƠ ĐIỂM HỎNG: {selectedDefect.id}
           </Text>
 
           {/* Severity Tag */}
@@ -345,18 +357,18 @@ export const DefectHolotank3D: React.FC = () => {
           </mesh>
           <Text
             position={[0.65, 0.76, 0.03]}
-            fontSize={0.07}
+            fontSize={0.062}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            {selectedDefect.severity}
+            {formatSeverityVN(selectedDefect.severity)}
           </Text>
 
           {/* Defect Label */}
           <Text
             position={[-0.95, 0.55, 0.02]}
-            fontSize={0.1}
+            fontSize={0.09}
             color="#ffffff"
             anchorX="left"
             anchorY="middle"
@@ -367,30 +379,30 @@ export const DefectHolotank3D: React.FC = () => {
           {/* 3D Spatial Coordinates */}
           <Text
             position={[-0.95, 0.36, 0.02]}
-            fontSize={0.075}
+            fontSize={0.068}
             color={DISPUTE_THEME.cyberCyan}
             anchorX="left"
             anchorY="middle"
           >
-            Coordinates: X: {selectedDefect.position[0]}m | Y:{' '}
+            Tọa độ: X: {selectedDefect.position[0]}m | Y:{' '}
             {selectedDefect.position[1]}m | Z: {selectedDefect.position[2]}m
           </Text>
 
           {/* Reporter & Session */}
           <Text
             position={[-0.95, 0.2, 0.02]}
-            fontSize={0.07}
+            fontSize={0.064}
             color={DISPUTE_THEME.textMuted}
             anchorX="left"
             anchorY="middle"
           >
-            Reported by: {selectedDefect.uploaderName} ({selectedDefect.timestamp})
+            Báo cáo bởi: {selectedDefect.uploaderName} ({formatDateVN(selectedDefect.timestamp)})
           </Text>
 
           {/* Description Text */}
           <Text
             position={[-0.95, -0.05, 0.02]}
-            fontSize={0.068}
+            fontSize={0.064}
             color="#f1f5f9"
             anchorX="left"
             anchorY="top"
@@ -403,12 +415,12 @@ export const DefectHolotank3D: React.FC = () => {
           {/* Linked Evidence Citation */}
           <Text
             position={[-0.95, -0.42, 0.02]}
-            fontSize={0.07}
+            fontSize={0.064}
             color={DISPUTE_THEME.secondary}
             anchorX="left"
             anchorY="middle"
           >
-            Attached: Evidence File #{selectedDefect.evidenceId} (Verified SHA-256)
+            Đính kèm: Chứng cứ số #{selectedDefect.evidenceId} (Chữ ký SHA-256 xác thực)
           </Text>
 
           {/* Interactive Button: Jump to Evidence Carousel */}
@@ -436,12 +448,12 @@ export const DefectHolotank3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.08}
+              fontSize={0.072}
               color="#090101"
               anchorX="center"
               anchorY="middle"
             >
-              [ 📸 INSPECT EVIDENCE ATTACHMENT ]
+              [ 📸 KIỂM TRA TẬP TIN CHỨNG CỨ ]
             </Text>
           </group>
         </group>

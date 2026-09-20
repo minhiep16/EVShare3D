@@ -5,6 +5,7 @@ import { useDecisionStore } from './useDecisionStore';
 import { DECISION_LAYOUT } from './decisionLayout';
 import { useAuthStore } from '@/auth/useAuthStore';
 import type { VoteOptionKey } from '../api/proposalsApi';
+import { formatPercentageVN, formatStatusVN } from '@/i18n';
 
 interface VotingTerminal3DProps {
   position?: [number, number, number];
@@ -28,22 +29,22 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
   const choices: { key: VoteOptionKey; label: string; sub: string; color: string; hoverColor: string }[] = [
     {
       key: 'APPROVE',
-      label: 'APPROVE',
-      sub: `+${voterWeight.toFixed(1)}% YES`,
+      label: 'TÁN THÀNH',
+      sub: `+${formatPercentageVN(voterWeight)} ĐỒNG Ý`,
       color: '#10b981', // Emerald
       hoverColor: '#34d399',
     },
     {
       key: 'REJECT',
-      label: 'REJECT',
-      sub: `-${voterWeight.toFixed(1)}% NO`,
+      label: 'KHÔNG TÁN THÀNH',
+      sub: `-${formatPercentageVN(voterWeight)} BÁC BỎ`,
       color: '#ef4444', // Ruby
       hoverColor: '#f87171',
     },
     {
       key: 'ABSTAIN',
-      label: 'ABSTAIN',
-      sub: 'NEUTRAL QUORUM',
+      label: 'KHÔNG BIỂU QUYẾT',
+      sub: 'TRUNG LẬP',
       color: '#f59e0b', // Amber
       hoverColor: '#fbbf24',
     },
@@ -94,11 +95,11 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
             anchorY="middle"
             letterSpacing={0.08}
           >
-            PARLIAMENTARY VOTING CONSOLE • ANGLE: -25°
+            BÀN BIỂU QUYẾT NGHỊ VIỆN • GÓC NGHIÊNG: -25°
           </Text>
           <Text
             position={[0, -0.16, 0]}
-            fontSize={0.15}
+            fontSize={0.14}
             color={DECISION_LAYOUT.colors.textWhite}
             anchorX="center"
             anchorY="middle"
@@ -109,19 +110,19 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
               ? activeProposal.title.length > 44
                 ? `${activeProposal.title.substring(0, 42)}...`
                 : activeProposal.title
-              : 'NO ACTIVE PROPOSAL'}
+              : 'CHƯA CHỌN ĐỀ XUẤT'}
           </Text>
         </group>
 
         {/* Voter Equity Weight Readout */}
         <group position={[0, 0.36, 0.06]}>
           <Text
-            fontSize={0.11}
+            fontSize={0.105}
             color={DECISION_LAYOUT.colors.textMuted}
             anchorX="center"
             anchorY="middle"
           >
-            {`VOTER: ${voterName.toUpperCase()} • ELIGIBLE EQUITY WEIGHT: ${voterWeight.toFixed(2)}%`}
+            {`NGƯỜI BẦU: ${voterName.toUpperCase()} • TRỌNG SỐ BIỂU QUYẾT: ${formatPercentageVN(voterWeight)}`}
           </Text>
         </group>
 
@@ -155,7 +156,7 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
               anchorX="center"
               anchorY="middle"
             >
-              {`ERROR: ${voteError}`}
+              {`LỖI: ${voteError}`}
             </Text>
           ) : isSubmittingVote ? (
             <Text
@@ -164,16 +165,16 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
               anchorX="center"
               anchorY="middle"
             >
-              TRANSMITTING BALLOT TO BACKEND GOVERNANCE ENGINE...
+              ĐANG GỬI PHIẾU BẦU VỀ HỆ THỐNG QUẢN TRỊ...
             </Text>
           ) : myVote ? (
             <Text
-              fontSize={0.12}
+              fontSize={0.11}
               color="#34d399"
               anchorX="center"
               anchorY="middle"
             >
-              {`BALLOT CONFIRMED: ${myVote.optionKey} (${voterWeight.toFixed(2)}% WEIGHT) • RECORDED`}
+              {`ĐÃ GHI NHẬN PHIẾU BẦU: ${myVote.optionKey === 'APPROVE' ? 'TÁN THÀNH' : myVote.optionKey === 'REJECT' ? 'KHÔNG TÁN THÀNH' : 'KHÔNG BIỂU QUYẾT'} (${formatPercentageVN(voterWeight)}) • ĐÃ LƯU SỔ`}
             </Text>
           ) : isVotingClosed ? (
             <Text
@@ -182,16 +183,16 @@ export const VotingTerminal3D: React.FC<VotingTerminal3DProps> = ({
               anchorX="center"
               anchorY="middle"
             >
-              {`PROPOSAL LIFECYCLE: ${activeProposal?.status} • DELIBERATION CONCLUDED`}
+              {`TRẠNG THÁI: ${formatStatusVN(activeProposal?.status || '')} • PHIÊN THẢO LUẬN ĐÃ ĐÓNG`}
             </Text>
           ) : (
             <Text
-              fontSize={0.11}
+              fontSize={0.105}
               color={DECISION_LAYOUT.colors.textMuted}
               anchorX="center"
               anchorY="middle"
             >
-              {`PRESS PEDESTAL TO CAST ${voterWeight.toFixed(2)}% SYNCHRONOUS WEIGHT`}
+              {`CHỌN NÚT ĐỂ BỎ PHIẾU VỚI ${formatPercentageVN(voterWeight)} TRỌNG SỐ ĐỒNG SỞ HỮU`}
             </Text>
           )}
         </group>
@@ -286,7 +287,7 @@ const VoteButton3D: React.FC<VoteButton3DProps> = ({
         anchorX="center"
         anchorY="middle"
       >
-        {isSelected ? '✓ RECORDED' : choice.sub}
+        {isSelected ? '✓ ĐÃ GHI NHẬN' : choice.sub}
       </Text>
     </group>
   );

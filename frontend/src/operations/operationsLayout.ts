@@ -12,32 +12,32 @@ export const OPERATIONS_STATIONS: Record<
   }
 > = {
   QR_DESK: {
-    name: 'QR Scanner Station',
-    description: 'Optical QR scanner kiosk for check-in validation & token issuance',
+    name: 'Trạm Quét Mã QR',
+    description: 'Kiosk quét mã QR quang học để xác thực nhận xe và cấp token',
     relativePosition: [-3.4, 0, 1.2],
     worldPosition: [-43.4, 0, 1.2],
   },
   DISPATCH_CONSOLE: {
-    name: 'Dispatch & Operations Console',
-    description: 'Vehicle telematics, odometer/battery log, and trip check-in/out engine',
+    name: 'Bàn Điều Phối & Vận Hành',
+    description: 'Đo xa xe, nhật ký quãng đường/pin và động cơ nhận/trả xe',
     relativePosition: [0, 0, 2.5],
     worldPosition: [-40, 0, 2.5],
   },
   FLEET_STELA: {
-    name: 'Fleet Status Stela',
-    description: 'Curved digital twin telematics stela for multi-bay fleet monitoring',
+    name: 'Bia Trạng Thái Đội Xe',
+    description: 'Bia đo xa bản sao số cong giám sát đội xe đa khoang',
     relativePosition: [0, 0, -4.8],
     worldPosition: [-40, 0, -4.8],
   },
   NOTIFICATION_BOARD: {
-    name: 'Operational Alerts Hologram',
-    description: 'Real-time incident dispatch, telemetry alerts, and bay notifications',
+    name: 'Toàn Ảnh Thông Báo Vận Hành',
+    description: 'Điều phối sự cố theo thời gian thực, cảnh báo đo xa và thông báo khoang đỗ',
     relativePosition: [3.6, 0, 1.2],
     worldPosition: [-36.4, 0, 1.2],
   },
   INSPECTION_BAY: {
-    name: 'Chassis Inspection Bay',
-    description: 'Vehicle physical staging pad with laser LiDAR scan & condition verification',
+    name: 'Khoang Kiểm Tra Khung Gầm',
+    description: 'Khu vực vật lý kiểm tra xe với quét laser LiDAR và xác thực tình trạng',
     relativePosition: [0, 0, -1.2],
     worldPosition: [-40, 0, -1.2],
   },
@@ -45,32 +45,32 @@ export const OPERATIONS_STATIONS: Record<
 
 export const OPERATIONS_CAMERA_PRESETS: Record<string, OperationsCameraPreset> = {
   HANGAR_OVERVIEW: {
-    name: 'Hangar Overview',
+    name: 'Toàn Cảnh Nhà Hangar',
     position: [-40, 8.5, 12],
     target: [-40, 1.2, 0],
   },
   QR_STATION_FOCUS: {
-    name: 'QR Scanner Station',
+    name: 'Trạm Quét QR',
     position: [-43.4, 2.4, 4.4],
     target: [-43.4, 1.3, 1.2],
   },
   DISPATCH_CONSOLE_FOCUS: {
-    name: 'Dispatch Console',
+    name: 'Bàn Điều Phối',
     position: [-40, 2.8, 5.8],
     target: [-40, 1.2, 2.5],
   },
   FLEET_STATUS_FOCUS: {
-    name: 'Fleet Status Matrix',
+    name: 'Ma Trận Đội Xe',
     position: [-40, 3.2, -1.2],
     target: [-40, 1.8, -4.8],
   },
   NOTIFICATION_BOARD_FOCUS: {
-    name: 'Notification Board',
+    name: 'Bảng Thông Báo',
     position: [-36.4, 2.4, 4.4],
     target: [-36.4, 1.4, 1.2],
   },
   INSPECTION_BAY_FOCUS: {
-    name: 'Inspection Bay',
+    name: 'Khoang Kiểm Tra',
     position: [-40, 4.2, 2.2],
     target: [-40, 0.5, -1.2],
   },
@@ -91,7 +91,7 @@ export const OPERATIONS_THEME = {
 };
 
 export const SERVICE_BAYS = [
-  { id: 'BAY_01', name: 'BAY 01 — FAST CHARGE', offset: [-4.2, 0, -1.2] as [number, number, number], defaultVehicleId: 1 },
-  { id: 'BAY_02', name: 'BAY 02 — INSPECTION STAGING', offset: [0, 0, -1.2] as [number, number, number], defaultVehicleId: 2 },
-  { id: 'BAY_03', name: 'BAY 03 — DISPATCH READY', offset: [4.2, 0, -1.2] as [number, number, number], defaultVehicleId: 3 },
+  { id: 'BAY_01', name: 'KHOANG 01 — SẠC NHANH', offset: [-4.2, 0, -1.2] as [number, number, number], defaultVehicleId: 1 },
+  { id: 'BAY_02', name: 'KHOANG 02 — CHỜ KIỂM TRA', offset: [0, 0, -1.2] as [number, number, number], defaultVehicleId: 2 },
+  { id: 'BAY_03', name: 'KHOANG 03 — SẴN SÀNG ĐIỀU PHỐI', offset: [4.2, 0, -1.2] as [number, number, number], defaultVehicleId: 3 },
 ];

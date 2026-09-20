@@ -19,6 +19,18 @@ export const DiagnosticCart3D: React.FC = () => {
 
   const activeFaults = Object.values(subsystems).filter((s) => s.faultCode !== null);
 
+  const formatWorkshopFeedback = (msg: string | null): string => {
+    if (!msg) return 'Hệ thống chẩn đoán sẵn sàng.';
+    if (msg.includes('elevated')) return 'Cầu nâng đã đưa xe lên chiều cao làm việc (1,80m).';
+    if (msg.includes('lowered')) return 'Cầu nâng đã hạ xe xuống vị trí mặt sàn (0,20m).';
+    if (msg.includes('OBD-II Scan complete:')) {
+      return msg.replace('OBD-II Scan complete:', 'Quét OBD-II hoàn tất:').replace('active DTC faults found.', 'mã lỗi DTC được phát hiện.');
+    }
+    if (msg.toLowerCase().includes('expense committed')) return 'Đã ghi nhận chi phí vào sổ cái bảo dưỡng.';
+    if (msg.includes('CERTIFICATION COMPLETE')) return 'CHỨNG NHẬN HOÀN TẤT: Đã nghiệm thu xe xuất xưởng.';
+    return msg;
+  };
+
   return (
     <group
       name="DiagnosticCart"
@@ -64,22 +76,22 @@ export const DiagnosticCart3D: React.FC = () => {
         {/* Title */}
         <Text
           position={[0, 0.32, 0.05]}
-          fontSize={0.062}
+          fontSize={0.058}
           color={WORKSHOP_THEME.primary}
           anchorX="center"
           anchorY="middle"
-          letterSpacing={0.05}
+          letterSpacing={0.04}
         >
-          OBD-II DIAGNOSTIC BENCH
+          BÀN CHẨN ĐOÁN OBD-II
         </Text>
         <Text
           position={[0, 0.22, 0.05]}
-          fontSize={0.046}
+          fontSize={0.044}
           color="#94a3b8"
           anchorX="center"
           anchorY="middle"
         >
-          CAN BUS: 500 KBPS • ISO-14229 UDS
+          BUS CAN: 500 KBPS • ISO-14229 UDS
         </Text>
 
         {/* Active Fault Readout Box */}
@@ -89,25 +101,25 @@ export const DiagnosticCart3D: React.FC = () => {
         </mesh>
         <Text
           position={[0, 0.12, 0.06]}
-          fontSize={0.048}
+          fontSize={0.045}
           color={activeFaults.length > 0 ? '#ef4444' : '#10b981'}
           anchorX="center"
           anchorY="middle"
         >
           {activeFaults.length > 0
-            ? `ACTIVE FAULTS DETECTED: ${activeFaults.length}`
-            : 'ALL SUBSYSTEMS NOMINAL (0 DTCS)'}
+            ? `PHÁT HIỆN LỖI HOẠT ĐỘNG: ${activeFaults.length}`
+            : 'TẤT CẢ HỆ THỐNG ĐẠT CHUẨN (0 MÃ LỖI)'}
         </Text>
         <Text
           position={[0, 0.01, 0.06]}
-          fontSize={0.04}
+          fontSize={0.038}
           color="#cbd5e1"
           anchorX="center"
           anchorY="middle"
         >
           {activeFaults.length > 0
             ? activeFaults.map((f) => `[${f.faultCode}] ${f.name}`).join(' | ')
-            : 'No diagnostic trouble codes logged in ECU.'}
+            : 'Không có mã lỗi chẩn đoán (DTC) nào trong ECU.'}
         </Text>
 
         {/* Interactive Button 1: Run Full OBD Diagnostic */}
@@ -137,12 +149,12 @@ export const DiagnosticCart3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.042}
+            fontSize={0.038}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            {isScanningObd ? 'SCANNING...' : '🔍 OBD SCAN'}
+            {isScanningObd ? 'ĐANG QUÉT...' : '🔍 QUÉT LỖI OBD'}
           </Text>
         </group>
 
@@ -173,25 +185,25 @@ export const DiagnosticCart3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.042}
+            fontSize={0.038}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
           >
-            {isRepairing ? 'REPAIRING...' : '🛠 OVERHAUL'}
+            {isRepairing ? 'ĐANG SỬA...' : '🛠 ĐẠI TU & SỬA'}
           </Text>
         </group>
 
         {/* Live Status Message at Bottom of Tablet */}
         <Text
           position={[0, -0.32, 0.05]}
-          fontSize={0.036}
+          fontSize={0.034}
           color="#38bdf8"
           anchorX="center"
           anchorY="middle"
           maxWidth={0.96}
         >
-          {feedbackMessage || 'System ready.'}
+          {formatWorkshopFeedback(feedbackMessage)}
         </Text>
       </group>
     </group>

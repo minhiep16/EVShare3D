@@ -3,6 +3,7 @@ import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useDecisionStore } from './useDecisionStore';
 import { DECISION_LAYOUT } from './decisionLayout';
+import { formatPercentageVN, formatStatusVN } from '@/i18n';
 
 interface DecisionResultStela3DProps {
   position?: [number, number, number];
@@ -51,7 +52,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
           letterSpacing={0.08}
         >
-          AUTHORITATIVE GOVERNANCE VERDICT
+          PHÁN QUYẾT NGHỊ QUYẾT QUẢN TRỊ
         </Text>
         <Text
           position={[0, -0.22, 0]}
@@ -61,7 +62,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
           letterSpacing={0.04}
         >
-          BACKEND DECISION ENGINE • SPRING BOOT VOTING SERVICE
+          ĐỘNG CƠ BIỂU QUYẾT TẬP TRUNG • NỀN TẢNG EVSHARE
         </Text>
       </group>
 
@@ -73,18 +74,18 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorX="center"
           anchorY="middle"
         >
-          SUBJECT PROPOSAL
+          ĐỀ XUẤT ĐƯỢC XEM XÉT
         </Text>
         <Text
           position={[0, -0.2, 0]}
-          fontSize={0.14}
+          fontSize={0.135}
           color={DECISION_LAYOUT.colors.textWhite}
           anchorX="center"
           anchorY="middle"
           maxWidth={2.9}
           textAlign="center"
         >
-          {activeProposal ? activeProposal.title : 'No Proposal Selected'}
+          {activeProposal ? activeProposal.title : 'Chưa chọn đề xuất'}
         </Text>
       </group>
 
@@ -101,13 +102,13 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
 
         <Text
           position={[0, 0.12, 0.02]}
-          fontSize={0.22}
+          fontSize={0.2}
           color={statusColor}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          {finalDecision}
+          {formatStatusVN(finalDecision)}
         </Text>
 
         <Text
@@ -118,10 +119,10 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
         >
           {isPassed
-            ? '✓ ALL GOVERNANCE CONDITIONS SATISFIED'
+            ? '✓ ĐÃ THỎA MÃN TOÀN BỘ ĐIỀU KIỆN BIỂU QUYẾT'
             : quorumReached
-            ? 'DELIBERATION IN PROGRESS / ACTIVE'
-            : '⚠ QUORUM REQUIREMENT PENDING (<60.00%)'}
+            ? 'ĐANG TIẾN HÀNH THẢO LUẬN / BỎ PHIẾU'
+            : '⚠ CHƯA ĐẠT HẠN NGẠCH TỐI THIỂU (<60,00%)'}
         </Text>
       </group>
 
@@ -135,7 +136,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
           letterSpacing={0.04}
         >
-          DETERMINISTIC EQUITY PARTICIPATION
+          TỶ LỆ THAM GIA BIỂU QUYẾT
         </Text>
 
         <Text
@@ -146,20 +147,20 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
         >
           {results
-            ? `Participating: ${results.participatingEquity.toFixed(1)}% • Required Quorum: 60.00%`
-            : 'Participating: 45.0% • Quorum: 60.00%'}
+            ? `Tham gia: ${formatPercentageVN(results.participatingEquity)} • Hạn ngạch: 60,00%`
+            : `Tham gia: ${formatPercentageVN(45.0)} • Hạn ngạch: 60,00%`}
         </Text>
 
         <Text
           position={[0, -0.12, 0]}
-          fontSize={0.11}
+          fontSize={0.105}
           color={DECISION_LAYOUT.colors.textWhite}
           anchorX="center"
           anchorY="middle"
         >
           {results
-            ? `Approve: ${results.approveWeight.toFixed(1)}% | Reject: ${results.rejectWeight.toFixed(1)}% | Abstain: ${results.abstainWeight.toFixed(1)}%`
-            : 'Approve: 45.0% | Reject: 0.0% | Abstain: 0.0%'}
+            ? `Tán thành: ${formatPercentageVN(results.approveWeight)} | Bác bỏ: ${formatPercentageVN(results.rejectWeight)} | Không biểu quyết: ${formatPercentageVN(results.abstainWeight)}`
+            : `Tán thành: ${formatPercentageVN(45.0)} | Bác bỏ: ${formatPercentageVN(0.0)} | Không biểu quyết: ${formatPercentageVN(0.0)}`}
         </Text>
 
         <Text
@@ -169,7 +170,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorX="center"
           anchorY="middle"
         >
-          {`THRESHOLD RULE: ${results?.thresholdDescription || '> 50.00% of participating equity'}`}
+          {`QUY TẮC NGƯỠNG: ${results?.thresholdDescription || '> 50,00% tổng cổ phần tham gia'}`}
         </Text>
 
         <Text
@@ -181,7 +182,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           maxWidth={2.8}
           textAlign="center"
         >
-          {results?.decisionReason || 'Awaiting co-owner ballots to evaluate passing criteria.'}
+          {results?.decisionReason || 'Đang chờ các thành viên bỏ phiếu để tổng hợp kết quả.'}
         </Text>
       </group>
 
@@ -194,7 +195,7 @@ export const DecisionResultStela3D: React.FC<DecisionResultStela3DProps> = ({
           anchorY="middle"
           letterSpacing={0.06}
         >
-          SECURED BY SYNDICATE CONSENSUS PROTOCOL
+          BẢO CHỨNG BỞI GIAO THỨC ĐỒNG THUẬN NHÓM SỞ HỮU
         </Text>
       </group>
     </group>

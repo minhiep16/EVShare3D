@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Text } from '@react-three/drei';
 import { useGarageStore } from './useGarageStore';
+import { formatNumberVN, formatStatusVN } from '@/i18n';
 
 export const VehicleInspectionTerminal3D: React.FC = () => {
   const inspectedVehicle = useGarageStore((s) => s.inspectedVehicle);
@@ -79,12 +80,12 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
       <group position={[-1.2, 1.02, 0.05]}>
         <Text
           position={[0, 0, 0]}
-          fontSize={0.12}
+          fontSize={0.11}
           color="#00e5ff"
           anchorX="left"
           anchorY="middle"
         >
-          VEHICLE TELEMETRY & FSM TERMINAL
+          BÀN KIỂM TRA THÔNG SỐ VÀ TRẠNG THÁI XE
         </Text>
         <Text
           position={[0, -0.15, 0]}
@@ -101,10 +102,10 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
       <group position={[-1.2, 0.62, 0.05]}>
         {/* Battery Metric & Visual Bar */}
         <Text position={[0, 0, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          BATTERY SoC:
+          DUNG LƯỢNG PIN:
         </Text>
         <Text position={[1.05, 0, 0]} fontSize={0.085} color={batteryBarColor} anchorX="left" anchorY="middle">
-          {`${inspectedVehicle.batteryLevel}% (${estimatedRange} km range)`}
+          {`${inspectedVehicle.batteryLevel}% (Tầm hoạt động ~${estimatedRange} km)`}
         </Text>
 
         {/* 3D Visual Battery Bar Container */}
@@ -126,15 +127,15 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
 
         {/* Lifecycle Status */}
         <Text position={[0, -0.16, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          FSM LIFECYCLE:
+          TRẠNG THÁI XE:
         </Text>
         <Text position={[1.05, -0.16, 0]} fontSize={0.085} color={statusColor} anchorX="left" anchorY="middle">
-          {`[ ${inspectedVehicle.status} ]`}
+          {`[ ${formatStatusVN(inspectedVehicle.status)} ]`}
         </Text>
 
         {/* Stall Location */}
         <Text position={[0, -0.32, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          STALL LOCATION:
+          VỊ TRÍ ĐỖ XE:
         </Text>
         <Text position={[1.05, -0.32, 0]} fontSize={0.085} color="#f8fafc" anchorX="left" anchorY="middle">
           {inspectedVehicle.stallLocationCode}
@@ -142,15 +143,15 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
 
         {/* VIN & Odometer */}
         <Text position={[0, -0.48, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          ODOMETER / VIN:
+          KM ĐÃ ĐI / SỐ VIN:
         </Text>
         <Text position={[1.05, -0.48, 0]} fontSize={0.075} color="#94a3b8" anchorX="left" anchorY="middle">
-          {`${inspectedVehicle.odometerKm.toLocaleString()} km • ${inspectedVehicle.vin}`}
+          {`${formatNumberVN(inspectedVehicle.odometerKm)} km • ${inspectedVehicle.vin}`}
         </Text>
 
         {/* Supercharger Dock Status */}
         <Text position={[0, -0.64, 0]} fontSize={0.075} color="#64748b" anchorX="left" anchorY="middle">
-          SUPERCHARGER:
+          TRẠM SẠC NHANH:
         </Text>
         <Text
           position={[1.05, -0.64, 0]}
@@ -160,16 +161,16 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
           anchorY="middle"
         >
           {isCharging
-            ? `⚡ Active (${inspectedVehicle.chargingPowerKw || 150} kW)`
-            : 'Disconnected (Idle)'}
+            ? `⚡ Đang sạc (${inspectedVehicle.chargingPowerKw || 150} kW)`
+            : 'Đã ngắt kết nối (Chờ)'}
         </Text>
 
         {/* Permitted State Machine Transitions */}
         <Text position={[0, -0.8, 0]} fontSize={0.07} color="#64748b" anchorX="left" anchorY="middle">
-          PERMITTED TRANSITIONS:
+          HÀNH ĐỘNG HỢP LỆ:
         </Text>
         <Text position={[1.05, -0.8, 0]} fontSize={0.07} color="#a855f7" anchorX="left" anchorY="middle">
-          {permittedActions.length > 0 ? permittedActions.join(' • ') : 'NONE'}
+          {permittedActions.length > 0 ? permittedActions.map(a => formatStatusVN(a)).join(' • ') : 'KHÔNG CÓ'}
         </Text>
       </group>
 
@@ -177,7 +178,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
       <group position={[0, -0.38, 0.05]}>
         {isActionExecuting ? (
           <Text fontSize={0.075} color="#38bdf8" anchorX="center" anchorY="middle">
-            {'⏳ TRANSMITTING TO DATABASE...'}
+            {'⏳ ĐANG TRUYỀN DỮ LIỆU ĐẾN MÁY CHỦ...'}
           </Text>
         ) : actionError ? (
           <Text fontSize={0.065} color="#ef4444" anchorX="center" anchorY="middle" maxWidth={2.4}>
@@ -189,7 +190,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
           </Text>
         ) : (
           <Text fontSize={0.06} color="#475569" anchorX="center" anchorY="middle">
-            Authoritative JPA State Synchronized
+            Dữ liệu đồng bộ máy chủ thời gian thực
           </Text>
         )}
       </group>
@@ -214,7 +215,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.065} color="#f8fafc" anchorX="center" anchorY="middle">
-            {inspectedVehicle.isLocked ? '🔒 UNLOCK' : '🔓 LOCK'}
+            {inspectedVehicle.isLocked ? '🔒 MỞ KHÓA' : '🔓 KHÓA XE'}
           </Text>
         </group>
 
@@ -235,7 +236,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.065} color="#f8fafc" anchorX="center" anchorY="middle">
-            {isCharging ? '⚡ UNPLUG' : '⚡ CHARGE'}
+            {isCharging ? '⚡ NGẮT SẠC' : '⚡ BẬT SẠC'}
           </Text>
         </group>
 
@@ -250,8 +251,8 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
                 inspectedVehicle.id,
                 targetStatus,
                 isMaintenance
-                  ? 'Maintenance certified nominal'
-                  : 'Dispatched for diagnostic maintenance'
+                  ? 'Bảo trì hoàn tất, xe sẵn sàng'
+                  : 'Chuyển sang xưởng bảo trì chẩn đoán'
               );
             }
           }}
@@ -265,7 +266,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.062} color="#f8fafc" anchorX="center" anchorY="middle">
-            {isMaintenance ? '🛠 NOMINAL' : '🛠 SERVICE'}
+            {isMaintenance ? '🛠 SẴN SÀNG' : '🛠 BẢO TRÌ'}
           </Text>
         </group>
       </group>
@@ -289,7 +290,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.062} color="#38bdf8" anchorX="center" anchorY="middle">
-            {'🔄 SYNC TELEM'}
+            {'🔄 ĐỒNG BỘ'}
           </Text>
         </group>
 
@@ -318,7 +319,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.065} color="#ffffff" anchorX="center" anchorY="middle">
-            {'📅 BOOK TRIP'}
+            {'📅 ĐẶT LỊCH XE'}
           </Text>
         </group>
 
@@ -339,7 +340,7 @@ export const VehicleInspectionTerminal3D: React.FC = () => {
             />
           </mesh>
           <Text position={[0, 0, 0.03]} fontSize={0.065} color="#94a3b8" anchorX="center" anchorY="middle">
-            {'✕ CLOSE'}
+            {'✕ ĐÓNG'}
           </Text>
         </group>
       </group>

@@ -64,7 +64,7 @@ export const FairUsageHoloPillar3D: React.FC = () => {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff"
         >
-          FAIR USAGE QUOTA
+          HẠN MỨC SỬ DỤNG CÔNG BẰNG
         </Text>
 
         <Text
@@ -74,7 +74,7 @@ export const FairUsageHoloPillar3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          BR-FAIR-01..03 MOBILITY STANDING
+          TIÊU CHUẨN CÔNG BẰNG EVSHARE
         </Text>
 
         {/* Score Ring Display */}
@@ -98,24 +98,24 @@ export const FairUsageHoloPillar3D: React.FC = () => {
         {/* Metrics Readout */}
         <group position={[-0.65, -0.15, 0.02]}>
           <Text position={[0, 0, 0]} fontSize={0.06} color="#64748b" anchorX="left" anchorY="middle">
-            FAIRNESS RATIO:
+            HỆ SỐ CÔNG BẰNG:
           </Text>
           <Text position={[0.75, 0, 0]} fontSize={0.065} color="#38bdf8" anchorX="left" anchorY="middle">
             {`${fairnessRatio.toFixed(2)}x`}
           </Text>
 
           <Text position={[0, -0.14, 0]} fontSize={0.06} color="#64748b" anchorX="left" anchorY="middle">
-            EQUITY TIER:
+            HẠNG CỔ PHẦN:
           </Text>
           <Text position={[0.75, -0.14, 0]} fontSize={0.065} color={AVAILABLE_GREEN} anchorX="left" anchorY="middle">
-            {tier}
+            {tier === 'BALANCED' ? 'CÂN BẰNG' : tier}
           </Text>
 
           <Text position={[0, -0.28, 0]} fontSize={0.06} color="#64748b" anchorX="left" anchorY="middle">
-            PRIORITY STATUS:
+            ƯU TIÊN ĐẶT XE:
           </Text>
           <Text position={[0.75, -0.28, 0]} fontSize={0.065} color="#ffffff" anchorX="left" anchorY="middle">
-            ACTIVE QUOTA
+            ĐỦ ĐIỀU KIỆN
           </Text>
         </group>
 
@@ -130,7 +130,7 @@ export const FairUsageHoloPillar3D: React.FC = () => {
             maxWidth={1.35}
             lineHeight={1.3}
           >
-            {fairUsage?.recommendation || 'Syndicate quota in balance. Immediate reservation approved.'}
+            {fairUsage?.recommendation || 'Hạn mức nhóm đang ở trạng thái cân bằng. Đủ điều kiện đặt lịch ngay.'}
           </Text>
         </group>
       </group>

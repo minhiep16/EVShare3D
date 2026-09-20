@@ -21,66 +21,66 @@ export const CONTRACT_SECTIONS: ContractDocumentSection[] = [
   {
     id: 1,
     sectionNumber: 'SECTION I',
-    title: 'PREAMBLE & SYNDICATE COMPOSITION',
-    subtitle: 'Parties, Digital Twin Asset, and Fractional Legal Framework',
+    title: 'LỜI NÓI ĐẦU & CƠ CẤU NHÓM ĐỒNG SỞ HỮU',
+    subtitle: 'Các Bên, Tài Sản Bản Sao Số, và Khung Pháp Lý Đồng Sở Hữu Phân Số',
     content:
-      'This Digital Co-Ownership Master Agreement governs the shared equity, telemetry surveillance, and equitable utilization of the VinFast VF8 City Edition electric vehicle (VIN: VF8-VN2026-99412) between registered syndicate participants.',
+      'Hợp đồng Khung Đồng Sở Hữu Kỹ Thuật Số này điều chỉnh tỷ lệ sở hữu chung, giám sát dữ liệu viễn thông từ xa, và việc sử dụng công bằng xe điện VinFast VF8 City Edition (Số khung VIN: VF8-VN2026-99412) giữa các thành viên nhóm đã xác thực.',
     keyClauses: [
-      'Clause 1.1: Multi-party syndicate bound under Law on Electronic Transactions No. 20/2023/QH15.',
-      'Clause 1.2: Participant Minh Hiep (Lead, 35%), Tran Duc (25%), Le Hoang (20%), Pham Mai (20%).',
-      'Clause 1.3: Vehicle title held in collective digital trust managed by EVShare Platform.',
+      'Điều khoản 1.1: Nhóm đa phương được ràng buộc pháp lý theo Luật Giao dịch điện tử số 20/2023/QH15.',
+      'Điều khoản 1.2: Thành viên gồm Minh Hiệp (Trưởng nhóm, 35%), Trần Đức (25%), Lê Hoàng (20%), Phạm Mai (20%).',
+      'Điều khoản 1.3: Quyền sở hữu xe được ủy thác kỹ thuật số tập thể quản lý thông qua Nền tảng EVShare.',
     ],
   },
   {
     id: 2,
     sectionNumber: 'SECTION II',
-    title: 'CAPITAL ALLOCATIONS & TREASURY COVENANTS',
-    subtitle: 'Reserve Ratios, BR-FIN-03 Safety Floor, and Cost Sharing',
+    title: 'PHÂN BỔ NGUỒN VỐN & ĐIỀU KHOẢN KHO QUỸ',
+    subtitle: 'Tỷ Lệ Dự Phòng, Hạn Mức An Toàn BR-FIN-03, và Chia Sẻ Chi Phí',
     content:
-      'All syndicate capital contributions, fast charging electricity bills, preventative maintenance, and insurance premiums shall be cleared through the Shared Fund Vault.',
+      'Toàn bộ vốn góp của nhóm, hóa đơn sạc nhanh, bảo dưỡng định kỳ và phí bảo hiểm bắt buộc đều phải được quyết toán minh bạch qua Kho Quỹ Chung.',
     keyClauses: [
-      'Clause 2.1: Non-negotiable liquid safety reserve floor of 15,000,000 VND enforced by BR-FIN-03.',
-      'Clause 2.2: Routine charging and detailing expenses allocated pro-rata based on recorded usage km.',
-      'Clause 2.3: Capital deficits trigger automated liquidity calls with 48-hour cure windows.',
+      'Điều khoản 2.1: Hạn mức dự phòng an toàn không thương lượng là 15.000.000 ₫ được kiểm soát chặt chẽ bởi BR-FIN-03.',
+      'Điều khoản 2.2: Chi phí sạc định kỳ và vệ sinh được phân bổ theo tỷ lệ quãng đường km đã sử dụng thực tế.',
+      'Điều khoản 2.3: Thâm hụt vốn sẽ tự động kích hoạt yêu cầu bổ sung thanh khoản với thời hạn xử lý 48 giờ.',
     ],
   },
   {
     id: 3,
     sectionNumber: 'SECTION III',
-    title: 'CHRONO-SPATIAL BOOKING & FAIR USAGE',
-    subtitle: 'Quota Allowances, Priority Slots, and Telemetry Telematics',
+    title: 'ĐẶT LỊCH KHÔNG GIAN - THỜI GIAN & SỬ DỤNG CÔNG BẰNG',
+    subtitle: 'Hạn Mức Sử Dụng, Khung Giờ Ưu Tiên, và Dữ Liệu Viễn Thông Từ Xa',
     content:
-      'Reservations are coordinated exclusively via the Chrono-Spatial 3D Booking Chamber. Dynamic fair-usage algorithms prevent monopolization and optimize fleet uptime.',
+      'Việc đặt lịch xe được điều phối độc quyền thông qua Buồng Đặt Lịch 3D Không Gian - Thời Gian. Thuật toán sử dụng công bằng ngăn chặn hành vi độc chiếm và tối ưu hóa thời gian vận hành của xe.',
     keyClauses: [
-      'Clause 3.1: Monthly guaranteed driving quota of 168 hours proportional to co-owner equity share.',
-      'Clause 3.2: 15-minute mandatory buffer window between reservations for ultrasonic sensor calibration.',
-      'Clause 3.3: Geo-fenced telemetry tracking active; reckless driving triggers automated quota reduction.',
+      'Điều khoản 3.1: Hạn mức lái xe bảo đảm hàng tháng là 168 giờ, tương ứng với tỷ lệ cổ phần sở hữu.',
+      'Điều khoản 3.2: Khoảng đệm bắt buộc 15 phút giữa các lượt đặt xe để hiệu chuẩn cảm biến và làm mát pin.',
+      'Điều khoản 3.3: Định vị viễn thông hàng rào địa lý được bật; vi phạm tốc độ sẽ tự động bị giảm hạn mức ưu tiên.',
     ],
   },
   {
     id: 4,
     sectionNumber: 'SECTION IV',
-    title: 'GOVERNANCE QUORUM & SMART ARBITRATION',
-    subtitle: 'Voting Thresholds, Amendments, and Conflict Resolution',
+    title: 'ĐIỀU KIỆN BIỂU QUYẾT & TRỌNG TÀI TRANH CHẤP',
+    subtitle: 'Ngưỡng Tỷ Lệ Biểu Quyết, Tu Chính Án, và Giải Quyết Bất Đồng',
     content:
-      'Syndicate decisions are ratified through the Parliamentary Decision Chamber. Governance rules ensure minority protections and strict democratic transparency.',
+      'Các quyết định chung của nhóm được biểu quyết qua Phòng Hội Nghị Biểu Quyết Nghị Viện. Quy tắc quản trị bảo đảm quyền lợi của cổ đông thiểu số và tính minh bạch dân chủ tuyệt đối.',
     keyClauses: [
-      'Clause 4.1: Operational resolutions require simple majority (>50% equity weight).',
-      'Clause 4.2: Extraordinary amendments, asset liquidation, or overdraft require supermajority (>=75%).',
-      'Clause 4.3: Unresolved disputes escalate to the 3D Dispute Resolution Chamber with cryptographic evidence logs.',
+      'Điều khoản 4.1: Các nghị quyết vận hành thông thường yêu cầu quá bán (>50% tổng trọng số cổ phần).',
+      'Điều khoản 4.2: Tu chính án bất thường, thanh lý tài sản hoặc chi vượt dự phòng yêu cầu đa số tuyệt đối (>=75%).',
+      'Điều khoản 4.3: Tranh chấp không thể hòa giải sẽ được chuyển đến Phòng Phân Xử Tranh Chấp 3D với nhật ký bằng chứng mật mã.',
     ],
   },
   {
     id: 5,
     sectionNumber: 'SECTION V',
-    title: 'RATIFICATION & MULTI-SIG DIGITAL SIGNATURES',
-    subtitle: 'Cryptographic SHA-256 Digital Signatures & Binding Execution',
+    title: 'PHÊ CHUẨN & KÝ SỐ ĐA BÊN (MULTI-SIG)',
+    subtitle: 'Chữ Ký Số Mật Mã SHA-256 & Hiệu Lực Ràng Buộc Pháp Lý',
     content:
-      'Execution of this agreement requires multi-signature cryptographic ratification from all syndicate members. Once signed, the legal status permanently transitions to ACTIVE.',
+      'Việc thực thi hợp đồng này đòi hỏi sự phê chuẩn bằng chữ ký số mật mã đa bên từ tất cả các thành viên trong nhóm. Sau khi ký đủ, trạng thái pháp lý sẽ vĩnh viễn chuyển sang ĐANG HOẠT ĐỘNG.',
     keyClauses: [
-      'Clause 5.1: Signatures recorded with SHA-256 digests, UTC timestamps, and IP provenance.',
-      'Clause 5.2: Any unilateral document alteration invalidates the contract hash, requiring re-ratification.',
-      'Clause 5.3: Ratified document is permanently archived on immutable syndicate ledger.',
+      'Điều khoản 5.1: Chữ ký được lưu trữ kèm mã băm SHA-256, mốc thời gian chuẩn UTC và xuất xứ địa chỉ IP.',
+      'Điều khoản 5.2: Bất kỳ sửa đổi đơn phương nào đều làm vô hiệu hóa mã băm hợp đồng và buộc phải ký lại từ đầu.',
+      'Điều khoản 5.3: Hợp đồng đã phê chuẩn được lưu trữ vĩnh viễn trên sổ cái kiểm toán bất biến của nhóm.',
     ],
   },
 ];
@@ -99,12 +99,12 @@ export function getActiveContractSections(activeContract: ContractDTO | null): C
       return {
         ...section,
         title: activeContract.contractTitle.toUpperCase(),
-        subtitle: `Version ${activeContract.version}.0 • Status: ${activeContract.status} • Effective: ${activeContract.effectiveDate || 'Immediate'}`,
+        subtitle: `Version ${activeContract.version}.0 • Status: ${activeContract.status} • Có hiệu lực từ: ${activeContract.effectiveDate || 'Ngay lập tức'}`,
         content: activeContract.contractTermsText || section.content,
         keyClauses: [
-          `Clause 1.1: Legally binding under Electronic Transactions Law No. 20/2023/QH15.`,
-          `Clause 1.2: Syndicate group: ${activeContract.groupName || 'Founders Syndicate'} (ID: #${activeContract.groupId}).`,
-          `Clause 1.3: Immutable digital contract version: v${activeContract.version}.0 [${activeContract.status}].`,
+          `Điều khoản 1.1: Ràng buộc pháp lý theo Luật Giao dịch điện tử Law No. 20/2023/QH15.`,
+          `Điều khoản 1.2: Nhóm đồng sở hữu: ${activeContract.groupName || 'Founders Syndicate'} (Mã nhóm: #${activeContract.groupId}).`,
+          `Điều khoản 1.3: Phiên bản hợp đồng số bất biến: v${activeContract.version}.0 [${activeContract.status}].`,
         ],
       };
     }

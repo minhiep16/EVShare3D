@@ -4,6 +4,7 @@ import { Text } from '@react-three/drei';
 import type { Group, Mesh } from 'three';
 import { useOwnershipStore } from './useOwnershipStore';
 import { CO_OWNERSHIP_HALL_LAYOUT } from './ownershipLayout';
+import { formatCurrencyVND, formatPercentageVN } from '@/i18n';
 
 export const SyndicateOverviewPillar3D: React.FC = () => {
   const coreRef = useRef<Mesh>(null);
@@ -144,34 +145,34 @@ export const SyndicateOverviewPillar3D: React.FC = () => {
         {/* Syndicate Metrics Grid */}
         <group position={[-0.8, 0.28, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            VALUATION:
+            ĐỊNH GIÁ XE:
           </Text>
           <Text position={[1.6, 0, 0]} fontSize={0.065} color="#f8fafc" anchorX="right" anchorY="middle">
-            {`${(activeGroup.totalValuationVnd / 1e9).toFixed(2)}B VND`}
+            {formatCurrencyVND(activeGroup.totalValuationVnd)}
           </Text>
         </group>
 
         <group position={[-0.8, 0.15, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            RESERVE FUND:
+            QUỸ DỰ PHÒNG:
           </Text>
           <Text position={[1.6, 0, 0]} fontSize={0.065} color={THEME.CYBER_EMERALD} anchorX="right" anchorY="middle">
-            {`${(activeGroup.operatingReserveBalanceVnd / 1e6).toFixed(1)}M VND`}
+            {formatCurrencyVND(activeGroup.operatingReserveBalanceVnd)}
           </Text>
         </group>
 
         <group position={[-0.8, 0.02, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            EQUITY POOL:
+            TỔNG CỔ PHẦN:
           </Text>
           <Text position={[1.6, 0, 0]} fontSize={0.065} color={THEME.GOLD_ACCENT_PRIMARY} anchorX="right" anchorY="middle">
-            {`${activeGroup.totalSharesPercent.toFixed(2)}% ALLOCATED`}
+            {`${formatPercentageVN(activeGroup.totalSharesPercent)} ĐÃ PHÂN BỔ`}
           </Text>
         </group>
 
         <group position={[-0.8, -0.11, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            REGISTRY CODE:
+            MÃ ĐĂNG KÝ:
           </Text>
           <Text position={[1.6, 0, 0]} fontSize={0.065} color={THEME.CYBER_CYAN} anchorX="right" anchorY="middle">
             {activeGroup.legalRegistrationCode}
@@ -181,7 +182,7 @@ export const SyndicateOverviewPillar3D: React.FC = () => {
         {/* 6. Interactive Syndicate Switcher Buttons */}
         <group position={[0, -0.45, 0]}>
           <Text position={[0, 0.14, 0]} fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="center" anchorY="middle">
-            SWITCH SYNDICATE:
+            CHỌN NHÓM ĐỒNG SỞ HỮU:
           </Text>
 
           {groups.map((grp, idx) => {

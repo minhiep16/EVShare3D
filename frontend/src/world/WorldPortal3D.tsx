@@ -261,11 +261,11 @@ export const WorldPortal3D: React.FC<WorldPortal3DProps> = ({ portal, onActivate
         >
           {isAuthorized
             ? portal.isReturnPortal
-              ? '<<< WALK OR CLICK TO RETURN <<<'
-              : '>>> WALK OR CLICK TO WARP >>>'
+              ? '<<< BƯỚC VÀO HOẶC NHẤP ĐỂ QUAY LẠI <<<'
+              : '>>> BƯỚC VÀO HOẶC NHẤP ĐỂ DỊCH CHUYỂN >>>'
             : userRole === 'GUEST'
-              ? '[UNAUTHORIZED] LOGIN REQUIRED'
-              : `[RESTRICTED] REQUIRES ${portal.requiredRole || 'HIGHER PRIVILEGE'}`}
+              ? '[CHƯA XÁC THỰC] YÊU CẦU ĐĂNG NHẬP'
+              : `[GIỚI HẠN] YÊU CẦU ${portal.requiredRole === 'ROLE_CO_OWNER' ? 'ĐỒNG SỞ HỮU' : portal.requiredRole === 'ROLE_STAFF' ? 'NHÂN VIÊN' : portal.requiredRole === 'ROLE_ADMIN' ? 'QUẢN TRỊ VIÊN' : 'QUYỀN CAO HƠN'}`}
         </Text>
       </group>
     </group>

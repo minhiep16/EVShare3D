@@ -23,35 +23,35 @@ export type CameraPreset =
 const DEFAULT_ARTICLES: LegalContractArticle[] = [
   {
     id: 1,
-    articleNumber: 'ARTICLE 01',
-    title: 'Equity Allocation & Share Invariants',
-    summary: 'Strict distribution of fractional equity summing to precisely 100.00%.',
+    articleNumber: 'ĐIỀU KHOẢN 01',
+    title: 'Phân Bổ Cổ Phần & Tính Bất Biến Sở Hữu',
+    summary: 'Quy định nghiêm ngặt tổng tỷ lệ cổ phần sở hữu luôn đạt chính xác 100.00%.',
     fullText:
-      'The Co-Owners mutually agree to hold undivided fractional interests in the Electric Vehicle as recorded in the Syndicate Registry. The sum of all active equity shares must equal exactly 100.00% at all times as authoritatively validated by the backend. Transfers of equity require administrative consensus and immutable ledger execution.',
+      'Các đồng sở hữu đồng thuận nắm giữ phần quyền lợi phân đoạn không chia tách đối với Xe Điện như được ghi nhận trong Sổ bộ Nhóm. Tổng tất cả cổ phần đang hoạt động phải bằng chính xác 100.00% tại mọi thời điểm theo xác thực từ máy chủ. Việc chuyển nhượng cổ phần đòi hỏi đồng thuận hành chính và ghi nhận vào sổ cái bất biến.',
   },
   {
     id: 2,
-    articleNumber: 'ARTICLE 02',
-    title: 'Vehicle Access & Booking Quotas',
-    summary: 'Fair chronological reservation quotas calculated pro-rata from equity holding.',
+    articleNumber: 'ĐIỀU KHOẢN 02',
+    title: 'Quyền Sử Dụng Xe & Hạn Ngạch Đặt Lịch',
+    summary: 'Hạn ngạch đặt chỗ theo tỷ lệ cổ phần nắm giữ nhằm đảm bảo công bằng.',
     fullText:
-      'Each Co-Owner is entitled to vehicle reservation privileges proportional to their equity ownership. The scheduling engine strictly enforces overlap prevention and fair-share peak hour rationing. Cancellations within 12 hours of booking window incur standard fairness recalculation.',
+      'Mỗi đồng sở hữu được hưởng quyền ưu tiên đặt xe tương ứng với tỷ lệ sở hữu cổ phần của mình. Động cơ lập lịch thực thi nghiêm ngặt việc ngăn chặn trùng lịch và điều tiết giờ cao điểm công bằng. Việc hủy lịch trong vòng 12 giờ trước thời gian bắt đầu sẽ áp dụng tính lại điểm công bằng theo tiêu chuẩn.',
   },
   {
     id: 3,
-    articleNumber: 'ARTICLE 03',
-    title: 'Shared Operating Fund & Expenses',
-    summary: 'Mandatory reserve fund maintenance and proportional cost allocation.',
+    articleNumber: 'ĐIỀU KHOẢN 03',
+    title: 'Quỹ Vận Hành Chung & Chi Phí Bảo Dưỡng',
+    summary: 'Duy trì số dư quỹ dự phòng bắt buộc và phân bổ chi phí theo tỷ lệ sở hữu.',
     fullText:
-      'Co-Owners shall maintain an active Shared Operating Fund balance covering comprehensive insurance, preventive maintenance, battery servicing, and scheduled charging overhead. Routine expenses are billed pro-rata; individual damage or toll fees are levied directly to the operating member.',
+      'Các đồng sở hữu có nghĩa vụ duy trì số dư Quỹ Vận Hành Chung để chi trả bảo hiểm toàn diện, bảo dưỡng định kỳ, chăm sóc hệ thống pin và điện sạc định kỳ. Chi phí định kỳ được phân bổ theo tỷ lệ sở hữu; các hư hại cá nhân hoặc phí cầu đường phát sinh được tính trực tiếp cho thành viên điều khiển xe.',
   },
   {
     id: 4,
-    articleNumber: 'ARTICLE 04',
-    title: 'Governance, Voting & Dispute Arbitration',
-    summary: 'Democratic voting protocols with a 60.00% minimum participating equity quorum.',
+    articleNumber: 'ĐIỀU KHOẢN 04',
+    title: 'Quản Trị, Biểu Quyết & Giải Quyết Tranh Chấp',
+    summary: 'Quy trình biểu quyết dân chủ với túc số tối thiểu 60.00% tổng cổ phần tham gia.',
     fullText:
-      'Decisions exceeding 5,000,000 VND or altering syndicate membership require formal proposal voting. Quorum is achieved when participating equity reaches at least 60.00%. Disputed vehicle conditions require 3D spatial mesh annotations and platform mediation before binding arbitration.',
+      'Các quyết định vượt quá 5.000.000 VNĐ hoặc thay đổi cơ cấu thành viên nhóm phải thông qua biểu quyết chính thức. Túc số đạt được khi tỷ lệ cổ phần tham gia đạt ít nhất 60.00%. Tranh chấp về tình trạng xe yêu cầu chú thích trực quan trên lưới 3D và hòa giải nền tảng trước khi bước vào phán quyết ràng buộc.',
   },
 ];
 

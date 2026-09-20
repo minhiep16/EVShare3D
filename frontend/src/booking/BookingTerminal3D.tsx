@@ -22,11 +22,11 @@ export const BookingTerminal3D: React.FC = () => {
   const { CHRONO_CYAN, PANEL_BG } = BOOKING_CHAMBER_THEME;
 
   const steps: { id: BookingStep; label: string }[] = [
-    { id: 'CALENDAR', label: '1. CALENDAR' },
-    { id: 'TIMELINE', label: '2. TIMELINE' },
-    { id: 'TIME_SELECT', label: '3. TIME SELECT' },
-    { id: 'CONFIRMATION', label: '4. CONFIRM' },
-    { id: 'HISTORY', label: '5. HISTORY' },
+    { id: 'CALENDAR', label: '1. LỊCH XE' },
+    { id: 'TIMELINE', label: '2. TIẾN TRÌNH' },
+    { id: 'TIME_SELECT', label: '3. CHỌN GIỜ' },
+    { id: 'CONFIRMATION', label: '4. XÁC NHẬN' },
+    { id: 'HISTORY', label: '5. LỊCH SỬ' },
   ];
 
   return (
@@ -99,7 +99,7 @@ export const BookingTerminal3D: React.FC = () => {
                   </mesh>
                   <Text
                     position={[0, 0, 0.015]}
-                    fontSize={0.052}
+                    fontSize={0.048}
                     color={isCurrent ? '#ffffff' : '#94a3b8'}
                     anchorX="center"
                     anchorY="middle"
@@ -128,17 +128,17 @@ export const BookingTerminal3D: React.FC = () => {
             }}
           >
             <mesh>
-              <boxGeometry args={[0.55, 0.18, 0.02]} />
+              <boxGeometry args={[0.62, 0.18, 0.02]} />
               <meshStandardMaterial color="#334155" />
             </mesh>
             <Text
               position={[0, 0, 0.015]}
-              fontSize={0.06}
+              fontSize={0.052}
               color="#cbd5e1"
               anchorX="center"
               anchorY="middle"
             >
-              {isTerminalFocused ? 'WIDE CAM' : 'FOCUS'}
+              {isTerminalFocused ? 'TOÀN CẢNH' : 'TIÊU ĐIỂM'}
             </Text>
           </group>
         </group>

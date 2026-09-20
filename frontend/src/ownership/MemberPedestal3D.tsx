@@ -5,6 +5,7 @@ import type { Group, Mesh } from 'three';
 import type { CoOwnerMember } from './ownershipTypes';
 import { useOwnershipStore } from './useOwnershipStore';
 import { CO_OWNERSHIP_HALL_LAYOUT } from './ownershipLayout';
+import { formatDateVN } from '@/i18n';
 
 interface MemberPedestal3DProps {
   member: CoOwnerMember;
@@ -145,12 +146,12 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.075}
+              fontSize={0.07}
               color={THEME.TEXT_GOLD_BRIGHT}
               anchorX="center"
               anchorY="middle"
             >
-              ★ REPRESENTATIVE
+              ★ ĐẠI DIỆN NHÓM
             </Text>
           </group>
         )}
@@ -195,7 +196,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
           anchorX="center"
           anchorY="middle"
         >
-          {member.trustTier.replace('_', ' ')}
+          {member.isRepresentative ? 'Đại diện sở hữu' : member.trustTier === 'TIER_1_FOUNDER' ? 'Thành viên sáng lập' : member.trustTier === 'TIER_2_SENIOR' ? 'Đồng sở hữu cấp cao' : 'Đồng sở hữu'}
         </Text>
 
         {/* Divider */}
@@ -207,7 +208,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
         {/* Equity & Voting Power */}
         <group position={[-0.75, 0.05, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            EQUITY SHARE:
+            TỶ LỆ CỔ PHẦN:
           </Text>
           <Text position={[1.5, 0, 0]} fontSize={0.075} color={member.color} anchorX="right" anchorY="middle">
             {`${member.sharePercentage.toFixed(1)}%`}
@@ -216,7 +217,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
 
         <group position={[-0.75, -0.09, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            VOTING POWER:
+            QUYỀN BIỂU QUYẾT:
           </Text>
           <Text position={[1.5, 0, 0]} fontSize={0.075} color="#38bdf8" anchorX="right" anchorY="middle">
             {`${member.votingPowerPercentage.toFixed(1)}%`}
@@ -225,7 +226,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
 
         <group position={[-0.75, -0.23, 0]}>
           <Text fontSize={0.065} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-            FAIRNESS SCORE:
+            ĐIỂM CÔNG BẰNG:
           </Text>
           <Text position={[1.5, 0, 0]} fontSize={0.075} color={THEME.CYBER_EMERALD} anchorX="right" anchorY="middle">
             {`${member.fairnessScore}%`}
@@ -249,7 +250,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
             anchorX="center"
             anchorY="middle"
           >
-            {isSelected ? 'CLOSE DOSSIER' : 'INSPECT DOSSIER'}
+            {isSelected ? 'ĐÓNG HỒ SƠ' : 'XEM CHI TIẾT'}
           </Text>
         </group>
       </group>
@@ -277,7 +278,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
             anchorX="center"
             anchorY="middle"
           >
-            CO-OWNER DOSSIER
+            HỒ SƠ ĐỒNG SỞ HỮU
           </Text>
 
           <mesh position={[0, 0.42, 0]}>
@@ -288,7 +289,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
           {/* Detailed Specifications */}
           <group position={[-0.85, 0.28, 0]}>
             <Text fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-              CONTACT EMAIL:
+              EMAIL LIÊN HỆ:
             </Text>
             <Text position={[1.7, 0, 0]} fontSize={0.06} color="#ffffff" anchorX="right" anchorY="middle">
               {member.email}
@@ -297,37 +298,37 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
 
           <group position={[-0.85, 0.14, 0]}>
             <Text fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-              ENROLLED DATE:
+              NGÀY GIA NHẬP:
             </Text>
             <Text position={[1.7, 0, 0]} fontSize={0.06} color="#ffffff" anchorX="right" anchorY="middle">
-              {member.enrolledDate}
+              {formatDateVN(member.enrolledDate)}
             </Text>
           </group>
 
           <group position={[-0.85, 0.0, 0]}>
             <Text fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-              BOOKINGS COMPLETED:
+              CHUYẾN ĐÃ ĐI:
             </Text>
             <Text position={[1.7, 0, 0]} fontSize={0.06} color={THEME.CYBER_CYAN} anchorX="right" anchorY="middle">
-              {`${member.totalBookingsLogged} SESSIONS`}
+              {`${member.totalBookingsLogged} CHUYẾN`}
             </Text>
           </group>
 
           <group position={[-0.85, -0.14, 0]}>
             <Text fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-              SIGNATURE STATUS:
+              CHỮ KÝ ĐIỆN TỬ:
             </Text>
             <Text position={[1.7, 0, 0]} fontSize={0.06} color={THEME.CYBER_EMERALD} anchorX="right" anchorY="middle">
-              VERIFIED VALID
+              ĐÃ XÁC THỰC
             </Text>
           </group>
 
           <group position={[-0.85, -0.28, 0]}>
             <Text fontSize={0.06} color={THEME.TEXT_MUTED} anchorX="left" anchorY="middle">
-              DISPUTE RECORD:
+              TRANH CHẤP:
             </Text>
             <Text position={[1.7, 0, 0]} fontSize={0.06} color="#ffffff" anchorX="right" anchorY="middle">
-              0 VIOLATIONS
+              0 VI PHẠM
             </Text>
           </group>
 
@@ -338,7 +339,7 @@ export const MemberPedestal3D: React.FC<MemberPedestal3DProps> = ({ member }) =>
             anchorX="center"
             anchorY="middle"
           >
-            CLICK OUTSIDE OR BUTTON TO DESELECT
+            NHẤN NÚT HOẶC RA NGOÀI ĐỂ ĐÓNG
           </Text>
         </group>
       )}

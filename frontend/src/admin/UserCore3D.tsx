@@ -30,6 +30,15 @@ export const UserCore3D: React.FC = () => {
   const isAuthorized = userRole === 'ROLE_ADMIN';
   const targetUser = users.find((u) => u.id === 3) || users[1]; // Bob Driver
 
+  const roleDisplay =
+    targetUser.role === 'ROLE_ADMIN'
+      ? 'Quản trị viên'
+      : targetUser.role === 'ROLE_STAFF'
+      ? 'Nhân viên sàn'
+      : 'Đồng sở hữu';
+  const statusDisplay =
+    targetUser.accountStatus === 'ACTIVE' ? 'Hoạt động' : 'Tạm khóa';
+
   return (
     <group name="UserCoreStation" position={config.relativePosition}>
       {/* Core Title */}
@@ -41,16 +50,16 @@ export const UserCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        USER IDENTITY & BIOMETRIC CORE
+        LÕI ĐỊNH DANH & SINH TRẮC HỌC
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        KYC Credential Hashes • RBAC Elevation • Account Safeguards
+        Mã băm chứng chỉ KYC • Thăng cấp vai trò RBAC • Bảo mật tài khoản
       </Text>
 
       {/* Floating Polyhedral Nucleus */}
@@ -101,12 +110,12 @@ export const UserCore3D: React.FC = () => {
         <group position={[-1.25, 0.55, 0.02]}>
           <Text
             position={[0, 0, 0]}
-            fontSize={0.075}
+            fontSize={0.072}
             color={config.primaryColor}
             anchorX="left"
             anchorY="middle"
           >
-            ACTIVE IDENTITY: {targetUser.fullName} (ID #{targetUser.id})
+            DANH TÍNH HOẠT ĐỘNG: {targetUser.fullName} (MÃ #{targetUser.id})
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -115,7 +124,7 @@ export const UserCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Role: {targetUser.role} • Status: {targetUser.accountStatus}
+            Vai trò: {roleDisplay} • Trạng thái: {statusDisplay}
           </Text>
           <Text
             position={[0, -0.28, 0]}
@@ -126,10 +135,10 @@ export const UserCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Biometric KYC:{' '}
+            Sinh trắc KYC:{' '}
             {targetUser.kycStatus === 'VERIFIED'
-              ? '✓ VERIFIED (SHA-256)'
-              : '⏳ PENDING VERIFICATION'}
+              ? '✓ ĐÃ XÁC THỰC (SHA-256)'
+              : '⏳ CHỜ XÁC THỰC'}
           </Text>
         </group>
 
@@ -161,12 +170,12 @@ export const UserCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.065}
+              fontSize={0.058}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🛡 VERIFY & SIGN KYC CREDENTIALS ]
+              [ 🛡 XÁC THỰC & KÝ CHỨNG THƯ KYC ]
             </Text>
           </group>
 
@@ -203,8 +212,8 @@ export const UserCore3D: React.FC = () => {
               anchorY="middle"
             >
               {targetUser.accountStatus === 'ACTIVE'
-                ? '[ ⛔ SUSPEND USER ]'
-                : '[ ⚡ ACTIVATE USER ]'}
+                ? '[ ⛔ TẠM KHÓA ]'
+                : '[ ⚡ KÍCH HOẠT ]'}
             </Text>
           </group>
 
@@ -235,12 +244,12 @@ export const UserCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ 🔑 PROMOTE TO STAFF ]
+              [ 🔑 THĂNG CẤP NHÂN VIÊN ]
             </Text>
           </group>
         </group>

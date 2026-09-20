@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useFinanceStore } from './useFinanceStore';
 import { FINANCE_LAYOUT } from './financeLayout';
 import type { PaymentMethod } from '@/api/financeApi';
+import { formatCurrencyVND } from '@/i18n';
 
 export const PaymentKiosk3D: React.FC = () => {
   const session = useFinanceStore((state) => state.paymentSession);
@@ -19,9 +20,9 @@ export const PaymentKiosk3D: React.FC = () => {
 
   const methods: { id: PaymentMethod; label: string; icon: string }[] = [
     { id: 'BANK_TRANSFER', label: 'VIETQR', icon: '🏦' },
-    { id: 'E_WALLET', label: 'E-WALLET', icon: '📱' },
-    { id: 'CREDIT_CARD', label: 'NFC CARD', icon: '💳' },
-    { id: 'MOCK', label: 'DEV SANDBOX', icon: '🧪' },
+    { id: 'E_WALLET', label: 'VÍ ĐT', icon: '📱' },
+    { id: 'CREDIT_CARD', label: 'NFC', icon: '💳' },
+    { id: 'MOCK', label: 'SANDBOX', icon: '🧪' },
   ];
 
   const handleExecute = () => {
@@ -96,13 +97,13 @@ export const PaymentKiosk3D: React.FC = () => {
         {/* Header Title */}
         <Text
           position={[0, 0.5, 0.04]}
-          fontSize={0.08}
+          fontSize={0.07}
           color="#00e5ff"
           anchorX="center"
           anchorY="middle"
           font="/fonts/Orbitron-Bold.ttf"
         >
-          CONTACTLESS 3D PAYMENT TERMINAL
+          TRẠM THANH TOÁN 3D KHÔNG TIẾP XÚC
         </Text>
 
         {/* Mode Selector: DUE SETTLEMENT vs VAULT TOPUP */}
@@ -127,13 +128,13 @@ export const PaymentKiosk3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.055}
+                fontSize={0.048}
                 color={payMode === 'DUE_SETTLEMENT' ? '#040b17' : '#f0f4fc'}
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/Orbitron-Bold.ttf"
               >
-                SETTLE DUES (5.88M)
+                TRẢ PHÍ NỢ (5.88M)
               </Text>
             </group>
 
@@ -156,13 +157,13 @@ export const PaymentKiosk3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.055}
+                fontSize={0.048}
                 color={payMode === 'VAULT_CONTRIBUTION' ? '#040b17' : '#f0f4fc'}
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/Orbitron-Bold.ttf"
               >
-                VAULT DEPOSIT (2.0M)
+                NẠP VỐN QUỸ (2.0M)
               </Text>
             </group>
           </group>
@@ -213,22 +214,22 @@ export const PaymentKiosk3D: React.FC = () => {
           <group position={[0, -0.1, 0.04]}>
             {/* Amount readout */}
             <Text
-              fontSize={0.07}
+              fontSize={0.065}
               color="#8a94a6"
               anchorX="center"
               anchorY="middle"
             >
-              Amount to authorize:
+              Số tiền cần thanh toán:
             </Text>
             <Text
               position={[0, -0.12, 0]}
-              fontSize={0.13}
+              fontSize={0.12}
               color="#00e676"
               anchorX="center"
               anchorY="middle"
               font="/fonts/JetBrainsMono-Bold.ttf"
             >
-              {`${customAmount.toLocaleString()} VND`}
+              {formatCurrencyVND(customAmount)}
             </Text>
 
             {/* Simulated NFC Card Tap Pad */}
@@ -241,18 +242,18 @@ export const PaymentKiosk3D: React.FC = () => {
                 }}
               >
                 <mesh position={[0, 0, 0]}>
-                  <planeGeometry args={[0.9, 0.18]} />
+                  <planeGeometry args={[0.95, 0.18]} />
                   <meshBasicMaterial color="#00e5ff" transparent opacity={0.3} side={THREE.DoubleSide} />
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.07}
+                  fontSize={0.06}
                   color="#00e5ff"
                   anchorX="center"
                   anchorY="middle"
                   font="/fonts/Orbitron-Bold.ttf"
                 >
-                  ((💳)) TAP NFC CARD HERE
+                  ((💳)) CHẠM THẺ NFC TẠI ĐÂY
                 </Text>
               </group>
             ) : (
@@ -264,18 +265,18 @@ export const PaymentKiosk3D: React.FC = () => {
                 }}
               >
                 <mesh position={[0, 0, 0]}>
-                  <planeGeometry args={[1.05, 0.18]} />
+                  <planeGeometry args={[1.15, 0.18]} />
                   <meshBasicMaterial color="#00e676" transparent opacity={0.35} side={THREE.DoubleSide} />
                 </mesh>
                 <Text
                   position={[0, 0, 0.01]}
-                  fontSize={0.07}
+                  fontSize={0.06}
                   color="#00e676"
                   anchorX="center"
                   anchorY="middle"
                   font="/fonts/Orbitron-Bold.ttf"
                 >
-                  ⚡ TRANSMIT TO BACKEND
+                  ⚡ TRUYỀN DỮ LIỆU THANH TOÁN
                 </Text>
               </group>
             )}
@@ -286,22 +287,22 @@ export const PaymentKiosk3D: React.FC = () => {
         {session.status === 'PROCESSING' && (
           <group position={[0, -0.05, 0.04]}>
             <Text
-              fontSize={0.09}
+              fontSize={0.08}
               color="#ffab00"
               anchorX="center"
               anchorY="middle"
               font="/fonts/Orbitron-Bold.ttf"
             >
-              CONNECTING TO SETTLEMENT ENGINE...
+              ĐANG KẾT NỐI HỆ THỐNG QUYẾT TOÁN...
             </Text>
             <Text
               position={[0, -0.15, 0]}
-              fontSize={0.065}
+              fontSize={0.06}
               color="#8a94a6"
               anchorX="center"
               anchorY="middle"
             >
-              Contacting Spring Boot backend (:8080) for real transaction ledger verification
+              Đang liên hệ backend Spring Boot (:8081) để xác minh sổ cái giao dịch
             </Text>
           </group>
         )}
@@ -316,26 +317,26 @@ export const PaymentKiosk3D: React.FC = () => {
               anchorY="middle"
               font="/fonts/Orbitron-Bold.ttf"
             >
-              VIETQR SETTLEMENT READY
+              MÃ VIETQR ĐÃ SẴN SÀNG
             </Text>
             <Text
               position={[0, -0.12, 0]}
-              fontSize={0.08}
+              fontSize={0.075}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
               font="/fonts/JetBrainsMono-Bold.ttf"
             >
-              {`REF: ${session.reference}`}
+              {`MÃ THAM CHIẾU: ${session.reference}`}
             </Text>
             <Text
               position={[0, -0.22, 0]}
-              fontSize={0.06}
+              fontSize={0.055}
               color="#8a94a6"
               anchorX="center"
               anchorY="middle"
             >
-              {session.providerInstructions || 'Scan with Banking App to clear transaction'}
+              {session.providerInstructions || 'Quét bằng ứng dụng Ngân hàng để hoàn tất giao dịch'}
             </Text>
 
             <group
@@ -346,18 +347,18 @@ export const PaymentKiosk3D: React.FC = () => {
               }}
             >
               <mesh position={[0, 0, 0]}>
-                <planeGeometry args={[1.1, 0.16]} />
+                <planeGeometry args={[1.2, 0.16]} />
                 <meshBasicMaterial color="#00e676" transparent opacity={0.4} side={THREE.DoubleSide} />
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.065}
+                fontSize={0.055}
                 color="#00e676"
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/Orbitron-Bold.ttf"
               >
-                ✓ VERIFY SETTLEMENT RESULT
+                ✓ XÁC THỰC KẾT QUẢ THANH TOÁN
               </Text>
             </group>
           </group>
@@ -367,32 +368,32 @@ export const PaymentKiosk3D: React.FC = () => {
         {session.status === 'FAILED' && (
           <group position={[0, -0.05, 0.04]}>
             <Text
-              fontSize={0.09}
+              fontSize={0.08}
               color="#ff1744"
               anchorX="center"
               anchorY="middle"
               font="/fonts/Orbitron-Bold.ttf"
             >
-              TRANSACTION FAILED / REJECTED
+              GIAO DỊCH THẤT BẠI / BỊ TỪ CHỐI
             </Text>
             <Text
               position={[0, -0.14, 0]}
-              fontSize={0.065}
+              fontSize={0.06}
               color="#ff8a80"
               anchorX="center"
               anchorY="middle"
               maxWidth={1.4}
             >
-              {session.errorMessage || 'Settlement declined by real financial backend.'}
+              {session.errorMessage || 'Giao dịch bị từ chối bởi hệ thống tài chính thực tế.'}
             </Text>
             <Text
               position={[0, -0.26, 0]}
-              fontSize={0.06}
+              fontSize={0.055}
               color="#8a94a6"
               anchorX="center"
               anchorY="middle"
             >
-              No fake success permitted. Ledger preserved without mutation.
+              Không chấp nhận kết quả giả. Sổ cái được bảo toàn nguyên vẹn.
             </Text>
 
             <group
@@ -408,13 +409,13 @@ export const PaymentKiosk3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.065}
+                fontSize={0.06}
                 color="#ff1744"
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/Orbitron-Bold.ttf"
               >
-                ↻ RETRY PAYMENT
+                ↻ THỬ LẠI THANH TOÁN
               </Text>
             </group>
           </group>
@@ -424,13 +425,13 @@ export const PaymentKiosk3D: React.FC = () => {
         {session.status === 'COMPLETED' && (
           <group position={[0, -0.05, 0.04]}>
             <Text
-              fontSize={0.09}
+              fontSize={0.08}
               color="#00e676"
               anchorX="center"
               anchorY="middle"
               font="/fonts/Orbitron-Bold.ttf"
             >
-              SETTLEMENT VERIFIED &amp; CONFIRMED
+              THANH TOÁN ĐÃ ĐƯỢC XÁC THỰC & GHI SỔ
             </Text>
             <Text
               position={[0, -0.12, 0]}
@@ -444,12 +445,12 @@ export const PaymentKiosk3D: React.FC = () => {
             </Text>
             <Text
               position={[0, -0.22, 0]}
-              fontSize={0.065}
+              fontSize={0.06}
               color="#8a94a6"
               anchorX="center"
               anchorY="middle"
             >
-              {`Authorized: ${session.amountVnd.toLocaleString()} VND via ${session.method}`}
+              {`Đã ủy quyền: ${formatCurrencyVND(session.amountVnd)} qua ${session.method}`}
             </Text>
 
             <group
@@ -465,13 +466,13 @@ export const PaymentKiosk3D: React.FC = () => {
               </mesh>
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={0.065}
+                fontSize={0.06}
                 color="#00e676"
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/Orbitron-Bold.ttf"
               >
-                + NEW TRANSACTION
+                + GIAO DỊCH MỚI
               </Text>
             </group>
           </group>

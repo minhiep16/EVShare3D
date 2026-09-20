@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { useAIStore } from './useAIStore';
 import { AI_LAYOUT } from './aiLayout';
 import type { AIIntelligenceCategory } from './aiTypes';
+import { formatPercentageVN, formatStatusVN } from '@/i18n';
 
 export const AIRecommendationHolograms3D: React.FC = () => {
   const activeCategory = useAIStore((s) => s.activeCategory);
@@ -12,10 +13,10 @@ export const AIRecommendationHolograms3D: React.FC = () => {
   const selectedRecommendationId = useAIStore((s) => s.selectedRecommendationId);
 
   const categories: { key: AIIntelligenceCategory; label: string; color: string }[] = [
-    { key: 'RECOMMENDATION', label: 'RECOMMENDATIONS', color: '#06b6d4' },
-    { key: 'INSIGHT', label: 'MOBILITY INSIGHTS', color: '#a855f7' },
-    { key: 'ANOMALY_INDICATOR', label: 'ANOMALY ALERTS', color: '#ef4444' },
-    { key: 'FAIRNESS_SUGGESTION', label: 'FAIRNESS QUOTAS', color: '#10b981' },
+    { key: 'RECOMMENDATION', label: 'KHUYẾN NGHỊ', color: '#06b6d4' },
+    { key: 'INSIGHT', label: 'PHÂN TÍCH', color: '#a855f7' },
+    { key: 'ANOMALY_INDICATOR', label: 'BẤT THƯỜNG', color: '#ef4444' },
+    { key: 'FAIRNESS_SUGGESTION', label: 'CÔNG BẰNG', color: '#10b981' },
   ];
 
   const currentItem =
@@ -85,7 +86,7 @@ export const AIRecommendationHolograms3D: React.FC = () => {
             anchorY="middle"
             letterSpacing={0.06}
           >
-            {`[ ${currentItem.category} • ${currentItem.severity} ]`}
+            {`[ ${formatStatusVN(currentItem.category)} • ${formatStatusVN(currentItem.severity)} ]`}
           </Text>
           <Text
             position={[1.9, 0, 0]}
@@ -94,7 +95,7 @@ export const AIRecommendationHolograms3D: React.FC = () => {
             anchorX="right"
             anchorY="middle"
           >
-            {`CONFIDENCE: ${currentItem.confidenceScore}% (DEV MOCK)`}
+            {`ĐỘ TIN CẬY: ${formatPercentageVN(currentItem.confidenceScore)} (MÔ HÌNH THỬ NGHIỆM)`}
           </Text>
         </group>
 
@@ -137,13 +138,13 @@ export const AIRecommendationHolograms3D: React.FC = () => {
           </lineSegments>
           <Text
             position={[0, 0, 0.02]}
-            fontSize={0.11}
+            fontSize={0.105}
             color={AI_LAYOUT.colors.goldWarning}
             anchorX="center"
             anchorY="middle"
             letterSpacing={0.04}
           >
-            {`PROJECTED IMPACT: ${currentItem.impactMetric}`}
+            {`TÁC ĐỘNG DỰ KIẾN: ${currentItem.impactMetric.replace('VND / month shared cost savings', '₫ / tháng tiết kiệm').replace('Peak ratio:', 'Tỷ lệ cao điểm:').replace('baseline threshold', 'ngưỡng chuẩn').replace('Thermal variance:', 'Chênh lệch nhiệt độ:').replace('(Norm:', '(Chuẩn:')}`}
           </Text>
         </group>
 
@@ -151,14 +152,14 @@ export const AIRecommendationHolograms3D: React.FC = () => {
         <group position={[0, -0.74, 0.02]}>
           <Text
             position={[0, 0.08, 0]}
-            fontSize={0.10}
+            fontSize={0.095}
             color={AI_LAYOUT.colors.cyanLight}
             anchorX="center"
             anchorY="middle"
             maxWidth={3.9}
             textAlign="center"
           >
-            {`ACTION: ${currentItem.suggestedAction}`}
+            {`HÀNH ĐỘNG ĐỀ XUẤT: ${currentItem.suggestedAction}`}
           </Text>
           <Text
             position={[0, -0.16, 0]}
@@ -168,7 +169,7 @@ export const AIRecommendationHolograms3D: React.FC = () => {
             anchorY="middle"
             letterSpacing={0.04}
           >
-            ADVISORY ONLY • REQUIRES CO-OWNER RATIFICATION IN RELEVANT SECTOR (BR-AI-SAFE-01)
+            CHỈ MANG TÍNH TƯ VẤN • CẦN CÁC THÀNH VIÊN PHÊ CHUẨN TẠI PHÂN VÙNG TƯƠNG ỨNG (BR-AI-SAFE-01)
           </Text>
         </group>
       </group>

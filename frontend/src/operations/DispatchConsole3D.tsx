@@ -71,13 +71,13 @@ export const DispatchConsole3D: React.FC = () => {
         {/* Header Title Bar */}
         <Text
           position={[0, 0.65, 0.05]}
-          fontSize={0.11}
+          fontSize={0.105}
           color={OPERATIONS_THEME.primary}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.08}
         >
-          DISPATCH & OPERATIONS MASTER CONSOLE
+          BÀN ĐIỀU PHỐI &amp; VẬN HÀNH TRUNG TÂM
         </Text>
 
         {/* 3. Mode Toggle (Check-In vs Check-Out) */}
@@ -114,12 +114,12 @@ export const DispatchConsole3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.01]}
-              fontSize={0.075}
+              fontSize={0.07}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ CHECK-IN / DEPARTURE ]
+              [ NHẬN XE / KHỞI HÀNH ]
             </Text>
           </group>
 
@@ -155,12 +155,12 @@ export const DispatchConsole3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.01]}
-              fontSize={0.075}
+              fontSize={0.07}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ CHECK-OUT / RECONCILE ]
+              [ TRẢ XE / QUYẾT TOÁN ]
             </Text>
           </group>
         </group>
@@ -174,7 +174,7 @@ export const DispatchConsole3D: React.FC = () => {
             anchorX="right"
             anchorY="middle"
           >
-            VEHICLE:
+            XE ĐIỆN:
           </Text>
           {fleet.map((v, i) => {
             const isSel = v.vehicleId === selectedVehicleId;
@@ -234,7 +234,7 @@ export const DispatchConsole3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              ODOMETER (KM)
+              CÔNG TƠ MÉT (KM)
             </Text>
             {/* Decrease button */}
             <group
@@ -287,7 +287,7 @@ export const DispatchConsole3D: React.FC = () => {
               anchorX="center"
               anchorY="middle"
             >
-              BATTERY SOC (%)
+              DUNG LƯỢNG PIN (%)
             </Text>
             {/* Decrease button */}
             <group
@@ -363,8 +363,8 @@ export const DispatchConsole3D: React.FC = () => {
             anchorY="middle"
           >
             {hasDamageReported
-              ? '⚠ DAMAGE REPORTED: MAINTENANCE HOLD ACTIVE'
-              : '✓ CHASSIS INSPECTION: NOMINAL (NO DAMAGE)'}
+              ? '⚠ PHÁT HIỆN HƯ HỎNG: KÍCH HOẠT LỆNH BẢO TRÌ'
+              : '✓ KIỂM TRA THÂN VỎ: ĐẠT TIÊU CHUẨN (KHÔNG HỎNG)'}
           </Text>
         </group>
 
@@ -407,17 +407,17 @@ export const DispatchConsole3D: React.FC = () => {
           </mesh>
           <Text
             position={[0, 0, 0.03]}
-            fontSize={0.08}
+            fontSize={0.075}
             color="#ffffff"
             anchorX="center"
             anchorY="middle"
             letterSpacing={0.05}
           >
             {isSubmitting
-              ? 'TRANSMITTING TELEMATICS...'
+              ? 'ĐANG TRUYỀN DỮ LIỆU TỪ XA...'
               : checkInOutMode === 'CHECK_IN'
-              ? `🟢 DISPATCH ${selectedVehicle.modelName.toUpperCase()} (CHECK-IN)`
-              : `🏁 RECONCILE ${selectedVehicle.modelName.toUpperCase()} (CHECK-OUT)`}
+              ? `🟢 XUẤT XE ${selectedVehicle.modelName.toUpperCase()} (NHẬN XE)`
+              : `🏁 QUYẾT TOÁN ${selectedVehicle.modelName.toUpperCase()} (TRẢ XE)`}
           </Text>
         </group>
       </group>
@@ -439,7 +439,7 @@ export const DispatchConsole3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          ACTIVE FLEET SELECTION: {selectedVehicle.modelName} [{selectedVehicle.licensePlate}]
+          XE ĐANG CHỌN: {selectedVehicle.modelName} [{selectedVehicle.licensePlate}]
         </Text>
         <Text
           position={[0, -0.08, 0.02]}
@@ -448,7 +448,7 @@ export const DispatchConsole3D: React.FC = () => {
           anchorX="center"
           anchorY="middle"
         >
-          {operationMessage || 'System ready.'}
+          {operationMessage || 'Hệ thống đã sẵn sàng.'}
         </Text>
       </group>
     </group>

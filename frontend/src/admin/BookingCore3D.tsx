@@ -39,16 +39,16 @@ export const BookingCore3D: React.FC = () => {
         anchorY="middle"
         font="https://fonts.gstatic.com/s/outfit/v11/QEUw-pXakupjh6eODBs.woff"
       >
-        CHRONO-SPATIAL BOOKING CORE
+        LÕI ĐIỀU PHỐI LỊCH & ĐẶT XE
       </Text>
       <Text
         position={[0, 3.12, 0]}
-        fontSize={0.11}
+        fontSize={0.105}
         color={COMMAND_THEME.textMuted}
         anchorX="center"
         anchorY="middle"
       >
-        Autonomous Conflict Resolution • Priority Preemption • Expired Hold Purge
+        Phân xử xung đột lịch • Thu hồi ưu tiên nền tảng • Dọn giữ chỗ hết hạn
       </Text>
 
       {/* Floating Chrono-Spatial Calendar Helix */}
@@ -95,7 +95,7 @@ export const BookingCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            DISPUTED SLOT #{conflict.id}: {conflict.vehicleName}
+            KHUNG GIỜ TRANH CHẤP #{conflict.id}: {conflict.vehicleName}
           </Text>
           <Text
             position={[0, -0.14, 0]}
@@ -104,7 +104,7 @@ export const BookingCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Contenders: {conflict.conflictingUsers.join(' vs ')} ({conflict.slotTime})
+            Bên tranh chấp: {conflict.conflictingUsers.join(' và ')} ({conflict.slotTime})
           </Text>
           <Text
             position={[0, -0.28, 0]}
@@ -115,7 +115,7 @@ export const BookingCore3D: React.FC = () => {
             anchorX="left"
             anchorY="middle"
           >
-            Status: {conflict.status.replace(/_/g, ' ')}
+            Trạng thái: {conflict.status === 'RESOLVED_BY_ADMIN' ? 'Đã giải quyết bởi quản trị' : 'Đang tranh chấp'}
           </Text>
         </group>
 
@@ -148,12 +148,12 @@ export const BookingCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.062}
+              fontSize={0.055}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ⏱ ARBITRATE SCHEDULE CONFLICT (FAVOR ALICE) ]
+              [ ⏱ PHÂN XỬ XUNG ĐỘT LỊCH (ƯU TIÊN ALICE) ]
             </Text>
           </group>
 
@@ -184,12 +184,12 @@ export const BookingCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ⛔ PREEMPT SLOT ]
+              [ ⛔ THU HỒI LỊCH ]
             </Text>
           </group>
 
@@ -219,12 +219,12 @@ export const BookingCore3D: React.FC = () => {
             </mesh>
             <Text
               position={[0, 0, 0.02]}
-              fontSize={0.055}
+              fontSize={0.052}
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
             >
-              [ ⚡ PURGE HOLDS ]
+              [ ⚡ DỌN GIỮ CHỖ ]
             </Text>
           </group>
         </group>
